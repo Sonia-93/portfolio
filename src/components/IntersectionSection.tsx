@@ -55,8 +55,14 @@ function AnimatedCircle({
 
   const labelOpacity = useTransform(
     progress,
-    [appEnd, appEnd + 0.04, morphStart + 0.04, morphEnd],
-    [0, 1, 0.1, 1]
+    [appEnd, appEnd + 0.04, morphStart, morphEnd],
+    [0, 1, 0.8, 1]
+  );
+
+  const strokeOpacity = useTransform(
+    progress,
+    [0, morphStart, morphEnd],
+    [1, 0.6, 1]
   );
 
   // Stroke dashoffset draws the ring (uses SMALL circ initially)
@@ -93,10 +99,11 @@ function AnimatedCircle({
             strokeDashoffset: dashoffset,
             transformOrigin: "center",
             rotate: "-90deg",
+            opacity: strokeOpacity,
           }}
           fill="none"
           stroke="#ffffff"
-          strokeWidth={1.8}
+          strokeWidth={2.2}
           strokeLinecap="round"
         />
       </motion.svg>
