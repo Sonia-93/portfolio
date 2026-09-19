@@ -36,7 +36,7 @@
   background: #ffffff;
 }
 
-/* ── Headline — Light font weight (300) with close/tight letter spacing ── */
+/* ── Headline ── */
 .headline {
   position: absolute;
   top: 7%;
@@ -48,18 +48,31 @@
 }
 
 .headlineText {
-  font-family: var(--font-sans), 'Inter', sans-serif;
-  font-size: clamp(32px, 4.8vw, 64px);
-  font-weight: 300;
-  letter-spacing: -0.045em;
-  text-transform: uppercase;
-  line-height: 1.05;
-  color: #ffffff;
   margin: 0;
 }
 
-.headlineLine {
+/* Line 1: Solid White, condensed close letters */
+.headlineLine1 {
   display: block;
+  font-family: var(--font-condensed), 'Barlow Condensed', sans-serif;
+  font-size: clamp(38px, 6vw, 76px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  line-height: 0.95;
+  color: #ffffff;
+}
+
+/* Line 2: Grey matching BACKEND DEVELOPER on homepage (rgba(255,255,255,0.5)), condensed close letters */
+.headlineLine2 {
+  display: block;
+  font-family: var(--font-condensed), 'Barlow Condensed', sans-serif;
+  font-size: clamp(38px, 6vw, 76px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
+  text-transform: uppercase;
+  line-height: 0.95;
+  color: rgba(255, 255, 255, 0.5);
 }
 
 /* ── Stage: circles live here, shifted downwards for breathing room under headline ── */
@@ -111,12 +124,12 @@
   margin-bottom: 8px;
 }
 
-/* ── Text label below inner circle — close tight letter spacing ── */
+/* ── Text label below inner circle ── */
 .circleLabel {
   font-family: var(--font-sans), 'Inter', sans-serif;
   font-size: 11px;
   font-weight: 500;
-  letter-spacing: -0.01em;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: #ffffff;
   white-space: nowrap;

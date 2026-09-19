@@ -6,9 +6,6 @@ import { Gauge, Layers, Zap } from "lucide-react";
 import styles from "./IntersectionSection.module.css";
 
 // ─── Data tailored specifically for Backend Engineering ──────────────────────
-// 0: Architecture (Bottom Left in Venn)
-// 1: Performance (Top Center in Venn)
-// 2: Scalability (Bottom Right in Venn)
 const CIRCLES = [
   { id: "architecture", label: "ARCHITECTURE", Icon: Layers, targetContentX: -35, targetContentY: 30 },
   { id: "performance",  label: "PERFORMANCE",  Icon: Gauge,  targetContentX: 0,   targetContentY: -50 },
@@ -194,15 +191,15 @@ export default function IntersectionSection() {
           />
         </div>
 
-        {/* Headline — Tailored for Backend Developer */}
+        {/* Headline — Line 1 is white, Line 2 is grey matching home page BACKEND DEVELOPER */}
         <div className={styles.headline}>
           <h2 className={styles.headlineText}>
-            <span className={styles.headlineLine}>I BUILD SYSTEMS</span>
-            <span className={styles.headlineLine}>AT THE INTERSECTION OF :</span>
+            <span className={styles.headlineLine1}>I BUILD SYSTEMS</span>
+            <span className={styles.headlineLine2}>AT THE INTERSECTION OF :</span>
           </h2>
         </div>
 
-        {/* Circles stage — shifted downwards for clear margin below headline */}
+        {/* Circles stage */}
         <div className={styles.stage}>
           {CIRCLES.map(({ id, label, Icon, targetContentX, targetContentY }, i) => (
             <AnimatedCircle
