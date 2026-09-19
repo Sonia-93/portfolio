@@ -77,10 +77,10 @@ function AnimatedCircle({
         style={{ position: "absolute", inset: 0, width: size, height: size }}
         overflow="visible"
       >
-        {/* Background fill */}
+        {/* Background fill — pure black */}
         <motion.circle
           style={{ cx: cx_cy, cy: cx_cy, r }}
-          fill="rgba(255,255,255,0.07)"
+          fill="#000000"
           stroke="none"
         />
         {/* Animated draw stroke */}
@@ -95,7 +95,7 @@ function AnimatedCircle({
             rotate: "-90deg",
           }}
           fill="none"
-          stroke="rgba(255,255,255,0.72)"
+          stroke="rgba(255,255,255,0.9)"
           strokeWidth={1.5}
           strokeLinecap="round"
         />
@@ -103,8 +103,8 @@ function AnimatedCircle({
 
       {/* Icon + label */}
       <div className={styles.circleInner}>
-        <motion.div style={{ scale: iconScale }}>
-          <Icon size={20} strokeWidth={1.4} color="rgba(255,255,255,0.85)" />
+        <motion.div style={{ scale: iconScale }} className={styles.iconGlow}>
+          <Icon size={22} strokeWidth={1.6} color="#ffffff" />
         </motion.div>
         <motion.span className={styles.circleLabel} style={{ opacity: labelOpacity }}>
           {label}
@@ -140,8 +140,8 @@ export default function IntersectionSection() {
         {/* Headline — always visible */}
         <div className={styles.headline}>
           <h2 className={styles.headlineText}>
-            I BUILD SYSTEMS<br />
-            AT THE INTERSECTION OF :
+            <span className={styles.headlineWhite}>I BUILD SYSTEMS</span><br />
+            <span className={styles.headlineMuted}>AT THE INTERSECTION OF :</span>
           </h2>
         </div>
 
