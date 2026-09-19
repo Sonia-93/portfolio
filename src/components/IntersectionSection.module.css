@@ -1,0 +1,102 @@
+/* ── Scroll section: tall enough to drive scroll-based animation ── */
+.scrollSection {
+  position: relative;
+  height: 500vh;
+  background: #000;
+}
+
+/* ── Sticky viewport ── */
+.sticky {
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* ── Left progress line ── */
+.progressTrack {
+  position: absolute;
+  left: 48px;
+  top: 20%;
+  bottom: 20%;
+  width: 1px;
+  background: rgba(255, 255, 255, 0.1);
+}
+
+.progressFill {
+  width: 100%;
+  height: 100%;
+  background: #ffffff;
+  transform-origin: top;
+}
+
+/* ── Headline ── */
+.headline {
+  position: absolute;
+  top: 9%;
+  left: 0;
+  right: 0;
+  text-align: center;
+  z-index: 5;
+  padding: 0 24px;
+}
+
+.headlineText {
+  font-family: Georgia, "Times New Roman", serif;
+  font-size: clamp(22px, 4vw, 52px);
+  font-weight: 700;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #ffffff;
+  line-height: 1.25;
+  text-shadow:
+    0 0 20px rgba(255, 255, 255, 0.4),
+    0 0 60px rgba(255, 255, 255, 0.15);
+}
+
+/* ── Circles stage ── */
+.stage {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+/* ── Individual circle ── */
+.circleWrapper {
+  position: absolute;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.circleContent {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+  pointer-events: none;
+}
+
+.circleLabel {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.7);
+  white-space: nowrap;
+  position: absolute;
+  bottom: -28px;
+  left: 50%;
+  transform: translateX(-50%);
+}
