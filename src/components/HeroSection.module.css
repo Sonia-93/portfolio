@@ -11,9 +11,9 @@
   padding-top: 60px;
   /* Torch/spotlight effect focused on center */
   background-image: radial-gradient(
-    ellipse 60% 50% at 50% 50%,
-    rgba(255, 255, 255, 0.07) 0%,
-    rgba(255, 255, 255, 0.03) 40%,
+    ellipse 65% 75% at 50% 50%,
+    rgba(255, 255, 255, 0.08) 0%,
+    rgba(255, 255, 255, 0.04) 40%,
     transparent 70%
   );
 }
