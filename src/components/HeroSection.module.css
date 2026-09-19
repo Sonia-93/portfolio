@@ -42,34 +42,115 @@
 .ring3 {
   position: absolute;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.07);
+  box-sizing: border-box;
 }
 
 /* Ring 1 — widest, slow rotation */
 .ring1 {
   width: 520px;
   height: 200px;
-  transform: rotateX(70deg) rotateZ(0deg);
-  border-color: rgba(255, 255, 255, 0.06);
+  border: none;
+  background: transparent;
   animation: orbit1 18s linear infinite;
+  transform: rotateX(70deg) rotateZ(0deg);
 }
 
 /* Ring 2 — medium, tilted, opposite direction */
 .ring2 {
   width: 380px;
   height: 140px;
-  transform: rotateX(72deg) rotateZ(45deg);
-  border-color: rgba(255, 255, 255, 0.05);
+  border: none;
+  background: transparent;
   animation: orbit2 28s linear infinite reverse;
+  transform: rotateX(72deg) rotateZ(45deg);
 }
 
 /* Ring 3 — small, fast, different tilt */
 .ring3 {
   width: 260px;
   height: 90px;
-  transform: rotateX(68deg) rotateZ(120deg);
-  border-color: rgba(255, 255, 255, 0.045);
+  border: none;
+  background: transparent;
   animation: orbit3 40s linear infinite;
+  transform: rotateX(68deg) rotateZ(120deg);
+}
+
+/* ── Ring inner: the actual dashed rotating ellipse ── */
+.ring1Inner,
+.ring2Inner,
+.ring3Inner {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1px dashed rgba(255, 255, 255, 0.18);
+}
+
+/* Bright arc segment overlaid on top */
+.ring1Arc {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid transparent;
+  border-top-color: rgba(255, 255, 255, 0.85);
+  border-right-color: rgba(255, 255, 255, 0.3);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.4), 0 0 24px rgba(255, 255, 255, 0.15);
+  animation: spinArc1 4.5s linear infinite;
+}
+
+.ring2Arc {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid transparent;
+  border-top-color: rgba(255, 255, 255, 0.75);
+  border-right-color: rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.35), 0 0 20px rgba(255, 255, 255, 0.12);
+  animation: spinArc1 6s linear infinite reverse;
+}
+
+.ring3Arc {
+  position: absolute;
+  inset: 0;
+  border-radius: 50%;
+  border: 1.5px solid transparent;
+  border-top-color: rgba(255, 255, 255, 0.65);
+  border-right-color: rgba(255, 255, 255, 0.2);
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.3), 0 0 18px rgba(255, 255, 255, 0.1);
+  animation: spinArc1 3s linear infinite;
+}
+
+/* Glowing node that travels the ring */
+.ring1Node,
+.ring2Node,
+.ring3Node {
+  position: absolute;
+  width: 6px;
+  height: 6px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 8px rgba(255,255,255,0.9), 0 0 18px rgba(255,255,255,0.5);
+  /* position at top-center */
+  top: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  animation: spinArc1 4.5s linear infinite;
+  transform-origin: 50% calc(50% + 100px);
+}
+
+.ring2Node {
+  animation: spinArc1 6s linear infinite reverse;
+  top: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  transform-origin: 50% calc(50% + 70px);
+}
+
+.ring3Node {
+  animation: spinArc1 3s linear infinite;
+  top: -3px;
+  left: 50%;
+  transform: translateX(-50%);
+  transform-origin: 50% calc(50% + 45px);
 }
 
 @keyframes orbit1 {
@@ -86,6 +167,12 @@
   from { transform: rotateX(68deg) rotateZ(120deg); }
   to   { transform: rotateX(68deg) rotateZ(480deg); }
 }
+
+@keyframes spinArc1 {
+  from { transform: translateX(-50%) rotate(0deg); }
+  to   { transform: translateX(-50%) rotate(360deg); }
+}
+
 
 /* ── Logo mark (top-left) ── */
 .logoMark {

@@ -125,9 +125,21 @@ function DotsCanvas() {
 function OrbitalRings() {
   return (
     <div className={styles.orbitalWrapper} aria-hidden="true">
-      <div className={styles.ring1} />
-      <div className={styles.ring2} />
-      <div className={styles.ring3} />
+      <div className={styles.ring1}>
+        <div className={styles.ring1Inner} />
+        <div className={styles.ring1Arc} />
+        <div className={styles.ring1Node} />
+      </div>
+      <div className={styles.ring2}>
+        <div className={styles.ring2Inner} />
+        <div className={styles.ring2Arc} />
+        <div className={styles.ring2Node} />
+      </div>
+      <div className={styles.ring3}>
+        <div className={styles.ring3Inner} />
+        <div className={styles.ring3Arc} />
+        <div className={styles.ring3Node} />
+      </div>
     </div>
   );
 }

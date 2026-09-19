@@ -18,12 +18,12 @@
   overflow: hidden;
 }
 
-/* ── Left progress line — shorter, tighter ── */
+/* ── Left progress line — short, tight ── */
 .progressTrack {
   position: absolute;
   left: 48px;
-  top: 35%;
-  bottom: 35%;
+  top: 44%;
+  bottom: 44%;
   width: 1px;
   background: rgba(255, 255, 255, 0.12);
   z-index: 5;
@@ -47,13 +47,13 @@
 }
 
 .headlineText {
-  font-family: 'Inter', sans-serif;
-  font-size: clamp(18px, 3vw, 44px);
-  font-weight: 900;
-  letter-spacing: 0.02em;
+  font-family: var(--font-condensed), 'Barlow Condensed', 'Inter', sans-serif;
+  font-size: clamp(28px, 4.5vw, 56px);
+  font-weight: 800;
+  letter-spacing: 0.05em;
   text-transform: uppercase;
   color: #ffffff;
-  line-height: 1.2;
+  line-height: 1.1;
 }
 
 /* ── Stage: circles live here, centered ── */

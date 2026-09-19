@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk } from "next/font/google";
+import { Inter, Space_Grotesk, Barlow_Condensed } from "next/font/google";
 import "./globals.css";
 import CustomCursor from "@/components/CustomCursor";
 import NavBar from "@/components/NavBar";
@@ -16,6 +16,13 @@ const spaceGrotesk = Space_Grotesk({
   display: "swap",
 });
 
+const barlowCondensed = Barlow_Condensed({
+  subsets: ["latin"],
+  variable: "--font-condensed",
+  weight: ["700", "800", "900"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Sonia — Backend Developer",
   description:
@@ -28,7 +35,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable}`}>
+    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${barlowCondensed.variable}`}>
       <body>
         <CustomCursor />
         <NavBar />
