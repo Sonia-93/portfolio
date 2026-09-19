@@ -121,12 +121,24 @@ function DotsCanvas() {
   return <canvas ref={canvasRef} className={styles.dotsCanvas} />;
 }
 
+// ─── Revolving orbital rings ─────────────────────────────────────────────────
+function OrbitalRings() {
+  return (
+    <div className={styles.orbitalWrapper} aria-hidden="true">
+      <div className={styles.ring1} />
+      <div className={styles.ring2} />
+      <div className={styles.ring3} />
+    </div>
+  );
+}
+
 export default function HeroSection() {
   const { date, time, mounted } = useLiveDateTime();
 
   return (
     <section className={styles.hero}>
       <DotsCanvas />
+      <OrbitalRings />
 
       {/* ── Top Left: Logo mark ── */}
       <motion.div className={styles.logoMark} initial={{ opacity: 0 }} animate={{ opacity: 1 }} transition={{ duration: 1, delay: 0.3 }}>
