@@ -26,6 +26,67 @@
   pointer-events: none;
 }
 
+/* ── Revolving orbital rings ── */
+.orbitalWrapper {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ring1,
+.ring2,
+.ring3 {
+  position: absolute;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.07);
+}
+
+/* Ring 1 — widest, slow rotation */
+.ring1 {
+  width: 520px;
+  height: 200px;
+  transform: rotateX(70deg) rotateZ(0deg);
+  border-color: rgba(255, 255, 255, 0.06);
+  animation: orbit1 18s linear infinite;
+}
+
+/* Ring 2 — medium, tilted, opposite direction */
+.ring2 {
+  width: 380px;
+  height: 140px;
+  transform: rotateX(72deg) rotateZ(45deg);
+  border-color: rgba(255, 255, 255, 0.05);
+  animation: orbit2 28s linear infinite reverse;
+}
+
+/* Ring 3 — small, fast, different tilt */
+.ring3 {
+  width: 260px;
+  height: 90px;
+  transform: rotateX(68deg) rotateZ(120deg);
+  border-color: rgba(255, 255, 255, 0.045);
+  animation: orbit3 40s linear infinite;
+}
+
+@keyframes orbit1 {
+  from { transform: rotateX(70deg) rotateZ(0deg); }
+  to   { transform: rotateX(70deg) rotateZ(360deg); }
+}
+
+@keyframes orbit2 {
+  from { transform: rotateX(72deg) rotateZ(45deg); }
+  to   { transform: rotateX(72deg) rotateZ(405deg); }
+}
+
+@keyframes orbit3 {
+  from { transform: rotateX(68deg) rotateZ(120deg); }
+  to   { transform: rotateX(68deg) rotateZ(480deg); }
+}
+
 /* ── Logo mark (top-left) ── */
 .logoMark {
   position: absolute;
