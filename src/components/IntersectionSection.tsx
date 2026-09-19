@@ -2,39 +2,20 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
-import { Gauge, Crosshair } from "lucide-react";
+import { Gauge, Layers, Zap } from "lucide-react";
 import styles from "./IntersectionSection.module.css";
 
-// Interlocking double rings icon for Aesthetic
-function AestheticIcon({ size = 18 }: { size?: number }) {
-  return (
-    <svg
-      width={size}
-      height={size}
-      viewBox="0 0 24 24"
-      fill="none"
-      stroke="#ffffff"
-      strokeWidth="1.8"
-      strokeLinecap="round"
-      strokeLinejoin="round"
-    >
-      <circle cx="9" cy="12" r="5.5" />
-      <circle cx="15" cy="12" r="5.5" />
-    </svg>
-  );
-}
-
-// ─── Data ────────────────────────────────────────────────────────────────────
-// 0: Aesthetic (Bottom Left in Venn)
+// ─── Data tailored specifically for Backend Engineering ──────────────────────
+// 0: Architecture (Bottom Left in Venn)
 // 1: Performance (Top Center in Venn)
-// 2: Strategy (Bottom Right in Venn)
+// 2: Scalability (Bottom Right in Venn)
 const CIRCLES = [
-  { id: "aesthetic",   label: "AESTHETIC",   Icon: AestheticIcon, targetContentX: -35, targetContentY: 30 },
-  { id: "performance", label: "PERFORMANCE",  Icon: Gauge,          targetContentX: 0,   targetContentY: -50 },
-  { id: "strategy",    label: "STRATEGY",     Icon: Crosshair,      targetContentX: 35,  targetContentY: 30 },
+  { id: "architecture", label: "ARCHITECTURE", Icon: Layers, targetContentX: -35, targetContentY: 30 },
+  { id: "performance",  label: "PERFORMANCE",  Icon: Gauge,  targetContentX: 0,   targetContentY: -50 },
+  { id: "scalability",  label: "SCALABILITY",  Icon: Zap,    targetContentX: 35,  targetContentY: 30 },
 ] as const;
 
-// Sizes (diameter) matching reference screenshot scale
+// Sizes (diameter)
 const SMALL = 44;
 const LARGE = 360;
 
@@ -175,7 +156,7 @@ function AnimatedCircle({
       >
         {/* Glowing brilliant white inner circle enclosing icon */}
         <motion.div className={styles.innerIconCircle}>
-          <Icon size={18} strokeWidth={2.4} color="#ffffff" />
+          <Icon size={18} strokeWidth={2.2} color="#ffffff" />
         </motion.div>
 
         {/* Crisp white text label with tight letter spacing */}
@@ -213,10 +194,10 @@ export default function IntersectionSection() {
           />
         </div>
 
-        {/* Headline — Bebas Neue matching reference images */}
+        {/* Headline — Tailored for Backend Developer */}
         <div className={styles.headline}>
           <h2 className={styles.headlineText}>
-            <span className={styles.headlineLine}>I BUILD WEBSITES</span>
+            <span className={styles.headlineLine}>I BUILD SYSTEMS</span>
             <span className={styles.headlineLine}>AT THE INTERSECTION OF :</span>
           </h2>
         </div>
