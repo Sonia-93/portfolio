@@ -7,144 +7,95 @@ import styles from "./IntersectionSection.module.css";
 
 // ─── Data ────────────────────────────────────────────────────────────────────
 const CIRCLES = [
-  { id: "aesthetic",   label: "AESTHETIC",   Icon: Link2,     delay: 0 },
-  { id: "performance", label: "PERFORMANCE",  Icon: Gauge,     delay: 0.12 },
-  { id: "strategy",    label: "STRATEGY",     Icon: Crosshair, delay: 0.24 },
+  { id: "aesthetic",   label: "AESTHETIC",   Icon: Link2 },
+  { id: "performance", label: "PERFORMANCE",  Icon: Gauge },
+  { id: "strategy",    label: "STRATEGY",     Icon: Crosshair },
 ] as const;
 
-// ─── Circle radius & circumference ──────────────────────────────────────────
-const R_SMALL = 44;   // radius when in horizontal list
-const R_LARGE = 128;  // radius in final Venn diagram
-const CIRC_SMALL = 2 * Math.PI * R_SMALL;
-const CIRC_LARGE = 2 * Math.PI * R_LARGE;
+// Circle dimensions
+const CIRCLE_SIZE = 260; // px — final large size
+const CIRC = Math.PI * CIRCLE_SIZE; // circumference of circle with r = SIZE/2
 
-// ─── Positions ───────────────────────────────────────────────────────────────
-// Horizontal layout  (x, y) from section center
-const H_POS = [
-  { x: -240, y: 0 },
-  { x:    0, y: 0 },
-  { x:  240, y: 0 },
-];
-// Venn diagram layout — circles must overlap (radius=128, so centers ~160px apart)
-const V_POS = [
-  { x: -90, y:  70 },  // AESTHETIC   bottom-left
-  { x:   0, y: -80 },  // PERFORMANCE top
-  { x:  90, y:  70 },  // STRATEGY    bottom-right
-];
+// Positions in the horizontal row (offsets from center)
+const H_X = [-280, 0, 280];
 
-// ─── Individual animated circle ──────────────────────────────────────────────
+// Venn diagram positions — circles need to overlap (r=130, so ~160px centers)
+const V_X = [-95, 0, 95];
+const V_Y = [75, -85, 75]; // [AESTHETIC, PERFORMANCE, STRATEGY]
+
+// ─── Per-circle component ────────────────────────────────────────────────────
 function AnimatedCircle({
   index,
   icon: Icon,
   label,
-  scrollYProgress,
+  progress,
 }: {
   index: number;
   icon: React.ElementType;
   label: string;
-  scrollYProgress: MotionValue<number>;
+  progress: MotionValue<number>;
 }) {
-  const appearAt   = 0.05 + index * 0.08;
-  const drawEnd    = appearAt + 0.15;
-  const morphStart = 0.55;
-  const morphEnd   = 0.85;
+  // Staggered appearance: circle 0 → [0.05,0.18], 1 → [0.12,0.25], 2 → [0.19,0.32]
+  const appStart  = 0.05 + index * 0.07;
+  const appEnd    = appStart + 0.13;
 
-  // The SVG is fixed size (large), we scale the wrapper div
-  const FIXED_R = R_LARGE;
-  const FIXED_CIRC = CIRC_LARGE;
-  const SIZE = FIXED_R * 2 + 4;
-  const CX = FIXED_R + 2;
+  // Morph to Venn: [0.52 → 0.78]
+  const morphStart = 0.52;
+  const morphEnd   = 0.78;
 
-  // Scale the whole wrapper from small → large
-  const scale = useTransform(
-    scrollYProgress,
-    [morphStart, morphEnd],
-    [R_SMALL / R_LARGE, 1]
-  );
+  // ── Opacity: 0 → 1 as circle draws in
+  const opacity = useTransform(progress, [appStart, appEnd], [0, 1]);
 
-  // Stroke draw: full circumference → 0 (scaled down circumference at start)
-  const strokeOffset = useTransform(
-    scrollYProgress,
-    [appearAt, drawEnd],
-    [FIXED_CIRC * (R_SMALL / R_LARGE), 0]
-  );
+  // ── Stroke draw: full CIRC → 0 (stroke-dashoffset)
+  const strokeDashoffset = useTransform(progress, [appStart, appEnd], [CIRC, 0]);
 
-  // Opacity of the circle wrapper
-  const circleOpacity = useTransform(
-    scrollYProgress,
-    [appearAt - 0.02, appearAt + 0.04],
-    [0, 1]
-  );
+  // ── X: horizontal → Venn
+  const x = useTransform(progress, [morphStart, morphEnd], [H_X[index], V_X[index]]);
 
-  // X position: H → V
-  const x = useTransform(
-    scrollYProgress,
-    [morphStart, morphEnd],
-    [H_POS[index].x, V_POS[index].x]
-  );
+  // ── Y: 0 → Venn Y
+  const y = useTransform(progress, [morphStart, morphEnd], [0, V_Y[index]]);
 
-  // Y position: H → V
-  const y = useTransform(
-    scrollYProgress,
-    [morphStart, morphEnd],
-    [H_POS[index].y, V_POS[index].y]
-  );
-
-  // Label opacity
+  // ── Label opacity: appears after draw, fades during morph, re-appears
   const labelOpacity = useTransform(
-    scrollYProgress,
-    [drawEnd - 0.02, drawEnd + 0.06, morphStart, morphEnd],
-    [0, 1, 0.3, 1]
+    progress,
+    [appEnd, appEnd + 0.05, morphStart + 0.05, morphEnd],
+    [0, 1, 0.15, 1]
   );
 
-  // Icon scale: stays consistent relative to circle
-  const iconScale = useTransform(
-    scrollYProgress,
-    [morphStart, morphEnd],
-    [0.55, 1]
-  );
+  const r = CIRCLE_SIZE / 2;
 
   return (
     <motion.div
       className={styles.circleWrapper}
-      style={{ x, y, opacity: circleOpacity, scale, width: SIZE, height: SIZE }}
+      style={{ x, y, opacity, width: CIRCLE_SIZE, height: CIRCLE_SIZE }}
     >
-      {/* SVG ring — fixed size, scaled by parent */}
       <svg
-        width={SIZE}
-        height={SIZE}
-        viewBox={`0 0 ${SIZE} ${SIZE}`}
-        overflow="visible"
+        width={CIRCLE_SIZE}
+        height={CIRCLE_SIZE}
+        viewBox={`0 0 ${CIRCLE_SIZE} ${CIRCLE_SIZE}`}
         style={{ position: "absolute", inset: 0 }}
+        overflow="visible"
       >
-        {/* Background fill */}
-        <circle
-          cx={CX}
-          cy={CX}
-          r={FIXED_R}
-          fill="rgba(255,255,255,0.06)"
-          stroke="none"
-        />
-        {/* Animated drawing stroke */}
+        {/* Dim fill */}
+        <circle cx={r} cy={r} r={r - 1} fill="rgba(255,255,255,0.05)" />
+        {/* Animated stroke ring — draws from top */}
         <motion.circle
-          cx={CX}
-          cy={CX}
-          r={FIXED_R}
+          cx={r}
+          cy={r}
+          r={r - 1}
           fill="none"
-          stroke="rgba(255,255,255,0.7)"
+          stroke="rgba(255,255,255,0.65)"
           strokeWidth={1.5}
           strokeLinecap="round"
-          strokeDasharray={FIXED_CIRC}
-          style={{ strokeDashoffset: strokeOffset }}
-          transform={`rotate(-90 ${CX} ${CX})`}
+          strokeDasharray={CIRC}
+          style={{ strokeDashoffset: strokeDashoffset }}
+          transform={`rotate(-90 ${r} ${r})`}
         />
       </svg>
 
       {/* Icon + label */}
-      <div className={styles.circleContent}>
-        <motion.div style={{ scale: iconScale, transformOrigin: "center" }}>
-          <Icon size={22} strokeWidth={1.4} color="rgba(255,255,255,0.85)" />
-        </motion.div>
+      <div className={styles.circleInner}>
+        <Icon size={22} strokeWidth={1.4} color="rgba(255,255,255,0.85)" />
         <motion.span className={styles.circleLabel} style={{ opacity: labelOpacity }}>
           {label}
         </motion.span>
@@ -153,7 +104,7 @@ function AnimatedCircle({
   );
 }
 
-// ─── Main Section ────────────────────────────────────────────────────────────
+// ─── Section ─────────────────────────────────────────────────────────────────
 export default function IntersectionSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
 
@@ -162,19 +113,18 @@ export default function IntersectionSection() {
     offset: ["start start", "end end"],
   });
 
-  // Headline
-  const headlineOpacity = useTransform(scrollYProgress, [0.38, 0.52], [0, 1]);
-  const headlineY       = useTransform(scrollYProgress, [0.38, 0.52], [30, 0]);
+  // Headline fades in at 0.35–0.50
+  const headlineOpacity = useTransform(scrollYProgress, [0.34, 0.48], [0, 1]);
+  const headlineY       = useTransform(scrollYProgress, [0.34, 0.48], [24, 0]);
 
-  // Left progress line height
-  const lineScaleY = useTransform(scrollYProgress, [0, 0.9], [0, 1]);
+  // Progress line
+  const lineScaleY = useTransform(scrollYProgress, [0, 0.95], [0, 1]);
 
   return (
     <div ref={sectionRef} className={styles.scrollSection}>
-      {/* Sticky viewport */}
       <div className={styles.sticky}>
 
-        {/* ── Left progress line ── */}
+        {/* Left progress line */}
         <div className={styles.progressTrack}>
           <motion.div
             className={styles.progressFill}
@@ -182,7 +132,7 @@ export default function IntersectionSection() {
           />
         </div>
 
-        {/* ── Headline ── */}
+        {/* Headline */}
         <motion.div
           className={styles.headline}
           style={{ opacity: headlineOpacity, y: headlineY }}
@@ -193,7 +143,7 @@ export default function IntersectionSection() {
           </h2>
         </motion.div>
 
-        {/* ── Circles stage ── */}
+        {/* Stage */}
         <div className={styles.stage}>
           {CIRCLES.map(({ id, label, Icon }, i) => (
             <AnimatedCircle
@@ -201,7 +151,7 @@ export default function IntersectionSection() {
               index={i}
               icon={Icon}
               label={label}
-              scrollYProgress={scrollYProgress}
+              progress={scrollYProgress}
             />
           ))}
         </div>
