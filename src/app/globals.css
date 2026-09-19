@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
+
 *, *::before, *::after {
   box-sizing: border-box;
   margin: 0;
@@ -11,6 +13,7 @@
   --text-primary: #ffffff;
   --text-muted: rgba(255, 255, 255, 0.55);
   --font-sans: 'Inter', sans-serif;
+  --font-bebas: 'Bebas Neue', sans-serif;
 }
 
 html {

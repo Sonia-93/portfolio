@@ -2,101 +2,154 @@
 
 import { useRef } from "react";
 import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
-import { Link2, Gauge, Crosshair } from "lucide-react";
+import { Gauge, Crosshair } from "lucide-react";
 import styles from "./IntersectionSection.module.css";
 
+// Interlocking double rings icon for Aesthetic
+function AestheticIcon({ size = 18 }: { size?: number }) {
+  return (
+    <svg
+      width={size}
+      height={size}
+      viewBox="0 0 24 24"
+      fill="none"
+      stroke="#ffffff"
+      strokeWidth="1.8"
+      strokeLinecap="round"
+      strokeLinejoin="round"
+    >
+      <circle cx="9" cy="12" r="5.5" />
+      <circle cx="15" cy="12" r="5.5" />
+    </svg>
+  );
+}
+
 // ─── Data ────────────────────────────────────────────────────────────────────
+// 0: Aesthetic (Bottom Left in Venn)
+// 1: Performance (Top Center in Venn)
+// 2: Strategy (Bottom Right in Venn)
 const CIRCLES = [
-  { id: "aesthetic",   label: "AESTHETIC",   Icon: Link2 },
-  { id: "performance", label: "PERFORMANCE",  Icon: Gauge },
-  { id: "strategy",    label: "STRATEGY",     Icon: Crosshair },
+  { id: "aesthetic",   label: "AESTHETIC",   Icon: AestheticIcon, targetContentX: -35, targetContentY: 30 },
+  { id: "performance", label: "PERFORMANCE",  Icon: Gauge,          targetContentX: 0,   targetContentY: -50 },
+  { id: "strategy",    label: "STRATEGY",     Icon: Crosshair,      targetContentX: 35,  targetContentY: 30 },
 ] as const;
 
-// Sizes (diameter)
-const SMALL = 90;
-const LARGE = 240;
+// Sizes (diameter) matching reference screenshot scale
+const SMALL = 44;
+const LARGE = 360;
 
-// Horizontal row x-offsets from center
+// Initial horizontal row positions (Loading reference)
 const H_X = [-240, 0, 240];
 
-// Venn diagram positions (radius=120, overlapping at ~150px spacing)
-const V_X = [-85, 0,  85];
-const V_Y = [ 70, -80, 70];
+// Final triangular Venn diagram positions
+const V_X = [-90, 0, 90];
+const V_Y = [75, -90, 75];
 
 // ─── Individual animated circle ──────────────────────────────────────────────
 function AnimatedCircle({
   index,
   icon: Icon,
   label,
+  targetContentX,
+  targetContentY,
   progress,
 }: {
   index: number;
   icon: React.ElementType;
   label: string;
+  targetContentX: number;
+  targetContentY: number;
   progress: MotionValue<number>;
 }) {
-  // Draw-in phase — staggered left→right
-  const appStart = 0.04 + index * 0.09;
-  const appEnd   = appStart + 0.14;
+  // Step 1: Initial load — Small inner circles appear horizontally together
+  const appStart = 0.02 + index * 0.04;
+  const appEnd   = appStart + 0.12;
 
-  // Grow phase: small → large
-  const growStart = 0.38;
-  const growEnd   = 0.56;
+  // Step 2: Outer circle appears and grows around each small circle
+  const growStart = 0.20;
+  const growEnd   = 0.45;
 
-  // Morph to Venn positions
-  const morphStart = 0.56;
-  const morphEnd   = 0.80;
+  // Step 3: Morph from horizontal row into triangular Venn diagram
+  const morphStart = 0.45;
+  const morphEnd   = 0.70;
 
-  const opacity  = useTransform(progress, [appStart, appEnd], [0, 1]);
-  const size     = useTransform(progress, [growStart, growEnd], [SMALL, LARGE]);
-  const x        = useTransform(progress, [morphStart, morphEnd], [H_X[index], V_X[index]]);
-  const y        = useTransform(progress, [morphStart, morphEnd], [0, V_Y[index]]);
-  const iconScale = useTransform(size, [SMALL, LARGE], [0.7, 1.1]);
+  // Wrapper opacity: Appears at appStart, stays locked at 1.0 (never fades out)
+  const opacity = useTransform(
+    progress,
+    [0, appStart, appEnd, 1],
+    [0, 0, 1, 1]
+  );
 
-  // Label position & opacity: starts outside circle (below), morphs inside circle during Venn diagram stage
-  const labelY = useTransform(progress, [growStart, morphStart, morphEnd], [65, 65, 26]);
+  // Outer circle size: SMALL (44px) -> LARGE (360px)
+  const size = useTransform(
+    progress,
+    [0, growStart, growEnd, 1],
+    [SMALL, SMALL, LARGE, LARGE]
+  );
+
+  // Position X: H_X -> V_X
+  const x = useTransform(
+    progress,
+    [0, morphStart, morphEnd, 1],
+    [H_X[index], H_X[index], V_X[index], V_X[index]]
+  );
+
+  // Position Y: 0 -> V_Y[index] (Morphs into triangular set)
+  const y = useTransform(
+    progress,
+    [0, morphStart, morphEnd, 1],
+    [0, 0, V_Y[index], V_Y[index]]
+  );
+
+  // Inner content offsets: 0 -> targetContentX/Y during morph so inner circles sit inside their respective outer circle space
+  const contentX = useTransform(
+    progress,
+    [0, morphStart, morphEnd, 1],
+    [0, 0, targetContentX, targetContentX]
+  );
+
+  const contentY = useTransform(
+    progress,
+    [0, morphStart, morphEnd, 1],
+    [0, 0, targetContentY, targetContentY]
+  );
+
+  // Outer SVG Stroke Opacity: 0 at start, turns on as outer ring grows
+  const outerStrokeOpacity = useTransform(
+    progress,
+    [0, growStart, growEnd, 1],
+    [0, 0, 0.3, 0.3]
+  );
+
+  // Outer stroke draw effect
+  const circumference = useTransform(size, (s) => Math.PI * s);
+  const dashoffset = useTransform(
+    progress,
+    [growStart, growEnd, 1],
+    [Math.PI * SMALL, 0, 0]
+  );
+
+  // Derived SVG geometry
+  const cx_cy = useTransform(size, (s) => s / 2);
+  const r = useTransform(size, (s) => s / 2 - 1);
+
+  // Label opacity
   const labelOpacity = useTransform(
     progress,
-    [appEnd, appEnd + 0.04, morphStart, morphEnd],
-    [0, 1, 0.6, 1]
+    [appStart, appEnd, 1],
+    [0, 1, 1]
   );
-  const labelColor = useTransform(
-    progress,
-    [morphStart, morphEnd],
-    ["rgba(255, 255, 255, 0.75)", "#ffffff"]
-  );
-
-  const strokeOpacity = useTransform(
-    progress,
-    [0, morphStart, morphEnd],
-    [1, 0.25, 0.35]
-  );
-
-  // Stroke dashoffset draws the ring (uses SMALL circ initially)
-  const circumference = useTransform(size, (s) => Math.PI * s);
-  const dashoffset = useTransform(progress, [appStart, appEnd], [Math.PI * SMALL, 0]);
-
-  // SVG geometry derived from size
-  const cx_cy = useTransform(size, (s) => s / 2);
-  const r     = useTransform(size, (s) => s / 2 - 1);
 
   return (
     <motion.div
       className={styles.circleWrapper}
       style={{ x, y, opacity, width: size, height: size }}
     >
-      {/* Resizable SVG ring */}
+      {/* Resizable SVG outer Venn ring — transparent fill so overlapping lines intersect cleanly */}
       <motion.svg
         style={{ position: "absolute", inset: 0, width: size, height: size }}
         overflow="visible"
       >
-        {/* Background fill — pure black */}
-        <motion.circle
-          style={{ cx: cx_cy, cy: cx_cy, r }}
-          fill="#000000"
-          stroke="none"
-        />
-        {/* Animated draw stroke */}
         <motion.circle
           style={{
             cx: cx_cy,
@@ -106,27 +159,33 @@ function AnimatedCircle({
             strokeDashoffset: dashoffset,
             transformOrigin: "center",
             rotate: "-90deg",
-            opacity: strokeOpacity,
+            opacity: outerStrokeOpacity,
           }}
           fill="none"
-          stroke="#ffffff"
-          strokeWidth={2.2}
+          stroke="rgba(255, 255, 255, 0.35)"
+          strokeWidth={1.2}
           strokeLinecap="round"
         />
       </motion.svg>
 
-      {/* Icon + label */}
-      <div className={styles.circleInner}>
-        <motion.div style={{ scale: iconScale }} className={styles.iconGlow}>
-          <Icon size={24} strokeWidth={2} color="#ffffff" />
+      {/* Inner content: Icon circle + label positioned inside its respective circle area */}
+      <motion.div
+        className={styles.circleContent}
+        style={{ x: contentX, y: contentY }}
+      >
+        {/* Glowing brilliant white inner circle enclosing icon */}
+        <motion.div className={styles.innerIconCircle}>
+          <Icon size={18} strokeWidth={2.4} color="#ffffff" />
         </motion.div>
+
+        {/* Crisp white text label with tight letter spacing */}
         <motion.span
           className={styles.circleLabel}
-          style={{ opacity: labelOpacity, y: labelY, color: labelColor }}
+          style={{ opacity: labelOpacity }}
         >
           {label}
         </motion.span>
-      </div>
+      </motion.div>
     </motion.div>
   );
 }
@@ -154,22 +213,24 @@ export default function IntersectionSection() {
           />
         </div>
 
-        {/* Headline — always visible */}
+        {/* Headline — Bebas Neue matching reference images */}
         <div className={styles.headline}>
           <h2 className={styles.headlineText}>
-            <span className={styles.headlineWhite}>I BUILD SYSTEMS</span><br />
-            <span className={styles.headlineMuted}>AT THE INTERSECTION OF :</span>
+            <span className={styles.headlineLine}>I BUILD WEBSITES</span>
+            <span className={styles.headlineLine}>AT THE INTERSECTION OF :</span>
           </h2>
         </div>
 
-        {/* Circles stage */}
+        {/* Circles stage — shifted downwards for clear margin below headline */}
         <div className={styles.stage}>
-          {CIRCLES.map(({ id, label, Icon }, i) => (
+          {CIRCLES.map(({ id, label, Icon, targetContentX, targetContentY }, i) => (
             <AnimatedCircle
               key={id}
               index={i}
               icon={Icon}
               label={label}
+              targetContentX={targetContentX}
+              targetContentY={targetContentY}
               progress={scrollYProgress}
             />
           ))}
