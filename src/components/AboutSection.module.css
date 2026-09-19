@@ -1,0 +1,117 @@
+/* ── About Section ── */
+.about {
+  position: relative;
+  background: #000;
+  padding: 120px clamp(32px, 8vw, 160px) 160px;
+  overflow: hidden;
+}
+
+/* ── Divider ── */
+.dividerWrap {
+  position: relative;
+  width: 100%;
+  height: 1px;
+  margin-bottom: 48px;
+  display: flex;
+  align-items: center;
+}
+
+.dividerLine {
+  width: 100%;
+  height: 1px;
+  background: rgba(255, 255, 255, 0.18);
+  transform-origin: left center;
+}
+
+.dividerDot {
+  position: absolute;
+  right: 0;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: #ffffff;
+  box-shadow: 0 0 8px rgba(255,255,255,0.8);
+}
+
+/* ── Overline label ── */
+.overline {
+  font-family: var(--font-sans), 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.38);
+  margin-bottom: 48px;
+}
+
+/* ── Headline ── */
+.headlineBlock {
+  margin-bottom: 56px;
+}
+
+.headlineRow {
+  overflow: hidden;
+  line-height: 0.95;
+  margin-bottom: 2px;
+}
+
+.headlineSolid {
+  display: block;
+  font-family: var(--font-condensed), 'Barlow Condensed', 'Inter', sans-serif;
+  font-size: clamp(40px, 7vw, 96px);
+  font-weight: 800;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: #ffffff;
+  line-height: 0.95;
+}
+
+.headlineItalic {
+  display: block;
+  font-family: var(--font-condensed), 'Barlow Condensed', 'Inter', sans-serif;
+  font-size: clamp(40px, 7vw, 96px);
+  font-weight: 700;
+  font-style: italic;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.28);
+  line-height: 0.95;
+}
+
+/* ── Body ── */
+.body {
+  font-family: var(--font-sans), 'Inter', sans-serif;
+  font-size: clamp(15px, 1.4vw, 18px);
+  font-weight: 400;
+  line-height: 1.75;
+  color: rgba(255, 255, 255, 0.55);
+  max-width: 560px;
+  margin-bottom: 56px;
+}
+
+/* ── Skill tags ── */
+.skillsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.skillTag {
+  display: inline-block;
+  font-family: var(--font-sans), 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.55);
+  padding: 7px 18px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.03);
+  transition: border-color 0.2s ease, color 0.2s ease;
+}
+
+.skillTag:hover {
+  border-color: rgba(255, 255, 255, 0.35);
+  color: rgba(255, 255, 255, 0.85);
+}
