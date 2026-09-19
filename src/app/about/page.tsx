@@ -1,4 +1,5 @@
 import IntersectionSection from "@/components/IntersectionSection";
+import AboutSection from "@/components/AboutSection";
 
 export const metadata = {
   title: "About — Sonia",
@@ -9,6 +10,7 @@ export default function AboutPage() {
   return (
     <main>
       <IntersectionSection />
+      <AboutSection />
     </main>
   );
 }
