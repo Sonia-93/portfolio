@@ -75,6 +75,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transform-origin: center center;
 }
 
 .circleContent {
@@ -96,7 +97,7 @@
   color: rgba(255, 255, 255, 0.7);
   white-space: nowrap;
   position: absolute;
-  bottom: -28px;
+  bottom: -22px;
   left: 50%;
   transform: translateX(-50%);
 }

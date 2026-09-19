@@ -25,11 +25,11 @@ const H_POS = [
   { x:    0, y: 0 },
   { x:  240, y: 0 },
 ];
-// Venn diagram layout
+// Venn diagram layout — circles must overlap (radius=128, so centers ~160px apart)
 const V_POS = [
-  { x: -135, y:  80 },  // AESTHETIC   bottom-left
-  { x:    0, y: -95 },  // PERFORMANCE top
-  { x:  135, y:  80 },  // STRATEGY    bottom-right
+  { x: -90, y:  70 },  // AESTHETIC   bottom-left
+  { x:   0, y: -80 },  // PERFORMANCE top
+  { x:  90, y:  70 },  // STRATEGY    bottom-right
 ];
 
 // ─── Individual animated circle ──────────────────────────────────────────────
@@ -44,34 +44,32 @@ function AnimatedCircle({
   label: string;
   scrollYProgress: MotionValue<number>;
 }) {
-  // --- Appear threshold for this circle ---
-  const appearAt  = 0.05 + index * 0.08;
-  const drawEnd   = appearAt + 0.15;
+  const appearAt   = 0.05 + index * 0.08;
+  const drawEnd    = appearAt + 0.15;
   const morphStart = 0.55;
   const morphEnd   = 0.85;
 
-  // Stroke draw: circumference → 0
+  // The SVG is fixed size (large), we scale the wrapper div
+  const FIXED_R = R_LARGE;
+  const FIXED_CIRC = CIRC_LARGE;
+  const SIZE = FIXED_R * 2 + 4;
+  const CX = FIXED_R + 2;
+
+  // Scale the whole wrapper from small → large
+  const scale = useTransform(
+    scrollYProgress,
+    [morphStart, morphEnd],
+    [R_SMALL / R_LARGE, 1]
+  );
+
+  // Stroke draw: full circumference → 0 (scaled down circumference at start)
   const strokeOffset = useTransform(
     scrollYProgress,
     [appearAt, drawEnd],
-    [CIRC_SMALL, 0]
+    [FIXED_CIRC * (R_SMALL / R_LARGE), 0]
   );
 
-  // Radius grow: small → large
-  const radius = useTransform(
-    scrollYProgress,
-    [morphStart, morphEnd],
-    [R_SMALL, R_LARGE]
-  );
-
-  // Stroke circumference (keeps in sync with radius)
-  const strokeDash = useTransform(
-    scrollYProgress,
-    [morphStart, morphEnd],
-    [CIRC_SMALL, CIRC_LARGE]
-  );
-
-  // Opacity of the circle itself
+  // Opacity of the circle wrapper
   const circleOpacity = useTransform(
     scrollYProgress,
     [appearAt - 0.02, appearAt + 0.04],
@@ -92,66 +90,65 @@ function AnimatedCircle({
     [H_POS[index].y, V_POS[index].y]
   );
 
-  // Label opacity: fades in shortly after draw, fades out as morph begins, back in at end
+  // Label opacity
   const labelOpacity = useTransform(
     scrollYProgress,
     [drawEnd - 0.02, drawEnd + 0.06, morphStart, morphEnd],
     [0, 1, 0.3, 1]
   );
 
-  // Icon size: scales with radius
+  // Icon scale: stays consistent relative to circle
   const iconScale = useTransform(
     scrollYProgress,
     [morphStart, morphEnd],
-    [1, 2.2]
+    [0.55, 1]
   );
-
-  // SVG viewport size driven by radius
-  const svgSize = useTransform(radius, (r) => r * 2 + 4);
-  const cx = useTransform(radius, (r) => r + 2);
 
   return (
     <motion.div
       className={styles.circleWrapper}
-      style={{ x, y, opacity: circleOpacity }}
+      style={{ x, y, opacity: circleOpacity, scale, width: SIZE, height: SIZE }}
     >
-      {/* SVG ring */}
-      <motion.svg
-        style={{ width: svgSize, height: svgSize }}
+      {/* SVG ring — fixed size, scaled by parent */}
+      <svg
+        width={SIZE}
+        height={SIZE}
+        viewBox={`0 0 ${SIZE} ${SIZE}`}
         overflow="visible"
+        style={{ position: "absolute", inset: 0 }}
       >
-        {/* Background dim fill */}
-        <motion.circle
-          style={{ cx, cy: cx, r: radius }}
-          fill="rgba(255,255,255,0.03)"
+        {/* Background fill */}
+        <circle
+          cx={CX}
+          cy={CX}
+          r={FIXED_R}
+          fill="rgba(255,255,255,0.06)"
           stroke="none"
         />
-        {/* Animated stroke ring */}
+        {/* Animated drawing stroke */}
         <motion.circle
-          style={{
-            cx,
-            cy: cx,
-            r: radius,
-            strokeDasharray: strokeDash,
-            strokeDashoffset: strokeOffset,
-          }}
+          cx={CX}
+          cy={CX}
+          r={FIXED_R}
           fill="none"
-          stroke="rgba(255,255,255,0.35)"
-          strokeWidth={1}
+          stroke="rgba(255,255,255,0.7)"
+          strokeWidth={1.5}
           strokeLinecap="round"
-          transform={`rotate(-90, ${R_SMALL + 2}, ${R_SMALL + 2})`}
+          strokeDasharray={FIXED_CIRC}
+          style={{ strokeDashoffset: strokeOffset }}
+          transform={`rotate(-90 ${CX} ${CX})`}
         />
-      </motion.svg>
+      </svg>
 
-      {/* Icon + label overlay */}
-      <motion.div className={styles.circleContent} style={{ opacity: circleOpacity }}>
+      {/* Icon + label */}
+      <div className={styles.circleContent}>
         <motion.div style={{ scale: iconScale, transformOrigin: "center" }}>
-          <Icon size={18} strokeWidth={1.4} color="rgba(255,255,255,0.8)" />
+          <Icon size={22} strokeWidth={1.4} color="rgba(255,255,255,0.85)" />
         </motion.div>
         <motion.span className={styles.circleLabel} style={{ opacity: labelOpacity }}>
           {label}
         </motion.span>
-      </motion.div>
+      </div>
     </motion.div>
   );
 }
