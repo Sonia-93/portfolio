@@ -51,18 +51,25 @@ function AnimatedCircle({
   const size     = useTransform(progress, [growStart, growEnd], [SMALL, LARGE]);
   const x        = useTransform(progress, [morphStart, morphEnd], [H_X[index], V_X[index]]);
   const y        = useTransform(progress, [morphStart, morphEnd], [0, V_Y[index]]);
-  const iconScale = useTransform(size, [SMALL, LARGE], [0.7, 1.2]);
+  const iconScale = useTransform(size, [SMALL, LARGE], [0.7, 1.1]);
 
+  // Label position & opacity: starts outside circle (below), morphs inside circle during Venn diagram stage
+  const labelY = useTransform(progress, [growStart, morphStart, morphEnd], [65, 65, 26]);
   const labelOpacity = useTransform(
     progress,
     [appEnd, appEnd + 0.04, morphStart, morphEnd],
-    [0, 1, 0.8, 1]
+    [0, 1, 0.6, 1]
+  );
+  const labelColor = useTransform(
+    progress,
+    [morphStart, morphEnd],
+    ["rgba(255, 255, 255, 0.75)", "#ffffff"]
   );
 
   const strokeOpacity = useTransform(
     progress,
     [0, morphStart, morphEnd],
-    [1, 0.6, 1]
+    [1, 0.25, 0.35]
   );
 
   // Stroke dashoffset draws the ring (uses SMALL circ initially)
@@ -113,7 +120,10 @@ function AnimatedCircle({
         <motion.div style={{ scale: iconScale }} className={styles.iconGlow}>
           <Icon size={24} strokeWidth={2} color="#ffffff" />
         </motion.div>
-        <motion.span className={styles.circleLabel} style={{ opacity: labelOpacity }}>
+        <motion.span
+          className={styles.circleLabel}
+          style={{ opacity: labelOpacity, y: labelY, color: labelColor }}
+        >
           {label}
         </motion.span>
       </div>
