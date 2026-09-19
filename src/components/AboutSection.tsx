@@ -51,16 +51,6 @@ export default function AboutSection() {
         />
       </div>
 
-      {/* ── Overline label ── */}
-      <motion.p
-        className={styles.overline}
-        initial={{ opacity: 0, y: 16 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.7, delay: 0.3, ease: "easeOut" }}
-      >
-        Showcasing the journey
-      </motion.p>
-
       {/* ── Main headline block ── */}
       <div className={styles.headlineBlock}>
 
