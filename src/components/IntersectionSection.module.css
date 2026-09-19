@@ -52,8 +52,16 @@
   font-weight: 800;
   letter-spacing: 0.05em;
   text-transform: uppercase;
-  color: #ffffff;
   line-height: 1.1;
+}
+
+.headlineWhite {
+  color: #ffffff;
+}
+
+.headlineMuted {
+  color: rgba(255, 255, 255, 0.38);
+  font-weight: 700;
 }
 
 /* ── Stage: circles live here, centered ── */
@@ -88,14 +96,23 @@
 
 .circleLabel {
   font-family: 'Inter', sans-serif;
-  font-size: 9px;
+  font-size: 10px;
   font-weight: 600;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.65);
+  color: rgba(255, 255, 255, 0.75);
   white-space: nowrap;
   position: absolute;
-  bottom: 18%;
+  top: 100%;
   left: 50%;
   transform: translateX(-50%);
+  margin-top: 14px;
+}
+
+/* ── Glowing icon ── */
+.iconGlow {
+  filter:
+    drop-shadow(0 0 6px rgba(255, 255, 255, 0.95))
+    drop-shadow(0 0 14px rgba(255, 255, 255, 0.6))
+    drop-shadow(0 0 28px rgba(255, 255, 255, 0.3));
 }

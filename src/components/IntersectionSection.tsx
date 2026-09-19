@@ -95,8 +95,8 @@ function AnimatedCircle({
             rotate: "-90deg",
           }}
           fill="none"
-          stroke="rgba(255,255,255,0.9)"
-          strokeWidth={1.5}
+          stroke="#ffffff"
+          strokeWidth={1.8}
           strokeLinecap="round"
         />
       </motion.svg>
@@ -104,7 +104,7 @@ function AnimatedCircle({
       {/* Icon + label */}
       <div className={styles.circleInner}>
         <motion.div style={{ scale: iconScale }} className={styles.iconGlow}>
-          <Icon size={22} strokeWidth={1.6} color="#ffffff" />
+          <Icon size={24} strokeWidth={2} color="#ffffff" />
         </motion.div>
         <motion.span className={styles.circleLabel} style={{ opacity: labelOpacity }}>
           {label}
