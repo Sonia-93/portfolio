@@ -1,0 +1,292 @@
+.hero {
+  position: relative;
+  width: 100%;
+  height: 100dvh;
+  min-height: 600px;
+  background-color: #000;
+  overflow: hidden;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-top: 60px;
+  /* Torch/spotlight effect focused on center */
+  background-image: radial-gradient(
+    ellipse 60% 50% at 50% 50%,
+    rgba(255, 255, 255, 0.07) 0%,
+    rgba(255, 255, 255, 0.03) 40%,
+    transparent 70%
+  );
+}
+
+/* ── Animated dots ── */
+.dotsCanvas {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* ── Logo mark (top-left) ── */
+.logoMark {
+  position: absolute;
+  top: 28px;
+  left: 28px;
+  z-index: 10;
+  width: 42px;
+  height: 42px;
+}
+
+.logoSquare1 {
+  display: block;
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 30px;
+  height: 30px;
+  background: #ffffff;
+  border-radius: 3px;
+}
+
+.logoSquare2 {
+  display: block;
+  position: absolute;
+  top: 12px;
+  left: 12px;
+  width: 30px;
+  height: 30px;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 3px;
+}
+
+/* ── Datetime (top-right) ── */
+.datetimeBadge {
+  position: absolute;
+  top: 24px;
+  right: 28px;
+  z-index: 10;
+  text-align: right;
+}
+
+.datetime {
+  font-size: 11px;
+  letter-spacing: 0.04em;
+  color: rgba(255, 255, 255, 0.45);
+  font-feature-settings: "tnum";
+}
+
+/* ── Floating name tag ── */
+.nameTag {
+  position: absolute;
+  top: 8%;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 4px;
+}
+
+.nameTagLabel {
+  display: inline-block;
+  background: #ff3c3c;
+  color: #fff;
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  padding: 3px 10px;
+  border-radius: 3px;
+}
+
+.nameTagArrow {
+  display: block;
+  width: 0;
+  height: 0;
+  border-left: 6px solid transparent;
+  border-right: 6px solid transparent;
+  border-top: 7px solid #ff3c3c;
+}
+.headline {
+  position: relative;
+  z-index: 10;
+  line-height: 1;
+  text-align: center;
+}
+
+.headlineText {
+  display: block;
+  font-size: clamp(52px, 8vw, 100px);
+  font-weight: 300;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  color: #ffffff;
+  line-height: 1.05;
+  font-family: Georgia, "Times New Roman", serif;
+  text-shadow:
+    0 0 20px rgba(255, 255, 255, 0.9),
+    0 0 40px rgba(255, 255, 255, 0.5),
+    0 0 80px rgba(255, 255, 255, 0.2);
+}
+
+.headlineTextWhite {
+  display: block;
+  font-size: clamp(52px, 8vw, 100px);
+  font-weight: 300;
+  letter-spacing: 0.01em;
+  text-transform: none;
+  color: #ffffff;
+  line-height: 1.05;
+  font-family: Georgia, "Times New Roman", serif;
+  text-shadow:
+    0 0 20px rgba(255, 255, 255, 0.9),
+    0 0 40px rgba(255, 255, 255, 0.5),
+    0 0 80px rgba(255, 255, 255, 0.2);
+}
+
+.headlineLine2 {
+  display: flex;
+  align-items: baseline;
+  justify-content: center;
+  gap: 0;
+}
+
+.accentRect {
+  display: inline-block;
+  width: clamp(12px, 1vw, 18px);
+  height: clamp(12px, 1vw, 18px);
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 2px;
+  margin-left: 6px;
+  vertical-align: baseline;
+  position: relative;
+  top: -0.1em;
+  flex-shrink: 0;
+}
+
+.role {
+  margin-top: 16px;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  text-align: center;
+  background: none;
+}
+
+.subSince {
+  position: absolute;
+  bottom: 48px;
+  left: 45%;
+  z-index: 10;
+  white-space: nowrap;
+  font-size: 13px;
+  color: rgba(255, 255, 255, 0.4);
+  letter-spacing: 0.01em;
+}
+
+.subSince strong {
+  color: rgba(255, 255, 255, 0.65);
+  font-weight: 600;
+}
+
+/* ── Sub info ── */
+.subInfo {
+  position: absolute;
+  bottom: 52px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  text-align: center;
+  white-space: nowrap;
+}
+
+.subSince {
+  font-size: 13.5px;
+  color: rgba(255, 255, 255, 0.55);
+  margin-bottom: 4px;
+  letter-spacing: 0.01em;
+}
+
+.subSince strong {
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 600;
+}
+
+.subRole {
+  font-size: 15px;
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 500;
+}
+
+.subAt {
+  color: rgba(255, 255, 255, 0.4);
+  font-weight: 400;
+}
+
+.subLink {
+  color: rgba(255, 255, 255, 0.75);
+  font-weight: 600;
+  transition: color 0.2s ease;
+}
+
+.subLink:hover {
+  color: #ff3c3c;
+}
+
+/* ── Buttons ── */
+.buttons {
+  display: flex;
+  gap: 12px;
+  justify-content: center;
+  margin-top: 56px;
+}
+
+.btnPrimary {
+  padding: 12px 28px;
+  background: #ffffff;
+  color: #000000;
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid #ffffff;
+  border-radius: 999px;
+  transition: all 0.25s ease;
+  text-shadow: none;
+  box-shadow:
+    0 0 18px rgba(255, 255, 255, 0.9),
+    0 0 40px rgba(255, 255, 255, 0.55),
+    0 0 80px rgba(255, 255, 255, 0.25);
+}
+
+.btnPrimary:hover {
+  background: rgba(255, 255, 255, 0.88);
+  box-shadow:
+    0 0 28px rgba(255, 255, 255, 1),
+    0 0 60px rgba(255, 255, 255, 0.7),
+    0 0 120px rgba(255, 255, 255, 0.35);
+  transform: scale(1.03);
+}
+
+.btnOutline {
+  padding: 12px 28px;
+  background: transparent;
+  color: #ffffff;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid rgba(255, 255, 255, 0.6);
+  border-radius: 999px;
+  transition: all 0.2s ease;
+  text-shadow:
+    0 0 20px rgba(255, 255, 255, 0.9),
+    0 0 40px rgba(255, 255, 255, 0.5);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+}
+
+.btnOutline:hover {
+  border-color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.25);
+}
