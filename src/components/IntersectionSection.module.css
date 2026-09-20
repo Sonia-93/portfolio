@@ -51,31 +51,32 @@
   margin: 0;
 }
 
-/* Line 1: Solid White, condensed close letters */
+/* Line 1: Solid White, Light Font Weight (300), reduced font size */
 .headlineLine1 {
   display: block;
-  font-family: var(--font-condensed), 'Barlow Condensed', sans-serif;
-  font-size: clamp(38px, 6vw, 76px);
-  font-weight: 400;
-  letter-spacing: -0.01em;
+  font-family: var(--font-sans), 'Inter', sans-serif;
+  font-size: clamp(28px, 4.2vw, 54px);
+  font-weight: 300;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
-  line-height: 0.95;
+  line-height: 1.05;
   color: #ffffff;
 }
 
-/* Line 2: Grey matching BACKEND DEVELOPER on homepage (rgba(255,255,255,0.5)), condensed close letters */
+/* Line 2: Grey (rgba(255,255,255,0.5)), Light Font Weight (300), Oblique/Italic, reduced font size */
 .headlineLine2 {
   display: block;
-  font-family: var(--font-condensed), 'Barlow Condensed', sans-serif;
-  font-size: clamp(38px, 6vw, 76px);
-  font-weight: 400;
-  letter-spacing: -0.01em;
+  font-family: var(--font-sans), 'Inter', sans-serif;
+  font-size: clamp(28px, 4.2vw, 54px);
+  font-weight: 300;
+  font-style: italic;
+  letter-spacing: -0.02em;
   text-transform: uppercase;
-  line-height: 0.95;
+  line-height: 1.05;
   color: rgba(255, 255, 255, 0.5);
 }
 
-/* ── Stage: circles live here, shifted downwards for breathing room under headline ── */
+/* ── Stage: circles live here, shifted downwards for wide breathing room under headline ── */
 .stage {
   position: relative;
   width: 100%;
@@ -83,7 +84,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  padding-top: 70px;
+  padding-top: 130px;
 }
 
 /* ── Individual circle shell ── */
