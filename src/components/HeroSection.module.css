@@ -9,12 +9,13 @@
   align-items: center;
   justify-content: center;
   padding-top: 60px;
-  /* Torch/spotlight effect focused on center */
+  /* Torch/spotlight — wider, brighter halo around the words */
   background-image: radial-gradient(
-    ellipse 65% 75% at 50% 50%,
-    rgba(255, 255, 255, 0.08) 0%,
-    rgba(255, 255, 255, 0.04) 40%,
-    transparent 70%
+    ellipse 78% 82% at 50% 48%,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.09) 34%,
+    rgba(255, 255, 255, 0.03) 58%,
+    transparent 74%
   );
 }
 
@@ -271,9 +272,10 @@
   line-height: 1.05;
   font-family: Georgia, "Times New Roman", serif;
   text-shadow:
-    0 0 20px rgba(255, 255, 255, 0.9),
-    0 0 40px rgba(255, 255, 255, 0.5),
-    0 0 80px rgba(255, 255, 255, 0.2);
+    0 0 28px rgba(255, 255, 255, 1),
+    0 0 58px rgba(255, 255, 255, 0.65),
+    0 0 110px rgba(255, 255, 255, 0.32),
+    0 0 180px rgba(255, 255, 255, 0.14);
 }
 
 .headlineTextWhite {
@@ -286,9 +288,10 @@
   line-height: 1.05;
   font-family: Georgia, "Times New Roman", serif;
   text-shadow:
-    0 0 20px rgba(255, 255, 255, 0.9),
-    0 0 40px rgba(255, 255, 255, 0.5),
-    0 0 80px rgba(255, 255, 255, 0.2);
+    0 0 28px rgba(255, 255, 255, 1),
+    0 0 58px rgba(255, 255, 255, 0.65),
+    0 0 110px rgba(255, 255, 255, 0.32),
+    0 0 180px rgba(255, 255, 255, 0.14);
 }
 
 .headlineLine2 {

@@ -6,32 +6,9 @@ import Image from "next/image";
 import soniaImage from "@/app/sonia.png";
 import styles from "./AboutSection.module.css";
 
-const SKILLS = [
-  "Node.js", "Python", "PostgreSQL", "Redis",
-  "Docker", "REST APIs", "GraphQL", "AWS",
-  "Penetration Testing", "Network Security",
-];
-
-function SkillTag({ label, delay }: { label: string; delay: number }) {
-  const ref = useRef<HTMLSpanElement>(null);
-  const inView = useInView(ref, { once: true, margin: "-10% 0px" });
-  return (
-    <motion.span
-      ref={ref}
-      className={styles.skillTag}
-      initial={{ opacity: 0, y: 12 }}
-      animate={inView ? { opacity: 1, y: 0 } : {}}
-      transition={{ duration: 0.5, delay, ease: "easeOut" }}
-    >
-      {label}
-    </motion.span>
-  );
-}
+const ease = [0.22, 1, 0.36, 1] as const;
 
 export default function AboutSection() {
-  const sectionRef = useRef<HTMLDivElement>(null);
-  const inView = useInView(sectionRef, { once: true, margin: "-12% 0px" });
-
   const textColRef = useRef<HTMLDivElement>(null);
   const textInView = useInView(textColRef, { once: true, margin: "-10% 0px" });
 
@@ -39,58 +16,50 @@ export default function AboutSection() {
   const imageInView = useInView(imageRef, { once: true, margin: "-10% 0px" });
 
   return (
-    <section ref={sectionRef} className={styles.about} id="about">
-
-      {/* ── Two-column wrapper ── */}
+    <section className={styles.about} id="about">
       <div className={styles.twoCol}>
-
-        {/* ── LEFT: Text column ── */}
         <div ref={textColRef} className={styles.textCol}>
+          <div className={styles.textTorch} aria-hidden="true" />
 
-          {/* "ABOUT ME" headline — Bebas Neue (same as I BUILD SYSTEMS) */}
           <motion.h2
             className={styles.aboutTitle}
-            initial={{ opacity: 0, y: 30 }}
+            initial={{ opacity: 0, y: 36 }}
             animate={textInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.9, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+            transition={{ duration: 1, delay: 0.08, ease }}
           >
             ABOUT ME
           </motion.h2>
 
-          {/* Full name line */}
           <motion.div
             className={styles.fullName}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 22 }}
             animate={textInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.28, ease: "easeOut" }}
+            transition={{ duration: 0.85, delay: 0.26, ease }}
           >
             SHIMIRWA TETA Sonia
           </motion.div>
 
-          {/* Role / Title line */}
           <motion.div
             className={styles.roleLine}
-            initial={{ opacity: 0, y: 20 }}
+            initial={{ opacity: 0, y: 18 }}
             animate={textInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
+            transition={{ duration: 0.85, delay: 0.38, ease }}
           >
             Backend Developer &amp; Cyber Security Enthusiast
           </motion.div>
 
-          {/* Divider */}
           <motion.div
             className={styles.textDivider}
-            initial={{ scaleX: 0 }}
-            animate={textInView ? { scaleX: 1 } : {}}
-            transition={{ duration: 1.0, delay: 0.52, ease: [0.22, 1, 0.36, 1] }}
+            initial={{ scaleX: 0, opacity: 0 }}
+            animate={textInView ? { scaleX: 1, opacity: 1 } : {}}
+            transition={{ duration: 1.05, delay: 0.5, ease }}
           />
 
-          {/* Bio paragraphs */}
           <motion.p
             className={styles.body}
             initial={{ opacity: 0, y: 24 }}
             animate={textInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.65, ease: "easeOut" }}
+            transition={{ duration: 0.9, delay: 0.62, ease }}
           >
             I&apos;m <strong className={styles.strong}>SHIMIRWA TETA Sonia</strong>, a backend developer
             and cyber security enthusiast based in Kigali, Rwanda. I specialise in
@@ -103,7 +72,7 @@ export default function AboutSection() {
             className={styles.body}
             initial={{ opacity: 0, y: 24 }}
             animate={textInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
+            transition={{ duration: 0.9, delay: 0.78, ease }}
           >
             My passion for backend engineering goes hand-in-hand with my love for
             cyber security. I build systems with security baked in from the ground
@@ -113,23 +82,14 @@ export default function AboutSection() {
             vulnerabilities, I believe great software is both <em className={styles.em}>blazing fast</em> and
             <em className={styles.em}> deeply secure</em>.
           </motion.p>
-
-          {/* Skill tags */}
-          <div className={styles.skillsRow}>
-            {SKILLS.map((s, i) => (
-              <SkillTag key={s} label={s} delay={0.95 + i * 0.05} />
-            ))}
-          </div>
-
         </div>
 
-        {/* ── RIGHT: Image column ── */}
         <motion.div
           ref={imageRef}
           className={styles.imageCol}
-          initial={{ opacity: 0, x: 40, scale: 0.98 }}
+          initial={{ opacity: 0, x: 48, scale: 0.94 }}
           animate={imageInView ? { opacity: 1, x: 0, scale: 1 } : {}}
-          transition={{ duration: 1.0, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+          transition={{ duration: 1.15, delay: 0.22, ease }}
         >
           <div className={styles.imageFrame}>
             <div className={styles.imageGlow} aria-hidden="true" />
@@ -140,15 +100,38 @@ export default function AboutSection() {
                 className={styles.portrait}
                 priority
               />
+              <span className={styles.portraitVeil} aria-hidden="true" />
             </div>
-            {/* Corner accents */}
-            <span className={styles.cornerTopLeft} aria-hidden="true" />
-            <span className={styles.cornerTopRight} aria-hidden="true" />
-            <span className={styles.cornerBottomLeft} aria-hidden="true" />
-            <span className={styles.cornerBottomRight} aria-hidden="true" />
+            <motion.span
+              className={styles.cornerTopLeft}
+              aria-hidden="true"
+              initial={{ opacity: 0, x: -8, y: -8 }}
+              animate={imageInView ? { opacity: 1, x: 0, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.7, ease }}
+            />
+            <motion.span
+              className={styles.cornerTopRight}
+              aria-hidden="true"
+              initial={{ opacity: 0, x: 8, y: -8 }}
+              animate={imageInView ? { opacity: 1, x: 0, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.78, ease }}
+            />
+            <motion.span
+              className={styles.cornerBottomLeft}
+              aria-hidden="true"
+              initial={{ opacity: 0, x: -8, y: 8 }}
+              animate={imageInView ? { opacity: 1, x: 0, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.86, ease }}
+            />
+            <motion.span
+              className={styles.cornerBottomRight}
+              aria-hidden="true"
+              initial={{ opacity: 0, x: 8, y: 8 }}
+              animate={imageInView ? { opacity: 1, x: 0, y: 0 } : {}}
+              transition={{ duration: 0.7, delay: 0.94, ease }}
+            />
           </div>
         </motion.div>
-
       </div>
     </section>
   );
