@@ -61,6 +61,7 @@
   text-transform: uppercase;
   line-height: var(--title-line-height);
   color: #ffffff;
+  font-size: 50px;
 }
 
 .headlineLine2 {

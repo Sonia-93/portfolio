@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk, Barlow_Condensed, Bebas_Neue, Playfair_Display } from "next/font/google";
+import { Inter, Space_Grotesk, Barlow_Condensed, Bebas_Neue, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
 import CustomCursor from "@/components/CustomCursor";
 import NavBar from "@/components/NavBar";
@@ -30,9 +30,9 @@ const bebasNeue = Bebas_Neue({
   display: "swap",
 });
 
-const playfairDisplay = Playfair_Display({
+const cormorantGaramond = Cormorant_Garamond({
   subsets: ["latin"],
-  variable: "--font-playfair",
+  variable: "--font-hero",
   weight: ["300", "400", "500", "600"],
   style: ["normal", "italic"],
   display: "swap",
@@ -50,7 +50,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${barlowCondensed.variable} ${bebasNeue.variable} ${playfairDisplay.variable}`}>
+    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${barlowCondensed.variable} ${bebasNeue.variable} ${cormorantGaramond.variable}`}>
       <body>
         <CustomCursor />
         <NavBar />

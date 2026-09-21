@@ -126,23 +126,7 @@ export default function AboutSection() {
             {textInView && !titleDone && <span className={styles.typingCursor} />}
           </h2>
 
-          <motion.div
-            className={styles.fullName}
-            initial={{ opacity: 0, y: 22 }}
-            animate={textInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.85, delay: 0.55, ease }}
-          >
-            SHIMIRWA TETA Sonia
-          </motion.div>
-
-          <motion.div
-            className={styles.roleLine}
-            initial={{ opacity: 0, y: 18 }}
-            animate={textInView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.85, delay: 0.68, ease }}
-          >
-            Backend Developer & Cyber Security Enthusiast
-          </motion.div>
+         
 
           <motion.div
             className={styles.textDivider}
