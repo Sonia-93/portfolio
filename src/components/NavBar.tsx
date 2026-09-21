@@ -25,23 +25,35 @@ export default function NavBar() {
       return;
     }
 
+    const SECTION_IDS = ["home", "about", "journey", "projects", "skills", "contact"];
+
     const onScroll = () => {
       const scrollY = window.scrollY;
-      const heroHeight = window.innerHeight;
-      const intersectionEnd = heroHeight * 4.5;
+      const vh = window.innerHeight;
+      const midpoint = scrollY + vh * 0.45;
 
-      if (scrollY < heroHeight * 0.6) {
-        setActiveSection("home");
-      } else if (scrollY < intersectionEnd) {
-        setActiveSection("about");
-      } else {
-        setActiveSection("about");
+      let current = "home";
+      for (const id of SECTION_IDS) {
+        const el = document.getElementById(id);
+        if (!el) continue;
+        const top = el.offsetTop;
+        if (midpoint >= top) {
+          if (id === "journey") current = "about"; // journey sits within about portion of nav for now
+          else current = id;
+        }
       }
+      setActiveSection(current);
+
+      void scrollY;
     };
 
     onScroll();
     window.addEventListener("scroll", onScroll, { passive: true });
-    return () => window.removeEventListener("scroll", onScroll);
+    window.addEventListener("resize", onScroll);
+    return () => {
+      window.removeEventListener("scroll", onScroll);
+      window.removeEventListener("resize", onScroll);
+    };
   }, [pathname]);
 
   return (
