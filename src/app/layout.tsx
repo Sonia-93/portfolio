@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk, Barlow_Condensed, Bebas_Neue } from "next/font/google";
+import { Inter, Space_Grotesk, Barlow_Condensed, Bebas_Neue, Playfair_Display } from "next/font/google";
 import "./globals.css";
 import CustomCursor from "@/components/CustomCursor";
 import NavBar from "@/components/NavBar";
@@ -30,6 +30,14 @@ const bebasNeue = Bebas_Neue({
   display: "swap",
 });
 
+const playfairDisplay = Playfair_Display({
+  subsets: ["latin"],
+  variable: "--font-playfair",
+  weight: ["300", "400", "500", "600"],
+  style: ["normal", "italic"],
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Sonia — Backend Developer",
   description:
@@ -42,7 +50,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${barlowCondensed.variable} ${bebasNeue.variable}`}>
+    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${barlowCondensed.variable} ${bebasNeue.variable} ${playfairDisplay.variable}`}>
       <body>
         <CustomCursor />
         <NavBar />

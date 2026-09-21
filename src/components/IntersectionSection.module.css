@@ -51,28 +51,20 @@
   margin: 0;
 }
 
-/* Line 1: Solid White, Bebas Neue Condensed Display Font */
-.headlineLine1 {
+.headlineLine1,
+.headlineLine2 {
   display: block;
-  font-family: var(--font-bebas), 'Barlow Condensed', sans-serif;
-  font-size: clamp(36px, 5.2vw, 68px);
-  font-weight: 400;
-  letter-spacing: -0.04em;
+  font-family: var(--title-font);
+  font-size: var(--title-size);
+  font-weight: var(--title-weight);
+  letter-spacing: var(--title-tracking);
   text-transform: uppercase;
-  line-height: 1.0;
+  line-height: var(--title-line-height);
   color: #ffffff;
 }
 
-/* Line 2: Grey, Bebas Neue Condensed Display Font */
 .headlineLine2 {
-  display: block;
-  font-family: var(--font-bebas), 'Barlow Condensed', sans-serif;
-  font-size: clamp(36px, 5.2vw, 68px);
-  font-weight: 400;
   letter-spacing: -0.01em;
-  text-transform: uppercase;
-  line-height: 1.0;
-  color: #ffffff;
 }
 
 /* ── Typing Cursor for Intersection Headline ── */

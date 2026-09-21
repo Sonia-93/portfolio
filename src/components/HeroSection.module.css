@@ -266,11 +266,12 @@
   display: block;
   font-size: clamp(52px, 8vw, 100px);
   font-weight: 300;
-  letter-spacing: 0.01em;
+  letter-spacing: -0.01em;
   text-transform: none;
   color: #ffffff;
   line-height: 1.05;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
+  font-style: italic;
   text-shadow:
     0 0 28px rgba(255, 255, 255, 1),
     0 0 58px rgba(255, 255, 255, 0.65),
@@ -281,12 +282,13 @@
 .headlineTextWhite {
   display: block;
   font-size: clamp(52px, 8vw, 100px);
-  font-weight: 300;
-  letter-spacing: 0.01em;
+  font-weight: 400;
+  letter-spacing: -0.005em;
   text-transform: none;
   color: #ffffff;
   line-height: 1.05;
-  font-family: Georgia, "Times New Roman", serif;
+  font-family: var(--font-playfair), 'Playfair Display', Georgia, serif;
+  font-style: normal;
   text-shadow:
     0 0 28px rgba(255, 255, 255, 1),
     0 0 58px rgba(255, 255, 255, 0.65),

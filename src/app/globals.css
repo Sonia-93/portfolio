@@ -14,6 +14,22 @@
   --text-muted: rgba(255, 255, 255, 0.55);
   --font-sans: 'Inter', sans-serif;
   --font-bebas: 'Bebas Neue', sans-serif;
+  --title-font: var(--font-bebas), 'Barlow Condensed', sans-serif;
+  --title-size: clamp(36px, 5.2vw, 68px);
+  --title-tracking: -0.04em;
+  --title-line-height: 1;
+  --title-weight: 400;
+}
+
+.sectionTitle {
+  font-family: var(--title-font);
+  font-size: var(--title-size);
+  font-weight: var(--title-weight);
+  letter-spacing: var(--title-tracking);
+  text-transform: uppercase;
+  line-height: var(--title-line-height);
+  color: #ffffff;
+  margin: 0;
 }
 
 html {

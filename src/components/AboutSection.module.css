@@ -2,7 +2,7 @@
 .about {
   position: relative;
   background: #000000;
-  padding: clamp(80px, 12vw, 160px) clamp(24px, 6vw, 100px);
+  padding: clamp(72px, 8vw, 110px) clamp(24px, 6vw, 100px) clamp(88px, 9vw, 120px);
   overflow: hidden;
   min-height: 100vh;
 }
@@ -21,62 +21,42 @@
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-}
-
-/* Torch halo behind the copy — same language as Get In Touch */
-.textTorch {
-  position: absolute;
-  top: -80px;
-  left: -120px;
-  width: min(720px, 120%);
-  height: 520px;
-  pointer-events: none;
-  z-index: 0;
-  background: radial-gradient(
-    ellipse 55% 50% at 32% 28%,
-    rgba(255, 255, 255, 0.22) 0%,
-    rgba(255, 255, 255, 0.1) 32%,
-    rgba(255, 255, 255, 0.03) 58%,
-    transparent 74%
-  );
-  filter: blur(8px);
+  z-index: 1;
 }
 
 .aboutTitle {
-  position: relative;
-  z-index: 1;
-  display: block;
-  font-family: var(--font-bebas), 'Barlow Condensed', sans-serif;
-  font-size: clamp(52px, 8vw, 110px);
-  font-weight: 400;
-  letter-spacing: -0.03em;
-  text-transform: uppercase;
-  line-height: 0.95;
-  color: #ffffff;
-  margin: 0 0 36px 0;
-  text-shadow:
-    0 0 24px rgba(255, 255, 255, 0.95),
-    0 0 56px rgba(255, 255, 255, 0.55),
-    0 0 110px rgba(255, 255, 255, 0.28);
+  font-size: clamp(52px, 7.4vw, 96px);
+  letter-spacing: -0.04em;
+  margin: 0 0 28px 0;
+  min-height: 1em;
+}
+
+.typingCursor {
+  display: inline-block;
+  width: clamp(3px, 0.4vw, 5px);
+  height: 0.82em;
+  background: #ffffff;
+  margin-left: 6px;
+  vertical-align: baseline;
+  border-radius: 2px;
+  animation: blinkCursor 0.75s ease-in-out infinite;
+}
+
+@keyframes blinkCursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 .fullName {
-  position: relative;
-  z-index: 1;
   font-family: var(--font-heading), 'Space Grotesk', sans-serif;
   font-size: clamp(20px, 1.8vw, 26px);
   font-weight: 600;
   letter-spacing: 0.01em;
   color: #ffffff;
   margin-bottom: 8px;
-  text-shadow:
-    0 0 18px rgba(255, 255, 255, 0.7),
-    0 0 40px rgba(255, 255, 255, 0.28);
 }
 
 .roleLine {
-  position: relative;
-  z-index: 1;
   font-family: var(--font-sans), 'Inter', sans-serif;
   font-size: clamp(13px, 1.1vw, 15px);
   font-weight: 500;
@@ -87,25 +67,17 @@
 }
 
 .textDivider {
-  position: relative;
-  z-index: 1;
   width: 60px;
   height: 1.5px;
   background: rgba(255, 255, 255, 0.55);
   transform-origin: left center;
   margin-bottom: 40px;
-  box-shadow:
-    0 0 12px rgba(255, 255, 255, 0.7),
-    0 0 28px rgba(255, 255, 255, 0.35);
 }
 
 .body {
-  position: relative;
-  z-index: 1;
   font-family: var(--font-sans), 'Inter', sans-serif;
   font-size: clamp(14px, 1.15vw, 16.5px);
   font-weight: 300;
-  letter-spacing: 0em;
   line-height: 1.85;
   color: rgba(255, 255, 255, 0.65);
   max-width: 560px;
@@ -115,13 +87,44 @@
 .strong {
   color: #ffffff;
   font-weight: 500;
-  text-shadow: 0 0 16px rgba(255, 255, 255, 0.35);
 }
 
 .em {
   color: rgba(255, 255, 255, 0.9);
   font-style: italic;
   font-weight: 400;
+}
+
+.skills {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  list-style: none;
+  margin: 18px 0 0;
+  padding: 0;
+  max-width: 560px;
+}
+
+.skill {
+  font-family: var(--font-sans), 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.72);
+  border: 1px solid rgba(255, 255, 255, 0.22);
+  border-radius: 999px;
+  padding: 8px 14px;
+  cursor: none;
+  background: rgba(255, 255, 255, 0.03);
+  transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+}
+
+.skill:hover {
+  color: #ffffff;
+  border-color: rgba(255, 255, 255, 0.7);
+  background: rgba(255, 255, 255, 0.08);
+  box-shadow: 0 0 18px rgba(255, 255, 255, 0.18);
 }
 
 .imageCol {
@@ -137,55 +140,16 @@
   width: 100%;
   max-width: 420px;
   aspect-ratio: 4 / 5;
-}
-
-.imageGlow {
-  position: absolute;
-  inset: -40px;
-  border-radius: 24px;
-  background: radial-gradient(
-    ellipse at center,
-    rgba(255, 255, 255, 0.12) 0%,
-    rgba(255, 255, 255, 0.04) 40%,
-    transparent 72%
-  );
-  filter: blur(20px);
-  z-index: 0;
-  pointer-events: none;
-  transition: background 0.7s ease, opacity 0.7s ease;
-}
-
-.imageFrame:hover .imageGlow {
-  background: radial-gradient(
-    ellipse at center,
-    rgba(255, 255, 255, 0.28) 0%,
-    rgba(255, 255, 255, 0.1) 38%,
-    transparent 72%
-  );
+  transform-style: preserve-3d;
 }
 
 .imageInner {
   position: relative;
   width: 100%;
   height: 100%;
-  border-radius: 20px;
   overflow: hidden;
   z-index: 2;
-  border: 1px solid rgba(255, 255, 255, 0.12);
   background: #000;
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.05),
-    0 25px 80px rgba(0, 0, 0, 0.6),
-    0 0 40px rgba(255, 255, 255, 0.06);
-  transition: box-shadow 0.7s ease, border-color 0.7s ease;
-}
-
-.imageFrame:hover .imageInner {
-  border-color: rgba(255, 255, 255, 0.28);
-  box-shadow:
-    0 0 0 1px rgba(255, 255, 255, 0.1),
-    0 25px 80px rgba(0, 0, 0, 0.55),
-    0 0 50px rgba(255, 255, 255, 0.16);
 }
 
 .portrait {
@@ -194,26 +158,24 @@
   object-fit: cover;
   object-position: center top;
   display: block;
-  filter: grayscale(1) brightness(0.38) contrast(1.15);
-  transform: scale(1.02);
-  transition: filter 0.75s ease, transform 0.75s ease;
 }
 
-.portraitVeil {
+.portraitBw {
+  filter: grayscale(1) contrast(1.35) brightness(0.92);
+}
+
+.colorReveal {
   position: absolute;
   inset: 0;
-  background: rgba(0, 0, 0, 0.45);
   pointer-events: none;
-  transition: opacity 0.75s ease;
 }
 
-.imageFrame:hover .portrait {
-  filter: grayscale(0) brightness(1.02) contrast(1.05);
-  transform: scale(1.06);
+.portraitColor {
+  filter: none;
 }
 
-.imageFrame:hover .portraitVeil {
-  opacity: 0;
+.imageFrame:hover .portraitBw {
+  filter: grayscale(1) contrast(1.2) brightness(0.7);
 }
 
 .cornerTopLeft,
@@ -223,17 +185,17 @@
   position: absolute;
   width: 28px;
   height: 28px;
-  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  border: 1.5px solid rgba(255, 255, 255, 0.55);
   z-index: 3;
   pointer-events: none;
-  transition: border-color 0.5s ease;
+  transition: border-color 0.4s ease;
 }
 
 .imageFrame:hover .cornerTopLeft,
 .imageFrame:hover .cornerTopRight,
 .imageFrame:hover .cornerBottomLeft,
 .imageFrame:hover .cornerBottomRight {
-  border-color: rgba(255, 255, 255, 0.85);
+  border-color: rgba(255, 255, 255, 0.95);
 }
 
 .cornerTopLeft {
@@ -241,7 +203,6 @@
   left: -10px;
   border-right: none;
   border-bottom: none;
-  border-top-left-radius: 4px;
 }
 
 .cornerTopRight {
@@ -249,7 +210,6 @@
   right: -10px;
   border-left: none;
   border-bottom: none;
-  border-top-right-radius: 4px;
 }
 
 .cornerBottomLeft {
@@ -257,7 +217,6 @@
   left: -10px;
   border-right: none;
   border-top: none;
-  border-bottom-left-radius: 4px;
 }
 
 .cornerBottomRight {
@@ -265,7 +224,6 @@
   right: -10px;
   border-left: none;
   border-top: none;
-  border-bottom-right-radius: 4px;
 }
 
 @media (max-width: 880px) {
@@ -283,19 +241,15 @@
   .imageFrame {
     max-width: 340px;
   }
-
-  .textTorch {
-    left: -60px;
-    width: 140%;
-  }
 }
 
 @media (hover: none) {
-  .portrait {
-    filter: grayscale(0.35) brightness(0.85) contrast(1.05);
+  .portraitBw {
+    filter: grayscale(0.2) contrast(1.05) brightness(1);
   }
 
-  .portraitVeil {
-    opacity: 0.18;
+  .colorReveal {
+    -webkit-mask-image: none !important;
+    mask-image: none !important;
   }
 }
