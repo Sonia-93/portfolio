@@ -3,176 +3,130 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
 import { ExternalLink, Code2, X } from "lucide-react";
+import Image from "next/image";
 import styles from "./ProjectsSection.module.css";
 
-type TermLineKind = "prompt" | "comment" | "ok" | "warn" | "err" | "text";
-type TermLine = { kind: TermLineKind; text: string };
+import wastenet1 from "@/app/wastenet1.png";
+import wastenet2 from "@/app/wastenet2.png";
+import staffnet1 from "@/app/staffnet1.png";
+import staffnet2 from "@/app/staffnet2.png";
 
 type Project = {
   id: string;
   index: string;
+  category: string;
   title: string;
   tags: string[];
   short: string;
-  terminalTitle: string;
-  terminalLines: TermLine[];
+  photos: { src: string; alt: string; width?: number; height?: number; staticImport?: any }[];
   writeup: string[];
-  liveUrl?: string;
   githubUrl?: string;
+  liveUrl?: string;
 };
 
+/* ── 7 projects: first 2 real (Wastenet + Staffnet), remaining 5 placeholders you fill in! ── */
 const PROJECTS: Project[] = [
   {
-    id: "p1",
+    id: "wastenet",
     index: "01",
-    title: "Commerce Core — E-commerce REST API",
-    tags: ["Node.js", "Express", "PostgreSQL", "JWT", "Stripe"],
+    category: "AI · Smart Waste Platform",
+    title: "WasteNet",
+    tags: ["Next.js", "TypeScript", "Python", "AI Classification", "PostgreSQL", "Real-time Dashboard"],
     short:
-      "Full-featured shop backend: cart, checkout, Stripe webhook fulfillment, admin role access, and paginated catalog search with Redis cache.",
-    terminalTitle: "~/commerce-core",
-    terminalLines: [
-      { kind: "comment", text: "# Boot the platform locally" },
-      { kind: "prompt",  text: "$ pnpm install && pnpm dev" },
-      { kind: "text",    text: "✔ Postgres connected   (pool=10)" },
-      { kind: "text",    text: "✔ Redis cache warmed    (30 keys)" },
-      { kind: "ok",      text: "➜ Listening on :3000" },
+      "An AI-powered waste management system that classifies waste into plastic, paper, biodegradable, non-biodegradable, metals, and more using smart bins. A real-time dashboard tracks waste levels, collection status, and environmental impact across locations.",
+    photos: [
+      { src: "", alt: "WasteNet — smart bin classification dashboard", staticImport: wastenet1 },
+      { src: "", alt: "WasteNet — collection map & impact stats", staticImport: wastenet2 },
     ],
     writeup: [
-      "Commerce Core is a REST-first store backend handling auth, products, carts, orders and Stripe-hosted checkouts.",
-      "Challenges included guaranteeing webhook idempotency (each Stripe event keyed in Postgres so retries never double-charge), and keeping the catalog sub-50ms with a Redis TTL layer.",
-      "Shipped with a CI/CD pipeline running migrations on Heroku review apps.",
+      "WasteNet combines on-device AI with a cloud backend to turn ordinary bins into smart, connected units.",
+      "Each smart bin runs a lightweight image classifier that identifies waste as it's dropped in — sorted into plastic, paper, biodegradable, non-biodegradable, metals, and other common categories.",
+      "The real-time dashboard aggregates fill levels, collection status, and environmental-impact metrics across every location, giving municipalities and operations teams a single pane to plan routes, prioritize pickups, and measure sustainability progress week-over-week.",
     ],
     githubUrl: "#",
     liveUrl: "#",
   },
   {
-    id: "p2",
+    id: "staffnet",
     index: "02",
-    title: "Socket Room — Real-time Chat Engine",
-    tags: ["WebSocket", "Redis Pub/Sub", "Node.js", "Rate Limiting"],
+    category: "RCA · Staff Operations Portal",
+    title: "StaffNet",
+    tags: ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "Role Dashboards"],
     short:
-      "Horizontally-scalable chat: presence, typing indicators, DMs, rooms, and sliding-window rate limits backed by sorted sets.",
-    terminalTitle: "~/socket-room",
-    terminalLines: [
-      { kind: "prompt",  text: "$ pm2 start server.js -i 4" },
-      { kind: "text",    text: "[PM2] App launched · 4 instances" },
-      { kind: "text",    text: "➜ redis.pubsub → 'chat:events' online" },
-      { kind: "ok",      text: "✔ 182 peers connected · 0 dropped msgs" },
+      "A digital operations system designed for RCA staff to ditch the paperwork. Manages student tickets, borrowed phones, and student funds all in one place — streamlining daily administrative tasks with a clean, intuitive interface that saves time and reduces errors.",
+    photos: [
+      { src: "", alt: "StaffNet — tickets + funds overview dashboard", staticImport: staffnet1 },
+      { src: "", alt: "StaffNet — student device borrow tracking", staticImport: staffnet2 },
     ],
     writeup: [
-      "A WebSocket chat server scaled across 4 processes using Redis Pub/Sub as the fan-out bus — any node can broadcast to any room.",
-      "The tricky part was rate limiting per-user across the cluster. Solved with a ZADD-based sliding window that survives process crashes.",
-      "Also supports ephemeral typing indicators — broadcast on keystroke, TTL-expire after 4s of silence.",
-    ],
-    githubUrl: "#",
-  },
-  {
-    id: "p3",
-    index: "03",
-    title: "ProbeKit — CTF Vulnerability Scanner",
-    tags: ["Python", "Nmap", "Requests", "PoC Scripts"],
-    short:
-      "Educational offensive toolkit for Capture The Flag events: port/version scans, common HTTP misconfigs, and reusable PoC modules.",
-    terminalTitle: "~/probekt · venv",
-    terminalLines: [
-      { kind: "comment", text: "# Run a recon sweep on a CTF target" },
-      { kind: "prompt",  text: "$ python -m probe scan ctf.local" },
-      { kind: "warn",    text: "  ! 22/tcp  SSH   OpenSSH 7.4  (user enum!)" },
-      { kind: "warn",    text: "  ! 80/tcp  HTTP  Apache/2.4   (TRACE on)" },
-      { kind: "ok",      text: "✔ 3 exploit modules loaded · run 'probe use #3'" },
-    ],
-    writeup: [
-      "ProbeKit is my CTF-workflow-in-a-box — a Python CLI to reduce the first 20 minutes of recon to one command.",
-      "It wraps Nmap XML output, then fires modules for common finds (TRACE-enabled, robots.txt /sitemap.xml leaks, .git/config disclosures).",
-      "Written for learning, use only in labs and authorized CTFs.",
-    ],
-    githubUrl: "#",
-  },
-  {
-    id: "p4",
-    index: "04",
-    title: "Minishort — Analytics Shortener API",
-    tags: ["FastAPI", "Docker", "SQLAlchemy", "Redis RL"],
-    short:
-      "Clean URL shortener with per-alias analytics (referer, UA, country), token bucket rate limits, and one-command Docker Compose deploy.",
-    terminalTitle: "~/minishort",
-    terminalLines: [
-      { kind: "prompt",  text: "$ docker compose up -d --build" },
-      { kind: "text",    text: "  ✔ postgres  healthy" },
-      { kind: "text",    text: "  ✔ redis     healthy" },
-      { kind: "text",    text: "  ✔ api       :8000 → uvicorn running" },
-      { kind: "ok",      text: "➜ docs: http://localhost:8000/docs" },
-    ],
-    writeup: [
-      "A URL shortener with a focus on observability — every resolve stores a light analytics row so dashboard can show click trends.",
-      "Rate limit per-IP with a 40-token bucket over 60s so bulk-abuse stops at the API gateway, not the DB.",
-      "Whole stack ships in one docker-compose up command for easy portability.",
+      "StaffNet was built specifically for Rwanda Coding Academy staff, replacing paper-based workflows that were slow, error-prone, and hard to search.",
+      "The platform centralizes three of the most common admin jobs: student helpdesk tickets (tracked from open to resolved with comments), the student phone borrow-log (who took which device, due-back date, and overdues), and the student-funds ledger for petty cash and allowance disbursements.",
+      "Every module has role-based dashboards for admins, matrons, and finance staff, so each person sees only their queue while a full audit trail keeps every change accountable.",
     ],
     githubUrl: "#",
     liveUrl: "#",
   },
   {
-    id: "p5",
+    id: "project3",
+    index: "03",
+    category: "Real-time",
+    title: "Project #3 (Coming soon)",
+    tags: ["WebSocket", "Redis", "Node.js"],
+    short:
+      "Put your third project name here — real-time chat, collaboration tool, live dashboard, anything with WebSockets / events.",
+    photos: [],
+    writeup: [
+      "Replace this paragraph with a 3-sentence writeup about the project.",
+      "What problem did it solve? What was the tricky technical part? What numbers did you move?",
+      "Then drop photo1.png and photo2.png in src/app/ and add them to the `photos` array above.",
+    ],
+  },
+  {
+    id: "project4",
+    index: "04",
+    category: "Data / APIs",
+    title: "Project #4 (Coming soon)",
+    tags: ["FastAPI", "Python", "Docker"],
+    short:
+      "Put your fourth project name here — scraping, data pipeline, internal tool, analytics API.",
+    photos: [],
+    writeup: [
+      "Add the real writeup here.",
+      "Use this to showcase: complex business rules, integrations, performance wins.",
+    ],
+  },
+  {
+    id: "project5",
     index: "05",
-    title: "EventBus — Order Microservice",
-    tags: ["Kafka", "Node.js", "Avro", "Docker Compose"],
+    category: "Infrastructure / DevOps",
+    title: "Project #5 (Coming soon)",
+    tags: ["Docker", "GitHub Actions", "Kafka"],
     short:
-      "Event-driven order flow: orders.created → payments.processed → shipments.dispatched, dead-letter queue + consumer offsets monitored.",
-    terminalTitle: "~/event-bus",
-    terminalLines: [
-      { kind: "prompt",  text: "$ kafka-console-consumer --topic orders.v1 --from-beginning | head -5" },
-      { kind: "text",    text: "  { order_id: 1093,  status: 'CREATED',  ts: … }" },
-      { kind: "text",    text: "  { order_id: 1093,  status: 'PAID',     ts: … }" },
-      { kind: "ok",      text: "✔ shipments-consumer lags: 0   (healthy)" },
-    ],
-    writeup: [
-      "A 3-service order pipeline with Kafka as the backbone. Each service is responsible for exactly one event transformation.",
-      "Idempotency keys in every consumer so replay-from-zero is safe when fixing bugs.",
-      "Avro schemas in a registry to guarantee no accidental cross-service message breaks.",
-    ],
-    githubUrl: "#",
+      "Put your fifth project here — event-driven microservices, CI/CD pipelines, anything infra/DevOps.",
+    photos: [],
+    writeup: ["TBD — replace this with the real story."],
   },
   {
-    id: "p6",
+    id: "project6",
     index: "06",
-    title: "VaultKit — Password Manager API",
-    tags: ["Argon2", "AES-GCM", "Audit Log", "Go"],
+    category: "Cybersecurity",
+    title: "Project #6 (Coming soon)",
+    tags: ["CTF", "Python", "Security"],
     short:
-      "Secrets vault with memory-hard Argon2id master hashing, AES-GCM per-secret encryption, and tamper-evident audit log.",
-    terminalTitle: "~/vaultkit · vault",
-    terminalLines: [
-      { kind: "prompt",  text: "$ vault login sonia@dev" },
-      { kind: "text",    text: "  master password ********  (Argon2id m=64M, t=3)" },
-      { kind: "ok",      text: "✔ unlocked · 42 vault entries loaded" },
-      { kind: "prompt",  text: "$ vault get 'stripe/prod'" },
-      { kind: "ok",      text: "decrypted → sk_live_********************" },
-    ],
-    writeup: [
-      "Backend for a personal password manager — no password is ever stored in reversible form.",
-      "Master key is derived via Argon2id (64MB memory cost), each secret is AES-GCM encrypted with its own data key.",
-      "Every auth+read is appended to a sequentially-linked audit log, you can detect tampering with a simple chain hash.",
-    ],
-    githubUrl: "#",
+      "Put your sixth project here — CTF tooling, a scanner you wrote, password manager API, crypto experiments.",
+    photos: [],
+    writeup: ["TBD — replace this with the real story."],
   },
   {
-    id: "p7",
+    id: "project7",
     index: "07",
-    title: "CRM-API — Velora Team Project",
-    tags: ["NestJS", "Prisma", "PostgreSQL", "Jest", "CI/CD"],
+    category: "Velora Internship",
+    title: "Project #7 (Coming soon)",
+    tags: ["NestJS", "Prisma", "Jest"],
     short:
-      "Internal customer-relationship backend built with the Velora team: role tiers, CSV import pipelines, test coverage gated by CI.",
-    terminalTitle: "~/velora-crm",
-    terminalLines: [
-      { kind: "prompt",  text: "$ git push origin feature/customer-dupes" },
-      { kind: "text",    text: "  running 3 jobs · lint · unit · migrate" },
-      { kind: "text",    text: "  jest  PASS  41/41   coverage: 84%" },
-      { kind: "ok",      text: "✔ merge request ready → assigned for review" },
-    ],
-    writeup: [
-      "Production CRM backend built alongside the backend engineering group at Velora during my internship.",
-      "Shipped the deduplication pipeline that runs across 100k+ rows before any CSV import commits — prevented thousands of bad writes.",
-      "Introduced Jest coverage gating to CI so we never regressed on the service layer tests.",
-    ],
+      "Put your Velora internship project here — the CRM API deduplication work you mentioned or another team project.",
+    photos: [],
+    writeup: ["TBD — replace this with the real story."],
   },
 ];
 
@@ -224,130 +178,178 @@ function useTypingEffect(
   return { displayed, done };
 }
 
-/** ── Terminal content renderer ─────────────────────────────────── */
-function Terminal({
-  title,
-  lines,
-  visible,
+/** ── Two-photo auto-rotating image stage (ken burns effect) ── */
+function PhotoStage({
+  photos,
+  paused,
 }: {
-  title: string;
-  lines: TermLine[];
-  visible: boolean;
+  photos: Project["photos"];
+  paused?: boolean;
 }) {
-  const flat = lines.map((l) => l.text).join("\n");
-  const { displayed, done } = useTypingEffect(flat, 120, 10, 20, visible);
-  const shownLines = displayed.split("\n");
-  const visibleLines = lines.slice(0, shownLines.length);
+  const [active, setActive] = useState(0);
+
+  useEffect(() => {
+    if (paused || photos.length <= 1) return;
+    const id = setInterval(() => {
+      setActive((i) => (i + 1) % photos.length);
+    }, 6000); // <── change this number (in ms) for slower/faster swap: 6000 = 6s
+    return () => clearInterval(id);
+  }, [paused, photos.length]);
+
+  if (photos.length === 0) {
+    return (
+      <div
+        className={styles.imageStage}
+        style={{
+          display: "flex",
+          alignItems: "center",
+          justifyContent: "center",
+          fontFamily: "var(--font-mono), monospace",
+          fontSize: 12,
+          color: "rgba(255,255,255,0.45)",
+          letterSpacing: "0.04em",
+          background:
+            "repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0 14px, rgba(255,255,255,0.045) 14px 28px)",
+        }}
+      >
+        drop 2 photos here later · photo1.png + photo2.png
+      </div>
+    );
+  }
 
   return (
-    <div className={styles.terminal}>
-      <div className={styles.terminalBar}>
-        <span className={`${styles.termDot} ${styles.red}`} />
-        <span className={`${styles.termDot} ${styles.yellow}`} />
-        <span className={`${styles.termDot} ${styles.green}`} />
-        <span className={styles.termTitle}>{title}</span>
-      </div>
-      <div className={styles.termBody}>
-        {visibleLines.map((line, i) => {
-          let cls = "";
-          if (line.kind === "prompt")  cls = styles.prompt;
-          if (line.kind === "comment") cls = styles.comment;
-          if (line.kind === "ok")      cls = styles.ok;
-          if (line.kind === "warn")    cls = styles.warn;
-          if (line.kind === "err")     cls = styles.err;
-          const isLast = i === visibleLines.length - 1;
-          const append = isLast && !done ? (
-            <>
-              {shownLines[i]}
-              <span className={styles.cursor} />
-            </>
-          ) : (
-            shownLines[i] ?? ""
-          );
-          return (
-            <span key={i} className={styles.termLine}>
-              <span className={cls}>{append}</span>
-            </span>
-          );
-        })}
-      </div>
+    <div className={styles.imageStage}>
+      {photos.map((p, i) => {
+        const isActive = i === active;
+        return (
+          <Image
+            key={i}
+            src={p.staticImport ?? p.src}
+            alt={p.alt}
+            fill
+            sizes="(max-width: 960px) 100vw, 960px"
+            className={`${styles.projectImage} ${isActive ? styles.imgActive : styles.imgIdle}`}
+            priority={i === 0}
+            quality={100}
+          />
+        );
+      })}
+
+      {photos.length > 0 && (
+        <div className={styles.imagePill}>
+          <span className={styles.pillDot} />
+          <span>
+            {active + 1} / {photos.length}
+          </span>
+        </div>
+      )}
     </div>
   );
 }
 
-/** ── Card component ───────────────────────────────────────────── */
-function Card({
+/** ── Alternating project row ── */
+function ProjectRow({
   project,
+  index,
   onOpen,
-  visible,
-  stagger,
+  listVisible,
 }: {
   project: Project;
+  index: number;
   onOpen: (p: Project) => void;
-  visible: boolean;
-  stagger: number;
+  listVisible: boolean;
 }) {
   const ref = useRef<HTMLDivElement>(null);
-  const cardInView = useInView(ref, { once: true, margin: "0px 0px -15% 0px" });
-  const revealWhen = visible && cardInView;
-
-  const handleMouse = (e: React.MouseEvent<HTMLDivElement>) => {
-    const el = ref.current;
-    if (!el) return;
-    const r = el.getBoundingClientRect();
-    const x = ((e.clientX - r.left) / r.width) * 100;
-    const y = ((e.clientY - r.top) / r.height) * 100;
-    el.style.setProperty("--mx", `${x}%`);
-    el.style.setProperty("--my", `${y}%`);
-  };
+  const cardInView = useInView(ref, { once: true, margin: "0px 0px -18% 0px" });
+  const reveal = listVisible && cardInView;
+  const flipped = index % 2 === 1; // second row flipped, fourth row flipped, etc
 
   return (
     <motion.div
       ref={ref}
-      className={styles.card}
-      onMouseMove={handleMouse}
-      onClick={() => onOpen(project)}
-      initial={{ opacity: 0, y: 40 }}
+      className={`${styles.row} ${flipped ? styles.rowFlip : ""}`}
+      initial={{ opacity: 0, y: 50 }}
       whileInView={{ opacity: 1, y: 0 }}
       viewport={{ once: true, margin: "-10% 0px" }}
       transition={{
-        duration: 0.85,
-        delay: stagger * 0.08,
+        duration: 0.9,
+        delay: reveal ? 0.08 * index : 0,
         ease: [0.22, 1, 0.36, 1],
       }}
     >
-      <span className={styles.index}>{project.index}</span>
-
-      <div className={styles.headline}>
-        <h3 className={styles.title}>{project.title}</h3>
+      <div className={styles.indexBadge} aria-hidden="true">
+        {project.index}
       </div>
 
-      <div className={styles.tags}>
-        {project.tags.map((t, i) => (
-          <motion.span
-            key={t}
-            className={styles.tag}
-            initial={{ opacity: 0, y: 6 }}
-            animate={revealWhen ? { opacity: 1, y: 0 } : {}}
-            transition={{ delay: 0.1 + i * 0.05, duration: 0.45 }}
-          >
-            {t}
-          </motion.span>
-        ))}
+      <div className={styles.frameWrap}>
+        <div className={styles.frame}>
+          <PhotoStage photos={project.photos} />
+        </div>
       </div>
 
-      <p className={styles.description}>{project.short}</p>
+      <div className={styles.content}>
+        <motion.span
+          className={styles.category}
+          initial={{ opacity: 0, y: 10 }}
+          animate={reveal ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.6, delay: 0.05 }}
+        >
+          {project.category}
+        </motion.span>
 
-      <Terminal
-        title={project.terminalTitle}
-        lines={project.terminalLines}
-        visible={revealWhen}
-      />
+        <motion.h3
+          className={styles.projectTitle}
+          initial={{ opacity: 0, y: 12 }}
+          animate={reveal ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.7, delay: 0.12 }}
+        >
+          {project.title}
+        </motion.h3>
+
+        <motion.p
+          className={styles.description}
+          initial={{ opacity: 0, y: 16 }}
+          animate={reveal ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.8, delay: 0.22 }}
+        >
+          {project.short}
+        </motion.p>
+
+        <div className={styles.tags}>
+          {project.tags.map((t, i) => (
+            <motion.span
+              key={t}
+              className={styles.tag}
+              initial={{ opacity: 0, y: 6 }}
+              animate={reveal ? { opacity: 1, y: 0 } : {}}
+              transition={{ delay: 0.32 + i * 0.05, duration: 0.5 }}
+            >
+              {t}
+            </motion.span>
+          ))}
+        </div>
+
+        <div className={styles.actions}>
+          <button type="button" className={styles.btn} onClick={() => onOpen(project)}>
+            <Code2 size={15} /> About project
+          </button>
+          {project.liveUrl && (
+            <a
+              href={project.liveUrl}
+              target="_blank"
+              rel="noreferrer noopener"
+              className={`${styles.btn} ${styles.btnPrimary}`}
+            >
+              <ExternalLink size={15} /> Live demo
+            </a>
+          )}
+        </div>
+      </div>
     </motion.div>
   );
 }
 
-/** ── Main section ──────────────────────────────────────────────── */
+/** ── Main Projects Section ── */
 export default function ProjectsSection() {
   const wrapRef = useRef<HTMLDivElement>(null);
   const sectionInView = useInView(wrapRef, {
@@ -364,7 +366,6 @@ export default function ProjectsSection() {
   );
 
   const listVisible = titleDone;
-
   const [selected, setSelected] = useState<Project | null>(null);
 
   return (
@@ -406,12 +407,12 @@ export default function ProjectsSection() {
 
       <div className={styles.list}>
         {PROJECTS.map((p, i) => (
-          <Card
+          <ProjectRow
             key={p.id}
             project={p}
+            index={i}
             onOpen={setSelected}
-            visible={listVisible}
-            stagger={i}
+            listVisible={listVisible}
           />
         ))}
       </div>
@@ -444,7 +445,9 @@ export default function ProjectsSection() {
                 <X size={16} />
               </button>
 
-              <div className={styles.modalSubtitle}>Project {selected.index}</div>
+              <div className={styles.modalSubtitle}>
+                {selected.index} · {selected.category}
+              </div>
               <h3 className={styles.modalTitle}>{selected.title}</h3>
 
               <div className={styles.modalTags}>
@@ -453,9 +456,8 @@ export default function ProjectsSection() {
                 ))}
               </div>
 
-              {/* Photo slot for real screenshot later — replace with <Image src="..." /> */}
-              <div className={styles.modalMedia}>
-                screenshot placeholder · drop an image here later
+              <div className={styles.modalStage}>
+                <PhotoStage photos={selected.photos} />
               </div>
 
               {selected.writeup.map((p, i) => (
@@ -464,12 +466,12 @@ export default function ProjectsSection() {
 
               <div className={styles.modalLinks}>
                 {selected.githubUrl && (
-                  <a className={styles.modalLink} href={selected.githubUrl} target="_blank" rel="noreferrer noopener">
+                  <a className={styles.btn} href={selected.githubUrl} target="_blank" rel="noreferrer noopener">
                     <Code2 size={15} /> Source code
                   </a>
                 )}
                 {selected.liveUrl && (
-                  <a className={`${styles.modalLink} ${styles.modalLinkPrimary}`} href={selected.liveUrl} target="_blank" rel="noreferrer noopener">
+                  <a className={`${styles.btn} ${styles.btnPrimary}`} href={selected.liveUrl} target="_blank" rel="noreferrer noopener">
                     <ExternalLink size={15} /> Live demo
                   </a>
                 )}
