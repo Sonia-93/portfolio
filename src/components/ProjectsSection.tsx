@@ -2,7 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView, AnimatePresence } from "framer-motion";
-import { ExternalLink, Code2, X } from "lucide-react";
+import { ExternalLink, Code2, X, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import styles from "./ProjectsSection.module.css";
 
@@ -10,6 +10,10 @@ import wastenet1 from "@/app/wastenet1.png";
 import wastenet2 from "@/app/wastenet2.png";
 import staffnet1 from "@/app/staffnet1.png";
 import staffnet2 from "@/app/staffnet2.png";
+import umuco1 from "@/app/umuco1.png";
+import umuco2 from "@/app/umuco2.png";
+import code1 from "@/app/code1.png";
+import code2 from "@/app/code2.png";
 
 type Project = {
   id: string;
@@ -24,7 +28,7 @@ type Project = {
   liveUrl?: string;
 };
 
-/* ── 7 projects: first 2 real (Wastenet + Staffnet), remaining 5 placeholders you fill in! ── */
+/* ── 4 featured projects: WasteNet, StaffNet, UmucoCore, CodeBridge ── */
 const PROJECTS: Project[] = [
   {
     id: "wastenet",
@@ -67,66 +71,44 @@ const PROJECTS: Project[] = [
     liveUrl: "#",
   },
   {
-    id: "project3",
+    id: "umucocore",
     index: "03",
-    category: "Real-time",
-    title: "Project #3 (Coming soon)",
-    tags: ["WebSocket", "Redis", "Node.js"],
+    category: "Culture · Heritage Platform",
+    title: "UmucoCore",
+    tags: ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "Media Library"],
     short:
-      "Put your third project name here — real-time chat, collaboration tool, live dashboard, anything with WebSockets / events.",
-    photos: [],
-    writeup: [
-      "Replace this paragraph with a 3-sentence writeup about the project.",
-      "What problem did it solve? What was the tricky technical part? What numbers did you move?",
-      "Then drop photo1.png and photo2.png in src/app/ and add them to the `photos` array above.",
+      "A cultural heritage platform that preserves, documents, and shares Rwandan traditions, oral histories, music, and indigenous knowledge — making it accessible for future generations through an immersive digital archive.",
+    photos: [
+      { src: "", alt: "UmucoCore — cultural collections & archive homepage", staticImport: umuco1 },
+      { src: "", alt: "UmucoCore — oral history player & story detail", staticImport: umuco2 },
     ],
+    writeup: [
+      "UmucoCore is a living digital archive dedicated to preserving and celebrating Rwandan cultural heritage.",
+      "The platform features oral histories, traditional music, dance documentation, indigenous crafts, and community-curated stories organized into browsable collections.",
+      "Built with role-based contribution workflows, elders and cultural custodians can submit content directly while moderators ensure quality and authenticity.",
+    ],
+    githubUrl: "#",
+    liveUrl: "#",
   },
   {
-    id: "project4",
+    id: "codebridge",
     index: "04",
-    category: "Data / APIs",
-    title: "Project #4 (Coming soon)",
-    tags: ["FastAPI", "Python", "Docker"],
+    category: "EdTech · Coding Community",
+    title: "CodeBridge",
+    tags: ["Next.js", "TypeScript", "Node.js", "PostgreSQL", "Learning Platform"],
     short:
-      "Put your fourth project name here — scraping, data pipeline, internal tool, analytics API.",
-    photos: [],
-    writeup: [
-      "Add the real writeup here.",
-      "Use this to showcase: complex business rules, integrations, performance wins.",
+      "A community-driven coding education platform that bridges the gap between beginners and mentors — featuring interactive tutorials, peer code reviews, project-based tracks, and live study rooms.",
+    photos: [
+      { src: "", alt: "CodeBridge — learning tracks & dashboard overview", staticImport: code1 },
+      { src: "", alt: "CodeBridge — interactive coding challenge editor", staticImport: code2 },
     ],
-  },
-  {
-    id: "project5",
-    index: "05",
-    category: "Infrastructure / DevOps",
-    title: "Project #5 (Coming soon)",
-    tags: ["Docker", "GitHub Actions", "Kafka"],
-    short:
-      "Put your fifth project here — event-driven microservices, CI/CD pipelines, anything infra/DevOps.",
-    photos: [],
-    writeup: ["TBD — replace this with the real story."],
-  },
-  {
-    id: "project6",
-    index: "06",
-    category: "Cybersecurity",
-    title: "Project #6 (Coming soon)",
-    tags: ["CTF", "Python", "Security"],
-    short:
-      "Put your sixth project here — CTF tooling, a scanner you wrote, password manager API, crypto experiments.",
-    photos: [],
-    writeup: ["TBD — replace this with the real story."],
-  },
-  {
-    id: "project7",
-    index: "07",
-    category: "Velora Internship",
-    title: "Project #7 (Coming soon)",
-    tags: ["NestJS", "Prisma", "Jest"],
-    short:
-      "Put your Velora internship project here — the CRM API deduplication work you mentioned or another team project.",
-    photos: [],
-    writeup: ["TBD — replace this with the real story."],
+    writeup: [
+      "CodeBridge connects aspiring developers with experienced mentors through structured learning paths and community support.",
+      "The platform includes interactive coding challenges, project submission workflows with peer review, live study rooms, and a progress dashboard that tracks skill mastery across tracks like frontend, backend, and DevOps.",
+      "Built for Rwanda's growing tech ecosystem, CodeBridge prioritizes offline-friendly content and Kinyarwanda language support to reach learners everywhere.",
+    ],
+    githubUrl: "#",
+    liveUrl: "#",
   },
 ];
 
@@ -416,6 +398,19 @@ export default function ProjectsSection() {
           />
         ))}
       </div>
+
+      <motion.div
+        className={styles.viewAllWrap}
+        initial={{ opacity: 0, y: 20 }}
+        whileInView={{ opacity: 1, y: 0 }}
+        viewport={{ once: true, margin: "-10% 0px" }}
+        transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
+      >
+        <a href="#" className={styles.viewAllBtn}>
+          View all projects
+          <ArrowRight size={16} />
+        </a>
+      </motion.div>
 
       <AnimatePresence>
         {selected && (
