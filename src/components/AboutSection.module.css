@@ -2,11 +2,12 @@
 .about {
   position: relative;
   background: #000000;
-  padding: clamp(72px, 8vw, 110px) clamp(24px, 6vw, 100px) clamp(88px, 9vw, 120px);
+  padding: clamp(80px, 12vw, 160px) clamp(24px, 6vw, 100px);
   overflow: hidden;
   min-height: 100vh;
 }
 
+/* ── Two column layout: Text LEFT | Image RIGHT ── */
 .twoCol {
   display: grid;
   grid-template-columns: 1.1fr 0.9fr;
@@ -16,38 +17,30 @@
   margin: 0 auto;
 }
 
+/* ── LEFT: Text column ── */
 .textCol {
-  position: relative;
   display: flex;
   flex-direction: column;
   align-items: flex-start;
-  z-index: 1;
 }
 
+/* "ABOUT ME" — NOW MATCHES "I BUILD SYSTEMS" exactly (same variables) */
 .aboutTitle {
-  font-size: clamp(52px, 7.4vw, 96px);
-  letter-spacing: -0.04em;
-  margin: 0 0 28px 0;
-  min-height: 1em;
-  font-size: 50px;
+  font-family: var(--title-font);
+  font-size: var(--title-size);
+  font-weight: var(--title-weight);
+  letter-spacing: var(--title-tracking);
+  text-transform: uppercase;
+  line-height: var(--title-line-height, 1);
+  color: #ffffff;
+  margin: 0 0 36px 0;
+  text-shadow:
+    0 0 18px rgba(255, 255, 255, 0.35),
+    0 0 40px rgba(255, 255, 255, 0.15);
+    font-size: 50px;
 }
 
-.typingCursor {
-  display: inline-block;
-  width: clamp(3px, 0.4vw, 5px);
-  height: 0.82em;
-  background: #ffffff;
-  margin-left: 6px;
-  vertical-align: baseline;
-  border-radius: 2px;
-  animation: blinkCursor 0.75s ease-in-out infinite;
-}
-
-@keyframes blinkCursor {
-  0%, 100% { opacity: 1; }
-  50% { opacity: 0; }
-}
-
+/* Full name — large, crisp white */
 .fullName {
   font-family: var(--font-heading), 'Space Grotesk', sans-serif;
   font-size: clamp(20px, 1.8vw, 26px);
@@ -57,6 +50,7 @@
   margin-bottom: 8px;
 }
 
+/* Role / title line — grey accent */
 .roleLine {
   font-family: var(--font-sans), 'Inter', sans-serif;
   font-size: clamp(13px, 1.1vw, 15px);
@@ -67,67 +61,231 @@
   margin-bottom: 36px;
 }
 
+/* Divider under name */
 .textDivider {
   width: 60px;
   height: 1.5px;
-  background: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.4);
   transform-origin: left center;
   margin-bottom: 40px;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.25);
 }
 
+/* ── Body copy ── */
 .body {
   font-family: var(--font-sans), 'Inter', sans-serif;
   font-size: clamp(14px, 1.15vw, 16.5px);
   font-weight: 300;
+  letter-spacing: 0em;
   line-height: 1.85;
   color: rgba(255, 255, 255, 0.65);
   max-width: 560px;
   margin: 0 0 22px 0;
+  min-height: 1.85em;
 }
 
-.strong {
+.strongInline {
   color: #ffffff;
   font-weight: 500;
 }
 
-.em {
+.emInline {
   color: rgba(255, 255, 255, 0.9);
   font-style: italic;
   font-weight: 400;
 }
 
-.skills {
+/* ── Stats row (reference-style: dim by default, brilliant on hover) ── */
+.statsRow {
   display: flex;
   flex-wrap: wrap;
-  gap: 10px;
-  list-style: none;
-  margin: 18px 0 0;
-  padding: 0;
-  max-width: 560px;
+  gap: clamp(30px, 5vw, 60px);
+  margin-top: 48px;
+  width: 100%;
+  max-width: 600px;
 }
 
-.skill {
+/* Each stat card: icon on top, number in middle, label below */
+.statItem {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  gap: 14px;
+  flex: 1;
+  min-width: 120px;
+  padding: 16px 8px 8px 0;
+  cursor: pointer;
+  transition: filter 0.4s ease, color 0.4s ease, opacity 0.4s ease;
+}
+
+/* Icon wrapper at top */
+.statIconWrap {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  margin-bottom: 4px;
+}
+
+/* Default: DIM GREY (like inactive "4" / "6" in reference) */
+.statIcon {
+  color: rgba(255, 255, 255, 0.22);
+  transition:
+    color 0.45s ease,
+    filter 0.45s ease,
+    opacity 0.45s ease;
+  stroke: currentColor;
+  opacity: 0.9;
+}
+
+/* Number wrapper */
+.statNumberWrap {
+  display: flex;
+  align-items: baseline;
+  line-height: 0.95;
+}
+
+/* Number — DEFAULT: DIM grey */
+.statNumber {
+  font-family: var(--font-bebas), 'Barlow Condensed', sans-serif;
+  font-size: clamp(56px, 6vw, 84px);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1;
+  color: rgba(255, 255, 255, 0.24); /* dim grey = inactive state */
+  transition:
+    color 0.45s ease,
+    text-shadow 0.45s ease,
+    filter 0.45s ease;
+}
+
+/* Label — DEFAULT: subtle dark grey uppercase spaced */
+.statLabel {
   font-family: var(--font-sans), 'Inter', sans-serif;
   font-size: 11px;
   font-weight: 500;
-  letter-spacing: 0.12em;
+  letter-spacing: 0.18em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.22);
-  border-radius: 999px;
-  padding: 8px 14px;
-  cursor: none;
-  background: rgba(255, 255, 255, 0.03);
-  transition: color 0.25s ease, border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
+  color: rgba(255, 255, 255, 0.18);
+  transition: color 0.45s ease, opacity 0.45s ease, text-shadow 0.45s ease;
 }
 
-.skill:hover {
-  color: #ffffff;
-  border-color: rgba(255, 255, 255, 0.7);
-  background: rgba(255, 255, 255, 0.08);
-  box-shadow: 0 0 18px rgba(255, 255, 255, 0.18);
+/* OLD glow class removed — not used anymore */
+.statNumberGlow { display: none; }
+
+/* ================================================================
+   💡 ON HOVER — everything lights up BRILLIANT WHITE (like "2" active)
+   ================================================================ */
+.statItem:hover .statIcon {
+  color: rgba(255, 255, 255, 0.98);
+  /* subtle 2-layer glow around icon */
+  filter:
+    drop-shadow(0 0 6px rgba(255, 255, 255, 0.85))
+    drop-shadow(0 0 14px rgba(255, 255, 255, 0.45));
 }
 
+.statItem:hover .statNumber {
+  color: #ffffff;  /* pure brilliant white */
+  /* 4-layer glow — exactly like "2 years experience" in reference */
+  text-shadow:
+    0 0 16px rgba(255, 255, 255, 0.95),    /* bright core */
+    0 0 38px rgba(255, 255, 255, 0.65),    /* medium halo */
+    0 0 70px rgba(255, 255, 255, 0.35),    /* wide glow */
+    0 0 120px rgba(255, 255, 255, 0.18);   /* huge ambient halo */
+}
+
+.statItem:hover .statLabel {
+  color: rgba(255, 255, 255, 0.55);
+  text-shadow: 0 0 8px rgba(255, 255, 255, 0.25);
+}
+
+/* ── Stats divider: horizontal line with dot markers at each stat ── */
+.statsDivider {
+  position: relative;
+  margin-top: 56px;
+  width: 100%;
+  max-width: 600px;
+  height: 1px;
+}
+
+/* The line itself */
+.statsDividerLine {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  height: 1px;
+  transform: translateY(-50%);
+  background: linear-gradient(
+    90deg,
+    transparent 0%,
+    rgba(255, 255, 255, 0.22) 8%,
+    rgba(255, 255, 255, 0.22) 92%,
+    transparent 100%
+  );
+}
+
+/* Dot markers container — matches the 3 stat columns exactly */
+.statsDotsRow {
+  position: absolute;
+  top: 50%;
+  left: 0;
+  right: 0;
+  transform: translateY(-50%);
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+/* Inactive dot marker (1st + 3rd — dim grey like reference) */
+.statDot {
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.28);
+  background: transparent;
+  position: relative;
+  transition:
+    border-color 0.45s ease,
+    box-shadow 0.45s ease,
+    background 0.45s ease;
+}
+
+.statDot::after {
+  content: "";
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  background: rgba(255, 255, 255, 0.35);
+  border-radius: 50%;
+  transform: translate(-50%, -50%);
+  transition:
+    background 0.45s ease,
+    box-shadow 0.45s ease,
+    width 0.45s ease,
+    height 0.45s ease;
+}
+
+/* ACTIVE / brilliant dot marker (middle one — like 4+ in reference) */
+.statDotActive {
+  border-color: rgba(255, 255, 255, 0.55);
+  box-shadow:
+    0 0 8px rgba(255, 255, 255, 0.15),
+    0 0 20px rgba(255, 255, 255, 0.08);
+}
+
+.statDotActive::after {
+  background: #ffffff;
+  width: 7px;
+  height: 7px;
+  box-shadow:
+    0 0 8px rgba(255, 255, 255, 0.9),
+    0 0 18px rgba(255, 255, 255, 0.55),
+    0 0 36px rgba(255, 255, 255, 0.25);
+}
+
+/* ── RIGHT: Image column ── */
 .imageCol {
   display: flex;
   justify-content: center;
@@ -136,49 +294,101 @@
   top: 10vh;
 }
 
+/* ── Image frame: OVERFLOW VISIBLE so corner brackets show outside ── */
 .imageFrame {
   position: relative;
   width: 100%;
   max-width: 420px;
   aspect-ratio: 4 / 5;
-  transform-style: preserve-3d;
+  overflow: visible; /* corners sit outside — MUST be visible */
+  cursor: none;
 }
 
-.imageInner {
+/* ── Image wrapper that clips the actual photo (overflow hidden for mask overlay) ── */
+.imageClip {
   position: relative;
   width: 100%;
   height: 100%;
+  border-radius: 4px;
   overflow: hidden;
-  z-index: 2;
-  background: #000;
 }
 
-.portrait {
+/* ⬛ Layer 1 (BOTTOM): ORIGINAL full-color photo, always there */
+.portraitOriginal {
   width: 100% !important;
   height: 100% !important;
   object-fit: cover;
   object-position: center top;
   display: block;
-}
-
-.portraitBw {
-  filter: grayscale(1) contrast(1.35) brightness(0.92);
-}
-
-.colorReveal {
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-}
-
-.portraitColor {
+  position: relative;
+  z-index: 1;
+  border-radius: 4px;
+  /* Completely untouched original format — no filters */
   filter: none;
 }
 
-.imageFrame:hover .portraitBw {
-  filter: grayscale(1) contrast(1.2) brightness(0.7);
+/* ⬛ Layer 2 (TOP): BLACK + FULL BLACK & WHITE version of the photo
+      By default (no hover) this covers the ENTIRE original photo.
+      On hover + mouse move, a MASK HOLE is cut at cursor coords (--mx,--my)
+      which reveals the ORIGINAL COLOR photo ONLY inside that small circle.
+      Everywhere else remains black and white. */
+.portraitBW {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  pointer-events: none;
+  border-radius: 4px;
+  overflow: hidden;
+  /* 💡 THE MAGIC: cuts a circular HOLE at cursor position.
+        By default (not hovering): NO hole — full B&W cover on 100% */
+  -webkit-mask-image: radial-gradient(
+    circle 120px at var(--mx, 50%) var(--my, 50%),
+    transparent 0%,              /* HOLE = completely transparent center */
+    rgba(0, 0, 0, 0.3) 55%,      /* soft gradient edge */
+    #000 80%,                    /* rest fully opaque = B&W cover */
+    #000 100%
+  );
+  mask-image: radial-gradient(
+    circle 120px at var(--mx, 50%) var(--my, 50%),
+    transparent 0%,
+    rgba(0, 0, 0, 0.3) 55%,
+    #000 80%,
+    #000 100%
+  );
 }
 
+/* When NOT hovering: 100% full B&W cover, NO mask hole at all */
+.imageFrame:not(.isSpotlight) .portraitBW {
+  -webkit-mask-image: none;
+  mask-image: none;
+}
+
+/* The duplicate photo inside layer 2 — rendered in FULL BLACK & WHITE + darkened */
+.portraitBWGrey {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+  border-radius: 4px;
+  /* ⬛ FULL black and white + darken + contrast boost for that classic B&W effect */
+  filter: grayscale(100%) brightness(0.8) contrast(1.12);
+  /* Dark tint overlay with pseudo-element */
+  position: relative;
+}
+
+/* Add dark tint / black effect on top of B&W layer */
+.portraitBW::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: rgba(0, 0, 0, 0.28);
+  box-shadow: inset 0 0 90px rgba(0, 0, 0, 0.9);
+  border-radius: 4px;
+}
+
+/* ── 4 Right-angled CORNER BRACKETS around the image ── */
 .cornerTopLeft,
 .cornerTopRight,
 .cornerBottomLeft,
@@ -186,17 +396,13 @@
   position: absolute;
   width: 28px;
   height: 28px;
-  border: 1.5px solid rgba(255, 255, 255, 0.55);
-  z-index: 3;
+  border: 1.5px solid rgba(255, 255, 255, 0.58);
+  z-index: 10;  /* sit on TOP of everything */
   pointer-events: none;
-  transition: border-color 0.4s ease;
-}
-
-.imageFrame:hover .cornerTopLeft,
-.imageFrame:hover .cornerTopRight,
-.imageFrame:hover .cornerBottomLeft,
-.imageFrame:hover .cornerBottomRight {
-  border-color: rgba(255, 255, 255, 0.95);
+  transition:
+    opacity 0.45s ease,
+    border-color 0.45s ease,
+    transform 0.45s ease;
 }
 
 .cornerTopLeft {
@@ -204,6 +410,7 @@
   left: -10px;
   border-right: none;
   border-bottom: none;
+  border-top-left-radius: 3px;
 }
 
 .cornerTopRight {
@@ -211,6 +418,7 @@
   right: -10px;
   border-left: none;
   border-bottom: none;
+  border-top-right-radius: 3px;
 }
 
 .cornerBottomLeft {
@@ -218,6 +426,7 @@
   left: -10px;
   border-right: none;
   border-top: none;
+  border-bottom-left-radius: 3px;
 }
 
 .cornerBottomRight {
@@ -225,8 +434,19 @@
   right: -10px;
   border-left: none;
   border-top: none;
+  border-bottom-right-radius: 3px;
 }
 
+/* On hover — corners get brighter and spread slightly */
+.imageFrame:hover .cornerTopLeft,
+.imageFrame:hover .cornerTopRight,
+.imageFrame:hover .cornerBottomLeft,
+.imageFrame:hover .cornerBottomRight {
+  border-color: rgba(255, 255, 255, 0.95);
+  transform: scale(1.2);
+}
+
+/* ── Responsive: Stack on mobile ── */
 @media (max-width: 880px) {
   .twoCol {
     grid-template-columns: 1fr;
@@ -244,13 +464,18 @@
   }
 }
 
-@media (hover: none) {
-  .portraitBw {
-    filter: grayscale(0.2) contrast(1.05) brightness(1);
-  }
-
-  .colorReveal {
-    -webkit-mask-image: none !important;
-    mask-image: none !important;
-  }
-}
+/* ── OLD unused styles (kept for safety) ── */
+.dividerWrap { display: none; }
+.dividerLine { display: none; }
+.dividerDot { display: none; }
+.overline { display: none; }
+.headlineBlock { display: none; }
+.headlineRow { display: none; }
+.headlineSolid { display: none; }
+.headlineItalic { display: none; }
+.skillsRowLegacy { display: none; }
+.skillTag { display: none; }
+.imageGlow { display: none; }
+.imageInner { display: none; }
+.typingCursor { display: none; }
+.spotlightMask { display: none; }

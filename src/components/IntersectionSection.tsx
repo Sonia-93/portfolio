@@ -1,7 +1,7 @@
 "use client";
 
 import { useEffect, useRef, useState } from "react";
-import { motion, useScroll, useTransform, MotionValue, useInView } from "framer-motion";
+import { motion, useTransform, MotionValue, useInView, useMotionValue, animate } from "framer-motion";
 import { Gauge, Layers, Zap } from "lucide-react";
 import styles from "./IntersectionSection.module.css";
 
@@ -34,7 +34,11 @@ function useTypingEffect(
   const [done, setDone] = useState(false);
 
   useEffect(() => {
-    if (!startTrigger) return;
+    if (!startTrigger) {
+      setDisplayed("");
+      setDone(false);
+      return;
+    }
 
     let index = 0;
     let timeoutId: NodeJS.Timeout;
@@ -95,35 +99,30 @@ function AnimatedCircle({
   const morphStart = 0.45;
   const morphEnd   = 0.70;
 
-  // Wrapper opacity: Appears at appStart, stays locked at 1.0 (never fades out)
   const opacity = useTransform(
     progress,
     [0, appStart, appEnd, 1],
     [0, 0, 1, 1]
   );
 
-  // Outer circle size: SMALL (44px) -> LARGE (360px)
   const size = useTransform(
     progress,
     [0, growStart, growEnd, 1],
     [SMALL, SMALL, LARGE, LARGE]
   );
 
-  // Position X: H_X -> V_X
   const x = useTransform(
     progress,
     [0, morphStart, morphEnd, 1],
     [H_X[index], H_X[index], V_X[index], V_X[index]]
   );
 
-  // Position Y: 0 -> V_Y[index] (Morphs into triangular set)
   const y = useTransform(
     progress,
     [0, morphStart, morphEnd, 1],
     [0, 0, V_Y[index], V_Y[index]]
   );
 
-  // Inner content offsets: 0 -> targetContentX/Y during morph so inner circles sit inside their respective outer circle space
   const contentX = useTransform(
     progress,
     [0, morphStart, morphEnd, 1],
@@ -136,14 +135,12 @@ function AnimatedCircle({
     [0, 0, targetContentY, targetContentY]
   );
 
-  // Outer SVG Stroke Opacity: 0 at start, turns on as outer ring grows
   const outerStrokeOpacity = useTransform(
     progress,
     [0, growStart, growEnd, 1],
     [0, 0, 0.3, 0.3]
   );
 
-  // Outer stroke draw effect
   const circumference = useTransform(size, (s) => Math.PI * s);
   const dashoffset = useTransform(
     progress,
@@ -151,11 +148,9 @@ function AnimatedCircle({
     [Math.PI * SMALL, 0, 0]
   );
 
-  // Derived SVG geometry
   const cx_cy = useTransform(size, (s) => s / 2);
   const r = useTransform(size, (s) => s / 2 - 1);
 
-  // Label opacity
   const labelOpacity = useTransform(
     progress,
     [appStart, appEnd, 1],
@@ -167,7 +162,6 @@ function AnimatedCircle({
       className={styles.circleWrapper}
       style={{ x, y, opacity, width: size, height: size }}
     >
-      {/* Resizable SVG outer Venn ring — transparent fill so overlapping lines intersect cleanly */}
       <motion.svg
         style={{ position: "absolute", inset: 0, width: size, height: size }}
         overflow="visible"
@@ -190,17 +184,14 @@ function AnimatedCircle({
         />
       </motion.svg>
 
-      {/* Inner content: Icon circle + label positioned inside its respective circle area */}
       <motion.div
         className={styles.circleContent}
         style={{ x: contentX, y: contentY }}
       >
-        {/* Glowing brilliant white inner circle enclosing icon */}
         <motion.div className={styles.innerIconCircle}>
           <Icon size={18} strokeWidth={2.2} color="#ffffff" />
         </motion.div>
 
-        {/* Crisp white text label with tight letter spacing */}
         <motion.span
           className={styles.circleLabel}
           style={{ opacity: labelOpacity }}
@@ -216,29 +207,49 @@ function AnimatedCircle({
 export default function IntersectionSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLDivElement>(null);
-  const headlineInView = useInView(headlineRef, { once: true, margin: "-20% 0px" });
+  const sectionInView = useInView(headlineRef, {
+    once: false,
+    margin: "0px 0px -30% 0px",
+  });
 
   const { displayed: line1, done: done1 } = useTypingEffect(
     "I BUILD SYSTEMS",
-    250,
-    60,
-    40,
-    headlineInView
+    0,
+    55,
+    30,
+    sectionInView
   );
   const { displayed: line2, done: done2 } = useTypingEffect(
     "AT THE INTERSECTION OF :",
-    200,
-    55,
-    40,
+    50,
+    50,
+    25,
     done1
   );
 
-  const { scrollYProgress } = useScroll({
-    target: sectionRef,
-    offset: ["start start", "end end"],
-  });
+  const typingFullyDone = done1 && done2;
 
-  const lineScaleY = useTransform(scrollYProgress, [0, 0.95], [0, 1]);
+  // ── AUTO-PLAY circle steps after typing finishes ──
+  const autoProgress = useMotionValue(0);
+
+  useEffect(() => {
+    if (!typingFullyDone) return;
+    const controls = animate(autoProgress, 1, {
+      duration: 5,
+      ease: [0.22, 1, 0.36, 1],
+      delay: 0.15,
+    });
+    return controls.stop;
+  }, [typingFullyDone, autoProgress]);
+
+  // Reset circles progress if user scrolls away & back
+  useEffect(() => {
+    if (!sectionInView) {
+      autoProgress.jump(0);
+    }
+  }, [sectionInView, autoProgress]);
+
+  const lineScaleY = useTransform(autoProgress, [0, 0.95], [0, 1]);
 
   return (
     <div ref={sectionRef} className={styles.scrollSection}>
@@ -252,16 +263,20 @@ export default function IntersectionSection() {
           />
         </div>
 
-        {/* Headline — Line 1 is white, Line 2 is grey matching home page BACKEND DEVELOPER */}
+        {/* Headline */}
         <div ref={headlineRef} className={styles.headline}>
           <h2 className={styles.headlineText}>
             <span className={styles.headlineLine1}>
-              {line1}
-              {!done1 && headlineInView && <span className={styles.typingCursor} />}
+              {line1 || sectionInView ? line1 : null}
+              {!done1 && sectionInView && line1 !== undefined && (
+                <span className={styles.typingCursor} />
+              )}
             </span>
             <span className={styles.headlineLine2}>
-              {line2}
-              {done1 && !done2 && headlineInView && <span className={styles.typingCursor} />}
+              {line2 || (sectionInView && done1) ? line2 : null}
+              {done1 && !done2 && sectionInView && (
+                <span className={styles.typingCursor} />
+              )}
             </span>
           </h2>
         </div>
@@ -276,7 +291,7 @@ export default function IntersectionSection() {
               label={label}
               targetContentX={targetContentX}
               targetContentY={targetContentY}
-              progress={scrollYProgress}
+              progress={autoProgress}
             />
           ))}
         </div>

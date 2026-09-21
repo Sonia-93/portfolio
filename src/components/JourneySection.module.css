@@ -1,0 +1,193 @@
+.journey {
+  position: relative;
+  background: #000000;
+  padding: clamp(80px, 10vw, 140px) clamp(20px, 5vw, 60px) clamp(100px, 14vw, 180px);
+  min-height: 100vh;
+  overflow: hidden;
+}
+
+.titleWrap {
+  max-width: 1400px;
+  margin: 0 auto 56px;
+  text-align: left;
+}
+
+.sectionLabel {
+  font-family: var(--font-sans), 'Inter', sans-serif;
+  font-size: 11px;
+  font-weight: 500;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.45);
+  margin-bottom: 14px;
+}
+
+.sectionTitle {
+  font-family: var(--title-font);
+  font-size: 50px;
+  font-weight: var(--title-weight, 700);
+  letter-spacing: var(--title-tracking, 0.02em);
+  text-transform: uppercase;
+  line-height: 1.05;
+  color: #ffffff;
+  margin: 0;
+  text-shadow:
+    0 0 18px rgba(255, 255, 255, 0.25),
+    0 0 40px rgba(255, 255, 255, 0.1);
+}
+
+/* ViewBox now 1200 x 420 matches this aspect ratio EXACTLY — no letterbox distortion! */
+.roadWrap {
+  position: relative;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  aspect-ratio: 1200 / 420;
+}
+
+.roadSvg {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  display: block;
+}
+
+.roadLine {
+  fill: none;
+  stroke: rgba(255, 255, 255, 0.75);
+  stroke-width: 3;
+  stroke-linecap: round;
+  stroke-linejoin: round;
+}
+
+.stopDot {
+  filter:
+    drop-shadow(0 0 8px rgba(255, 255, 255, 0.95))
+    drop-shadow(0 0 20px rgba(255, 255, 255, 0.55));
+}
+
+/* ── Car icon that drives ON TOP of the white road line ── */
+.car {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #ffffff;
+  z-index: 20;
+  filter:
+    drop-shadow(0 0 10px rgba(255, 255, 255, 0.9))
+    drop-shadow(0 0 24px rgba(255, 255, 255, 0.45));
+  transform: translate(-50%, -50%);
+  pointer-events: none;
+}
+
+/* ── Milestone content cards ── */
+.milestone {
+  position: absolute;
+  width: 260px;
+  z-index: 10;
+  pointer-events: none;
+}
+
+.msBigNumber {
+  position: absolute;
+  font-family: var(--title-font);
+  font-size: 140px;
+  font-weight: 700;
+  line-height: 0.8;
+  letter-spacing: -0.03em;
+  color: rgba(255, 255, 255, 0.05);
+  top: -28px;
+  left: -6px;
+  user-select: none;
+  z-index: -1;
+}
+
+.msTitle {
+  font-family: var(--font-heading), 'Space Grotesk', sans-serif;
+  font-size: 20px;
+  font-weight: 600;
+  line-height: 1.2;
+  color: #ffffff;
+  margin: 0 0 10px 0;
+  letter-spacing: -0.005em;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.35);
+}
+
+.msDescription {
+  font-family: var(--font-sans), 'Inter', sans-serif;
+  font-size: 13px;
+  font-weight: 300;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.55);
+  margin: 0;
+  letter-spacing: 0.005em;
+}
+
+/* stop 0: x=300 → 25% of 1200px viewBox, y=270 (lower valley) */
+.msPos0 {
+  left: 16%;
+  top: 68%;
+}
+
+/* stop 1: x=600 → 50%, y=120 (top peak) */
+.msPos1 {
+  left: 50%;
+  top: 6%;
+  transform: translateX(-50%);
+  text-align: center;
+}
+
+.msPos1 .msBigNumber {
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+/* stop 2: x=900 → 75%, y=270 (lower valley) */
+.msPos2 {
+  left: 72%;
+  top: 68%;
+}
+
+@media (max-width: 900px) {
+  .sectionTitle {
+    font-size: 38px;
+  }
+
+  .milestone {
+    width: 180px;
+  }
+
+  .msTitle {
+    font-size: 16px;
+  }
+
+  .msDescription {
+    font-size: 12px;
+  }
+
+  .msBigNumber {
+    font-size: 90px;
+  }
+
+  .msPos0 {
+    left: 3%;
+    top: 70%;
+  }
+
+  .msPos1 {
+    left: 50%;
+    top: 0%;
+  }
+
+  .msPos2 {
+    right: 3%;
+    left: auto;
+    top: 70%;
+  }
+}

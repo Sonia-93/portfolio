@@ -1,7 +1,7 @@
 /* ── Tall scroll section ── */
 .scrollSection {
   position: relative;
-  height: 350vh;
+  height: 100vh;
   background: #000000;
 }
 
