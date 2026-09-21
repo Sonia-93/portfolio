@@ -32,6 +32,50 @@ function useLiveDateTime() {
   return { ...display, mounted };
 }
 
+function useTypingEffect(
+  text: string,
+  startDelay: number,
+  baseSpeed: number = 75,
+  variance: number = 60,
+  startTrigger: boolean = true
+) {
+  const [displayed, setDisplayed] = useState("");
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    if (!startTrigger) return;
+
+    let index = 0;
+    let timeoutId: NodeJS.Timeout;
+    let cancelled = false;
+
+    const startTimeout = setTimeout(() => {
+      const type = () => {
+        if (cancelled) return;
+        if (index <= text.length) {
+          setDisplayed(text.slice(0, index));
+          index++;
+          if (index <= text.length) {
+            const jitter = Math.random() * variance;
+            timeoutId = setTimeout(type, baseSpeed + jitter);
+          } else {
+            setDone(true);
+          }
+        }
+      };
+      type();
+    }, startDelay);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(startTimeout);
+      clearTimeout(timeoutId);
+    };
+  }, [text, startDelay, baseSpeed, variance, startTrigger]);
+
+  return { displayed, done };
+}
+
 function fadeUp(delay: number) {
   return {
     initial: { opacity: 0, y: 40 },
@@ -146,6 +190,10 @@ function OrbitalRings() {
 
 export default function HeroSection() {
   const { date, time, mounted } = useLiveDateTime();
+  const { displayed: text1, done: done1 } = useTypingEffect("Hi there", 700, 70, 55, true);
+  const { displayed: text2, done: done2 } = useTypingEffect("I am Sonia", 300, 70, 55, done1);
+
+  const typingFullyDone = done1 && done2;
 
   return (
     <section className={styles.hero}>
@@ -158,21 +206,44 @@ export default function HeroSection() {
         <span className={styles.logoSquare2} />
       </motion.div>
 
-
-
       {/* ── Main Headline ── */}
       <div className={styles.headline}>
-        <motion.h1 className={styles.headlineText} {...fadeUp(0.2)}>
-          Hi there
-        </motion.h1>
-        <motion.div className={styles.headlineLine2} {...fadeUp(0.35)}>
-          <span className={styles.headlineTextWhite}>I am Sonia</span>
-          <span className={styles.accentRect} aria-hidden="true" />
-        </motion.div>
-        <motion.p className={styles.role} {...fadeUp(0.5)}>
+        <h1 className={styles.headlineText}>
+          {text1}
+          {!done1 && <span className={styles.typingCursor} />}
+        </h1>
+
+        <div className={styles.headlineLine2}>
+          <span className={styles.headlineTextWhite}>
+            {text2}
+            {done1 && !done2 && <span className={styles.typingCursor} />}
+          </span>
+          <motion.span
+            className={styles.accentRect}
+            aria-hidden="true"
+            initial={{ opacity: 0, scale: 0.6 }}
+            animate={{
+              opacity: typingFullyDone ? 1 : 0,
+              scale: typingFullyDone ? 1 : 0.6,
+            }}
+            transition={{ duration: 0.35, delay: 0.15, ease: "easeOut" }}
+          />
+        </div>
+
+        <motion.p
+          className={styles.role}
+          initial={{ opacity: 0, y: 40 }}
+          animate={typingFullyDone ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.85, delay: 0.2, ease: "easeOut" }}
+        >
           Backend Developer
         </motion.p>
-        <motion.div className={styles.buttons} {...fadeUp(0.65)}>
+        <motion.div
+          className={styles.buttons}
+          initial={{ opacity: 0, y: 40 }}
+          animate={typingFullyDone ? { opacity: 1, y: 0 } : {}}
+          transition={{ duration: 0.85, delay: 0.45, ease: "easeOut" }}
+        >
           <a href="mailto:sonia@example.com" className={styles.btnPrimary}>
             Get In Touch
           </a>
@@ -181,10 +252,6 @@ export default function HeroSection() {
           </a>
         </motion.div>
       </div>
-
-      {/* ── Bottom ── */}
-
-      {/* ── Bottom: Sub-info ── */}
     </section>
   );
 }

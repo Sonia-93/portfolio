@@ -2,117 +2,257 @@
 .about {
   position: relative;
   background: #000000;
-  padding: 120px clamp(32px, 8vw, 160px) 160px;
+  padding: clamp(80px, 12vw, 160px) clamp(24px, 6vw, 100px);
   overflow: hidden;
+  min-height: 100vh;
 }
 
-/* ── Divider ── */
-.dividerWrap {
-  position: relative;
-  width: 100%;
-  height: 1px;
-  margin-bottom: 48px;
+/* ── Two column layout: Text LEFT | Image RIGHT ── */
+.twoCol {
+  display: grid;
+  grid-template-columns: 1.1fr 0.9fr;
+  gap: clamp(40px, 7vw, 100px);
+  align-items: start;
+  max-width: 1400px;
+  margin: 0 auto;
+}
+
+/* ── LEFT: Text column ── */
+.textCol {
   display: flex;
-  align-items: center;
+  flex-direction: column;
+  align-items: flex-start;
 }
 
-.dividerLine {
-  width: 100%;
-  height: 1px;
-  background: rgba(255, 255, 255, 0.15);
-  transform-origin: left center;
-}
-
-.dividerDot {
-  position: absolute;
-  right: 0;
-  width: 4px;
-  height: 4px;
-  border-radius: 50%;
-  background: #ffffff;
-  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
-}
-
-/* ── Overline label ── */
-.overline {
-  font-family: var(--font-sans), 'Inter', sans-serif;
-  font-size: 11px;
-  font-weight: 300;
-  letter-spacing: 0.08em;
+/* "ABOUT US" — same Bebas Neue as "I BUILD SYSTEMS" */
+.aboutTitle {
+  font-family: var(--font-bebas), 'Barlow Condensed', sans-serif;
+  font-size: clamp(52px, 8vw, 110px);
+  font-weight: 400;
+  letter-spacing: -0.03em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.4);
-  margin-bottom: 48px;
-}
-
-/* ── Headline — Light font weight (300) with tight letter spacing ── */
-.headlineBlock {
-  margin-bottom: 56px;
-}
-
-.headlineRow {
-  overflow: hidden;
-  line-height: 1.05;
-  margin-bottom: 4px;
-}
-
-.headlineSolid {
-  display: block;
-  font-family: var(--font-sans), 'Inter', sans-serif;
-  font-size: clamp(32px, 5.5vw, 72px);
-  font-weight: 300;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
+  line-height: 0.95;
   color: #ffffff;
-  line-height: 1.05;
-}
+  margin: 0 0 36px 0;
 
-.headlineItalic {
-  display: block;
-  font-family: var(--font-sans), 'Inter', sans-serif;
-  font-size: clamp(32px, 5.5vw, 72px);
-  font-weight: 300;
-  font-style: italic;
-  letter-spacing: -0.01em;
+      display: block;
+  font-family: var(--font-bebas), 'Barlow Condensed', sans-serif;
+  font-size: clamp(36px, 5.2vw, 68px);
+  font-weight: 400;
+  letter-spacing: -0.04em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.45);
-  line-height: 1.05;
+  line-height: 1.0;
+  color: #ffffff;
 }
 
-/* ── Body copy — Light font weight (300) ── */
+/* Full name — large, crisp white */
+.fullName {
+  font-family: var(--font-heading), 'Space Grotesk', sans-serif;
+  font-size: clamp(20px, 1.8vw, 26px);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  color: #ffffff;
+  margin-bottom: 8px;
+}
+
+/* Role / title line — grey accent */
+.roleLine {
+  font-family: var(--font-sans), 'Inter', sans-serif;
+  font-size: clamp(13px, 1.1vw, 15px);
+  font-weight: 500;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.5);
+  margin-bottom: 36px;
+}
+
+/* Divider under name */
+.textDivider {
+  width: 60px;
+  height: 1.5px;
+  background: rgba(255, 255, 255, 0.4);
+  transform-origin: left center;
+  margin-bottom: 40px;
+  box-shadow: 0 0 8px rgba(255, 255, 255, 0.25);
+}
+
+/* ── Body copy ── */
 .body {
   font-family: var(--font-sans), 'Inter', sans-serif;
-  font-size: clamp(15px, 1.3vw, 18px);
+  font-size: clamp(14px, 1.15vw, 16.5px);
   font-weight: 300;
   letter-spacing: 0em;
-  line-height: 1.8;
+  line-height: 1.85;
   color: rgba(255, 255, 255, 0.65);
-  max-width: 580px;
-  margin-bottom: 56px;
+  max-width: 560px;
+  margin: 0 0 22px 0;
 }
 
-/* ── Skill tags — Light font weight and tight spacing ── */
+.strong {
+  color: #ffffff;
+  font-weight: 500;
+}
+
+.em {
+  color: rgba(255, 255, 255, 0.9);
+  font-style: italic;
+  font-weight: 400;
+}
+
+/* ── Skill tags ── */
 .skillsRow {
   display: flex;
   flex-wrap: wrap;
   gap: 10px;
+  margin-top: 28px;
 }
 
 .skillTag {
   display: inline-block;
   font-family: var(--font-sans), 'Inter', sans-serif;
   font-size: 11px;
-  font-weight: 300;
-  letter-spacing: 0.05em;
+  font-weight: 400;
+  letter-spacing: 0.08em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.6);
-  padding: 7px 18px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
-  border-radius: 4px;
-  background: rgba(255, 255, 255, 0.02);
-  transition: border-color 0.2s ease, color 0.2s ease;
+  color: rgba(255, 255, 255, 0.65);
+  padding: 8px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 999px;
+  background: rgba(255, 255, 255, 0.03);
+  transition: border-color 0.25s ease, color 0.25s ease, box-shadow 0.25s ease;
 }
 
 .skillTag:hover {
-  border-color: rgba(255, 255, 255, 0.35);
-  color: rgba(255, 255, 255, 0.9);
+  border-color: rgba(255, 255, 255, 0.45);
+  color: rgba(255, 255, 255, 0.95);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.15);
 }
+
+/* ── RIGHT: Image column ── */
+.imageCol {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  position: sticky;
+  top: 10vh;
+}
+
+.imageFrame {
+  position: relative;
+  width: 100%;
+  max-width: 420px;
+  aspect-ratio: 4 / 5;
+}
+
+/* Outer radiant glow */
+.imageGlow {
+  position: absolute;
+  inset: -40px;
+  border-radius: 24px;
+  background: radial-gradient(
+    ellipse at center,
+    rgba(255, 255, 255, 0.18) 0%,
+    rgba(255, 255, 255, 0.08) 35%,
+    transparent 70%
+  );
+  filter: blur(20px);
+  z-index: 0;
+  pointer-events: none;
+}
+
+/* Inner frame holding the image */
+.imageInner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  border-radius: 20px;
+  overflow: hidden;
+  z-index: 2;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.02);
+  box-shadow:
+    0 0 0 1px rgba(255, 255, 255, 0.05),
+    0 25px 80px rgba(0, 0, 0, 0.6),
+    0 0 40px rgba(255, 255, 255, 0.06);
+}
+
+.portrait {
+  width: 100% !important;
+  height: 100% !important;
+  object-fit: cover;
+  object-position: center top;
+  display: block;
+}
+
+/* ── Corner bracket accents around frame ── */
+.cornerTopLeft,
+.cornerTopRight,
+.cornerBottomLeft,
+.cornerBottomRight {
+  position: absolute;
+  width: 28px;
+  height: 28px;
+  border: 1.5px solid rgba(255, 255, 255, 0.45);
+  z-index: 3;
+  pointer-events: none;
+}
+
+.cornerTopLeft {
+  top: -10px;
+  left: -10px;
+  border-right: none;
+  border-bottom: none;
+  border-top-left-radius: 4px;
+}
+
+.cornerTopRight {
+  top: -10px;
+  right: -10px;
+  border-left: none;
+  border-bottom: none;
+  border-top-right-radius: 4px;
+}
+
+.cornerBottomLeft {
+  bottom: -10px;
+  left: -10px;
+  border-right: none;
+  border-top: none;
+  border-bottom-left-radius: 4px;
+}
+
+.cornerBottomRight {
+  bottom: -10px;
+  right: -10px;
+  border-left: none;
+  border-top: none;
+  border-bottom-right-radius: 4px;
+}
+
+/* ── Responsive: Stack on mobile ── */
+@media (max-width: 880px) {
+  .twoCol {
+    grid-template-columns: 1fr;
+    gap: 64px;
+  }
+
+  .imageCol {
+    order: -1;
+    position: relative;
+    top: 0;
+  }
+
+  .imageFrame {
+    max-width: 340px;
+  }
+}
+
+/* ── OLD unused styles (kept for safety, can remove later) ── */
+.dividerWrap { display: none; }
+.dividerLine { display: none; }
+.dividerDot { display: none; }
+.overline { display: none; }
+.headlineBlock { display: none; }
+.headlineRow { display: none; }
+.headlineSolid { display: none; }
+.headlineItalic { display: none; }

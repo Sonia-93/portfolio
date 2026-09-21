@@ -51,29 +51,49 @@
   margin: 0;
 }
 
-/* Line 1: Solid White, Light Font Weight (300), reduced font size */
+/* Line 1: Solid White, Bebas Neue Condensed Display Font */
 .headlineLine1 {
   display: block;
-  font-family: var(--font-sans), 'Inter', sans-serif;
-  font-size: clamp(28px, 4.2vw, 54px);
-  font-weight: 300;
-  letter-spacing: -0.02em;
+  font-family: var(--font-bebas), 'Barlow Condensed', sans-serif;
+  font-size: clamp(36px, 5.2vw, 68px);
+  font-weight: 400;
+  letter-spacing: -0.04em;
   text-transform: uppercase;
-  line-height: 1.05;
+  line-height: 1.0;
   color: #ffffff;
 }
 
-/* Line 2: Grey (rgba(255,255,255,0.5)), Light Font Weight (300), Oblique/Italic, reduced font size */
+/* Line 2: Grey, Bebas Neue Condensed Display Font */
 .headlineLine2 {
   display: block;
-  font-family: var(--font-sans), 'Inter', sans-serif;
-  font-size: clamp(28px, 4.2vw, 54px);
-  font-weight: 300;
-  font-style: italic;
-  letter-spacing: -0.02em;
+  font-family: var(--font-bebas), 'Barlow Condensed', sans-serif;
+  font-size: clamp(36px, 5.2vw, 68px);
+  font-weight: 400;
+  letter-spacing: -0.01em;
   text-transform: uppercase;
-  line-height: 1.05;
-  color: rgba(255, 255, 255, 0.5);
+  line-height: 1.0;
+  color: #ffffff;
+}
+
+/* ── Typing Cursor for Intersection Headline ── */
+.typingCursor {
+  display: inline-block;
+  width: clamp(3px, 0.4vw, 5px);
+  height: 0.9em;
+  background: #ffffff;
+  margin-left: 6px;
+  vertical-align: baseline;
+  border-radius: 2px;
+  box-shadow:
+    0 0 10px rgba(255, 255, 255, 0.9),
+    0 0 20px rgba(255, 255, 255, 0.5),
+    0 0 40px rgba(255, 255, 255, 0.2);
+  animation: blinkCursor 0.75s ease-in-out infinite;
+}
+
+@keyframes blinkCursor {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
 }
 
 /* ── Stage: circles live here, shifted downwards for wide breathing room under headline ── */
@@ -118,7 +138,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 
+  box-shadow:
     0 0 10px rgba(255, 255, 255, 0.9),
     0 0 20px rgba(255, 255, 255, 0.4),
     inset 0 0 6px rgba(255, 255, 255, 0.2);

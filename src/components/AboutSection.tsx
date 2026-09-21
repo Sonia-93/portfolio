@@ -1,12 +1,15 @@
 "use client";
 
 import { useRef } from "react";
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import Image from "next/image";
+import soniaImage from "@/app/sonia.png";
 import styles from "./AboutSection.module.css";
 
 const SKILLS = [
   "Node.js", "Python", "PostgreSQL", "Redis",
   "Docker", "REST APIs", "GraphQL", "AWS",
+  "Penetration Testing", "Network Security",
 ];
 
 function SkillTag({ label, delay }: { label: string; delay: number }) {
@@ -29,88 +32,124 @@ export default function AboutSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const inView = useInView(sectionRef, { once: true, margin: "-12% 0px" });
 
-  const lineRef = useRef<HTMLDivElement>(null);
-  const lineInView = useInView(lineRef, { once: true, margin: "-5% 0px" });
+  const textColRef = useRef<HTMLDivElement>(null);
+  const textInView = useInView(textColRef, { once: true, margin: "-10% 0px" });
+
+  const imageRef = useRef<HTMLDivElement>(null);
+  const imageInView = useInView(imageRef, { once: true, margin: "-10% 0px" });
 
   return (
     <section ref={sectionRef} className={styles.about} id="about">
 
-      {/* ── Divider line draws in ── */}
-      <div ref={lineRef} className={styles.dividerWrap} aria-hidden="true">
-        <motion.div
-          className={styles.dividerLine}
-          initial={{ scaleX: 0 }}
-          animate={lineInView ? { scaleX: 1 } : {}}
-          transition={{ duration: 1.1, ease: [0.22, 1, 0.36, 1] }}
-        />
-        <motion.div
-          className={styles.dividerDot}
-          initial={{ opacity: 0, scale: 0 }}
-          animate={lineInView ? { opacity: 1, scale: 1 } : {}}
-          transition={{ duration: 0.4, delay: 0.9 }}
-        />
-      </div>
+      {/* ── Two-column wrapper ── */}
+      <div className={styles.twoCol}>
 
-      {/* ── Main headline block ── */}
-      <div className={styles.headlineBlock}>
+        {/* ── LEFT: Text column ── */}
+        <div ref={textColRef} className={styles.textCol}>
 
-        {/* Line 1 */}
-        <div className={styles.headlineRow}>
+          {/* "ABOUT ME" headline — Bebas Neue (same as I BUILD SYSTEMS) */}
           <motion.h2
-            className={styles.headlineSolid}
-            initial={{ opacity: 0, y: 40 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.9, delay: 0.45, ease: [0.22, 1, 0.36, 1] }}
+            className={styles.aboutTitle}
+            initial={{ opacity: 0, y: 30 }}
+            animate={textInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.9, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
           >
-            I CRAFT BACKEND SYSTEMS
+            ABOUT ME
           </motion.h2>
-        </div>
 
-        {/* Line 2 */}
-        <div className={styles.headlineRow}>
-          <motion.span
-            className={styles.headlineSolid}
-            initial={{ opacity: 0, y: 40 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.9, delay: 0.58, ease: [0.22, 1, 0.36, 1] }}
+          {/* Full name line */}
+          <motion.div
+            className={styles.fullName}
+            initial={{ opacity: 0, y: 20 }}
+            animate={textInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.28, ease: "easeOut" }}
           >
-            WITH
-          </motion.span>
-        </div>
+            SHIMIRWA TETA Sonia
+          </motion.div>
 
-        {/* Line 3 — italic accent */}
-        <div className={styles.headlineRow}>
-          <motion.span
-            className={styles.headlineItalic}
-            initial={{ opacity: 0, y: 40 }}
-            animate={inView ? { opacity: 1, y: 0 } : {}}
-            transition={{ duration: 0.9, delay: 0.72, ease: [0.22, 1, 0.36, 1] }}
+          {/* Role / Title line */}
+          <motion.div
+            className={styles.roleLine}
+            initial={{ opacity: 0, y: 20 }}
+            animate={textInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.4, ease: "easeOut" }}
           >
-            PRECISION AND SCALE.
-          </motion.span>
+            Backend Developer &amp; Cyber Security Enthusiast
+          </motion.div>
+
+          {/* Divider */}
+          <motion.div
+            className={styles.textDivider}
+            initial={{ scaleX: 0 }}
+            animate={textInView ? { scaleX: 1 } : {}}
+            transition={{ duration: 1.0, delay: 0.52, ease: [0.22, 1, 0.36, 1] }}
+          />
+
+          {/* Bio paragraphs */}
+          <motion.p
+            className={styles.body}
+            initial={{ opacity: 0, y: 24 }}
+            animate={textInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.65, ease: "easeOut" }}
+          >
+            I&apos;m <strong className={styles.strong}>SHIMIRWA TETA Sonia</strong>, a backend developer
+            and cyber security enthusiast based in Kigali, Rwanda. I specialise in
+            designing robust, high-throughput server-side architectures — turning
+            complex business requirements into clean, scalable APIs and secure
+            data pipelines.
+          </motion.p>
+
+          <motion.p
+            className={styles.body}
+            initial={{ opacity: 0, y: 24 }}
+            animate={textInView ? { opacity: 1, y: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.8, ease: "easeOut" }}
+          >
+            My passion for backend engineering goes hand-in-hand with my love for
+            cyber security. I build systems with security baked in from the ground
+            up — hardening APIs, implementing least-privilege access controls,
+            and crafting robust authentication &amp; encryption layers. Whether I&apos;m
+            optimising a PostgreSQL query or analysing network traffic for
+            vulnerabilities, I believe great software is both <em className={styles.em}>blazing fast</em> and
+            <em className={styles.em}> deeply secure</em>.
+          </motion.p>
+
+          {/* Skill tags */}
+          <div className={styles.skillsRow}>
+            {SKILLS.map((s, i) => (
+              <SkillTag key={s} label={s} delay={0.95 + i * 0.05} />
+            ))}
+          </div>
+
         </div>
+
+        {/* ── RIGHT: Image column ── */}
+        <motion.div
+          ref={imageRef}
+          className={styles.imageCol}
+          initial={{ opacity: 0, x: 40, scale: 0.98 }}
+          animate={imageInView ? { opacity: 1, x: 0, scale: 1 } : {}}
+          transition={{ duration: 1.0, delay: 0.3, ease: [0.22, 1, 0.36, 1] }}
+        >
+          <div className={styles.imageFrame}>
+            <div className={styles.imageGlow} aria-hidden="true" />
+            <div className={styles.imageInner}>
+              <Image
+                src={soniaImage}
+                alt="SHIMIRWA TETA Sonia — Backend Developer"
+                className={styles.portrait}
+                priority
+              />
+            </div>
+            {/* Corner accents */}
+            <span className={styles.cornerTopLeft} aria-hidden="true" />
+            <span className={styles.cornerTopRight} aria-hidden="true" />
+            <span className={styles.cornerBottomLeft} aria-hidden="true" />
+            <span className={styles.cornerBottomRight} aria-hidden="true" />
+          </div>
+        </motion.div>
+
       </div>
-
-      {/* ── Body copy ── */}
-      <motion.p
-        className={styles.body}
-        initial={{ opacity: 0, y: 24 }}
-        animate={inView ? { opacity: 1, y: 0 } : {}}
-        transition={{ duration: 0.8, delay: 0.9, ease: "easeOut" }}
-      >
-        I'm a backend developer based in Kigali, Rwanda. I specialise in
-        designing robust, high-throughput server-side architectures — turning
-        complex business requirements into clean, scalable APIs and data
-        pipelines.
-      </motion.p>
-
-      {/* ── Skill tags ── */}
-      <div className={styles.skillsRow}>
-        {SKILLS.map((s, i) => (
-          <SkillTag key={s} label={s} delay={1.0 + i * 0.07} />
-        ))}
-      </div>
-
     </section>
   );
 }

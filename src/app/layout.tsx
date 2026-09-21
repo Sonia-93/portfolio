@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import { Inter, Space_Grotesk, Barlow_Condensed } from "next/font/google";
+import { Inter, Space_Grotesk, Barlow_Condensed, Bebas_Neue } from "next/font/google";
 import "./globals.css";
 import CustomCursor from "@/components/CustomCursor";
 import NavBar from "@/components/NavBar";
@@ -23,6 +23,13 @@ const barlowCondensed = Barlow_Condensed({
   display: "swap",
 });
 
+const bebasNeue = Bebas_Neue({
+  weight: "400",
+  subsets: ["latin"],
+  variable: "--font-bebas",
+  display: "swap",
+});
+
 export const metadata: Metadata = {
   title: "Sonia — Backend Developer",
   description:
@@ -35,7 +42,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }) {
   return (
-    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${barlowCondensed.variable}`}>
+    <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${barlowCondensed.variable} ${bebasNeue.variable}`}>
       <body>
         <CustomCursor />
         <NavBar />

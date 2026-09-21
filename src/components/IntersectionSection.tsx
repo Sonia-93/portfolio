@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform, MotionValue } from "framer-motion";
+import { useEffect, useRef, useState } from "react";
+import { motion, useScroll, useTransform, MotionValue, useInView } from "framer-motion";
 import { Gauge, Layers, Zap } from "lucide-react";
 import styles from "./IntersectionSection.module.css";
 
@@ -22,6 +22,50 @@ const H_X = [-240, 0, 240];
 // Final triangular Venn diagram positions
 const V_X = [-90, 0, 90];
 const V_Y = [75, -90, 75];
+
+function useTypingEffect(
+  text: string,
+  startDelay: number,
+  baseSpeed: number = 55,
+  variance: number = 45,
+  startTrigger: boolean = true
+) {
+  const [displayed, setDisplayed] = useState("");
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    if (!startTrigger) return;
+
+    let index = 0;
+    let timeoutId: NodeJS.Timeout;
+    let cancelled = false;
+
+    const startTimeout = setTimeout(() => {
+      const type = () => {
+        if (cancelled) return;
+        if (index <= text.length) {
+          setDisplayed(text.slice(0, index));
+          index++;
+          if (index <= text.length) {
+            const jitter = Math.random() * variance;
+            timeoutId = setTimeout(type, baseSpeed + jitter);
+          } else {
+            setDone(true);
+          }
+        }
+      };
+      type();
+    }, startDelay);
+
+    return () => {
+      cancelled = true;
+      clearTimeout(startTimeout);
+      clearTimeout(timeoutId);
+    };
+  }, [text, startDelay, baseSpeed, variance, startTrigger]);
+
+  return { displayed, done };
+}
 
 // ─── Individual animated circle ──────────────────────────────────────────────
 function AnimatedCircle({
@@ -171,6 +215,23 @@ function AnimatedCircle({
 // ─── Main Section ─────────────────────────────────────────────────────────────
 export default function IntersectionSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
+  const headlineRef = useRef<HTMLDivElement>(null);
+  const headlineInView = useInView(headlineRef, { once: true, margin: "-20% 0px" });
+
+  const { displayed: line1, done: done1 } = useTypingEffect(
+    "I BUILD SYSTEMS",
+    250,
+    60,
+    40,
+    headlineInView
+  );
+  const { displayed: line2, done: done2 } = useTypingEffect(
+    "AT THE INTERSECTION OF :",
+    200,
+    55,
+    40,
+    done1
+  );
 
   const { scrollYProgress } = useScroll({
     target: sectionRef,
@@ -192,10 +253,16 @@ export default function IntersectionSection() {
         </div>
 
         {/* Headline — Line 1 is white, Line 2 is grey matching home page BACKEND DEVELOPER */}
-        <div className={styles.headline}>
+        <div ref={headlineRef} className={styles.headline}>
           <h2 className={styles.headlineText}>
-            <span className={styles.headlineLine1}>I BUILD SYSTEMS</span>
-            <span className={styles.headlineLine2}>AT THE INTERSECTION OF :</span>
+            <span className={styles.headlineLine1}>
+              {line1}
+              {!done1 && headlineInView && <span className={styles.typingCursor} />}
+            </span>
+            <span className={styles.headlineLine2}>
+              {line2}
+              {done1 && !done2 && headlineInView && <span className={styles.typingCursor} />}
+            </span>
           </h2>
         </div>
 
