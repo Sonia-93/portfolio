@@ -6,14 +6,17 @@ import { ExternalLink, Code2, X, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import styles from "./ProjectsSection.module.css";
 
-import wastenet1 from "@/app/wastenet1.png";
 import wastenet2 from "@/app/wastenet2.png";
-import staffnet1 from "@/app/staffnet1.png";
-import staffnet2 from "@/app/staffnet2.png";
-import umuco1 from "@/app/umuco1.png";
-import umuco2 from "@/app/umuco2.png";
-import code1 from "@/app/code1.png";
-import code2 from "@/app/code2.png";
+import staffnet from "@/app/staffnet.png";
+import staffnetFront from "@/app/staffnetFront.png";
+import umuco from "@/app/umuco.png";
+import umucoFront from "@/app/umucoFront.png";
+import code from "@/app/code.png";
+import codeFront from "@/app/codeFront.png";
+import screen1 from "@/app/screen1.png";
+import screen2 from "@/app/screen2.png";
+import scree from "@/app/scree.png";
+import wastenetFront from "@/app/wastenetFront.png";
 
 type Project = {
   id: string;
@@ -24,6 +27,7 @@ type Project = {
   tags: string[];
   short: string;
   photos: { src: string; alt: string; width?: number; height?: number; staticImport?: any }[];
+  hoverPhoto?: any;
   writeup: string[];
   githubUrl?: string;
   liveUrl?: string;
@@ -41,9 +45,9 @@ const PROJECTS: Project[] = [
     short:
       "An AI-powered waste management system that classifies waste into plastic, paper, biodegradable, non-biodegradable, metals, and more using smart bins. A real-time dashboard tracks waste levels, collection status, and environmental impact across locations.",
     photos: [
-      { src: "", alt: "WasteNet — smart bin classification dashboard", staticImport: wastenet1 },
-      { src: "", alt: "WasteNet — collection map & impact stats", staticImport: wastenet2 },
+      { src: "", alt: "WasteNet — smart bin classification dashboard", staticImport: scree },
     ],
+    hoverPhoto: wastenetFront,
     writeup: [
       "WasteNet combines on-device AI with a cloud backend to turn ordinary bins into smart, connected units.",
       "Each smart bin runs a lightweight image classifier that identifies waste as it's dropped in — sorted into plastic, paper, biodegradable, non-biodegradable, metals, and other common categories.",
@@ -62,9 +66,9 @@ const PROJECTS: Project[] = [
     short:
       "A digital operations system designed for RCA staff to ditch the paperwork. Manages student tickets, borrowed phones, and student funds all in one place — streamlining daily administrative tasks with a clean, intuitive interface that saves time and reduces errors.",
     photos: [
-      { src: "", alt: "StaffNet — tickets + funds overview dashboard", staticImport: staffnet1 },
-      { src: "", alt: "StaffNet — student device borrow tracking", staticImport: staffnet2 },
+      { src: "", alt: "StaffNet — tickets + funds overview dashboard", staticImport: staffnet },
     ],
+    hoverPhoto: staffnetFront,
     writeup: [
       "StaffNet was built specifically for Rwanda Coding Academy staff, replacing paper-based workflows that were slow, error-prone, and hard to search.",
       "The platform centralizes three of the most common admin jobs: student helpdesk tickets (tracked from open to resolved with comments), the student phone borrow-log (who took which device, due-back date, and overdues), and the student-funds ledger for petty cash and allowance disbursements.",
@@ -83,9 +87,9 @@ const PROJECTS: Project[] = [
     short:
       "A cultural heritage platform that preserves, documents, and shares Rwandan traditions, oral histories, music, and indigenous knowledge — making it accessible for future generations through an immersive digital archive.",
     photos: [
-      { src: "", alt: "UmucoCore — cultural collections & archive homepage", staticImport: umuco1 },
-      { src: "", alt: "UmucoCore — oral history player & story detail", staticImport: umuco2 },
+      { src: "", alt: "UmucoCore — cultural collections & archive homepage", staticImport: umuco },
     ],
+    hoverPhoto: umucoFront,
     writeup: [
       "UmucoCore is a living digital archive dedicated to preserving and celebrating Rwandan cultural heritage.",
       "The platform features oral histories, traditional music, dance documentation, indigenous crafts, and community-curated stories organized into browsable collections.",
@@ -104,9 +108,9 @@ const PROJECTS: Project[] = [
     short:
       "A community-driven coding education platform that bridges the gap between beginners and mentors — featuring interactive tutorials, peer code reviews, project-based tracks, and live study rooms.",
     photos: [
-      { src: "", alt: "CodeBridge — learning tracks & dashboard overview", staticImport: code1 },
-      { src: "", alt: "CodeBridge — interactive coding challenge editor", staticImport: code2 },
+      { src: "", alt: "CodeBridge — learning tracks & dashboard overview", staticImport: code },
     ],
+    hoverPhoto: codeFront,
     writeup: [
       "CodeBridge connects aspiring developers with experienced mentors through structured learning paths and community support.",
       "The platform includes interactive coding challenges, project submission workflows with peer review, live study rooms, and a progress dashboard that tracks skill mastery across tracks like frontend, backend, and DevOps.",
@@ -165,72 +169,81 @@ function useTypingEffect(
   return { displayed, done };
 }
 
-/** ── Two-photo auto-rotating image stage (ken burns effect) ── */
+/** ── Two-photo auto-rotating image stage with tablet frame mockup ── */
 function PhotoStage({
   photos,
   paused,
+  showTabletFrame = true,
+  frame,
+  hoverPhoto,
 }: {
   photos: Project["photos"];
   paused?: boolean;
+  showTabletFrame?: boolean;
+  frame?: any;
+  hoverPhoto?: any;
 }) {
   const [active, setActive] = useState(0);
+  const [hovered, setHovered] = useState(false);
 
   useEffect(() => {
     if (paused || photos.length <= 1) return;
     const id = setInterval(() => {
       setActive((i) => (i + 1) % photos.length);
-    }, 6000); // <── change this number (in ms) for slower/faster swap: 6000 = 6s
+    }, 6000);
     return () => clearInterval(id);
   }, [paused, photos.length]);
 
-  if (photos.length === 0) {
+  // Plain mode — image IS the tablet, just fill the container directly
+  if (!showTabletFrame) {
+    const displaySrc = hoverPhoto && hovered ? hoverPhoto : (photos[0]?.staticImport ?? photos[0]?.src);
     return (
       <div
-        className={styles.imageStage}
-        style={{
-          display: "flex",
-          alignItems: "center",
-          justifyContent: "center",
-          fontFamily: "var(--font-mono), monospace",
-          fontSize: 12,
-          color: "rgba(255,255,255,0.45)",
-          letterSpacing: "0.04em",
-          background:
-            "repeating-linear-gradient(45deg, rgba(255,255,255,0.02) 0 14px, rgba(255,255,255,0.045) 14px 28px)",
-        }}
+        style={{ position: "relative", width: "100%", height: "100%" }}
+        onMouseEnter={() => setHovered(true)}
+        onMouseLeave={() => setHovered(false)}
       >
-        drop 2 photos here later · photo1.png + photo2.png
+        <Image
+          src={displaySrc}
+          alt={photos[0]?.alt ?? ""}
+          fill
+          sizes="(max-width: 960px) 100vw, 960px"
+          style={{ objectFit: "contain", transition: "opacity 0.4s ease" }}
+          priority
+          quality={100}
+        />
       </div>
     );
   }
 
   return (
-    <div className={styles.imageStage}>
-      {photos.map((p, i) => {
-        const isActive = i === active;
-        return (
+    <>
+      {frame && (
+        <Image
+          src={frame}
+          alt=""
+          fill
+          sizes="(max-width: 960px) 100vw, 960px"
+          className={styles.tabletFrameImg}
+          priority={false}
+          quality={100}
+        />
+      )}
+      <div className={styles.imageStage}>
+        {photos.map((p, i) => (
           <Image
             key={i}
             src={p.staticImport ?? p.src}
             alt={p.alt}
             fill
             sizes="(max-width: 960px) 100vw, 960px"
-            className={`${styles.projectImage} ${isActive ? styles.imgActive : styles.imgIdle}`}
+            className={`${styles.projectImage} ${i === active ? styles.imgActive : styles.imgIdle}`}
             priority={i === 0}
             quality={100}
           />
-        );
-      })}
-
-      {photos.length > 0 && (
-        <div className={styles.imagePill}>
-          <span className={styles.pillDot} />
-          <span>
-            {active + 1} / {photos.length}
-          </span>
-        </div>
-      )}
-    </div>
+        ))}
+      </div>
+    </>
   );
 }
 
@@ -290,7 +303,13 @@ function ProjectRow({
         }}
       >
         <div className={styles.frame}>
-          <PhotoStage photos={project.photos} paused={true} />
+          <PhotoStage
+            photos={project.photos}
+            paused={true}
+            frame={project.id === "wastenet" ? scree : index % 2 === 0 ? screen1 : screen2}
+            showTabletFrame={project.id !== "wastenet" && project.id !== "staffnet" && project.id !== "umucocore" && project.id !== "codebridge"}
+            hoverPhoto={project.hoverPhoto}
+          />
         </div>
       </motion.div>
 
@@ -598,7 +617,7 @@ export default function ProjectsSection() {
         viewport={{ once: true, margin: "-10% 0px" }}
         transition={{ duration: 0.7, ease: [0.22, 1, 0.36, 1], delay: 0.2 }}
       >
-        <a href="#" className={styles.viewAllBtn}>
+        <a href="/projects" className={styles.viewAllBtn}>
           View all projects
           <ArrowRight size={16} />
         </a>
@@ -608,52 +627,56 @@ export default function ProjectsSection() {
         {selected && (
           <motion.div
             className={styles.backdrop}
-            onClick={() => setSelected(null)}
             initial={{ opacity: 0 }}
             animate={{ opacity: 1 }}
             exit={{ opacity: 0 }}
-            transition={{ duration: 0.25 }}
+            transition={{ duration: 0.3 }}
           >
             <motion.div
               className={styles.modal}
               role="dialog"
               aria-modal="true"
-              onClick={(e) => e.stopPropagation()}
-              initial={{ opacity: 0, y: 30, scale: 0.98 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 20, scale: 0.98 }}
+              initial={{ opacity: 0, y: 40 }}
+              animate={{ opacity: 1, y: 0 }}
+              exit={{ opacity: 0, y: 20 }}
               transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
             >
+              {/* ── Back ── */}
               <button
-                className={styles.closeBtn}
-                onClick={() => setSelected(null)}
-                aria-label="Close project"
+                className={styles.backBtn}
+                onClick={(e) => { e.preventDefault(); e.stopPropagation(); setSelected(null); }}
+                type="button"
               >
-                <X size={16} />
+                ← Back
               </button>
 
-              <div className={styles.modalSubtitle}>
-                {selected.index} · {selected.category}
+              {/* ── Header ── */}
+              <div className={styles.modalHeader}>
+                <span className={styles.modalCategory}>{selected.category}</span>
+                <h2 className={styles.modalTitle}>{selected.title}</h2>
+                <p className={styles.modalSubheading}>{selected.subtitle}</p>
               </div>
-              <h3 className={styles.modalTitle}>{selected.title}</h3>
-              <p className={styles.projectSubtitle} style={{ marginBottom: 20, marginTop: -4 }}>
-                {selected.subtitle}
-              </p>
 
+              {/* ── Tags ── */}
               <div className={styles.modalTags}>
                 {selected.tags.map((t) => (
                   <span key={t} className={styles.tag}>{t}</span>
                 ))}
               </div>
 
+              {/* ── Image ── */}
               <div className={styles.modalStage}>
-                <PhotoStage photos={selected.photos} />
+                <PhotoStage photos={selected.photos} showTabletFrame={false} hoverPhoto={selected.hoverPhoto} />
               </div>
 
-              {selected.writeup.map((p, i) => (
-                <p key={i} className={styles.modalParagraph}>{p}</p>
-              ))}
+              {/* ── Writeup ── */}
+              <div className={styles.modalWriteup}>
+                {selected.writeup.map((p, i) => (
+                  <p key={i} className={styles.modalParagraph}>{p}</p>
+                ))}
+              </div>
 
+              {/* ── Links ── */}
               <div className={styles.modalLinks}>
                 {selected.githubUrl && (
                   <a className={styles.btn} href={selected.githubUrl} target="_blank" rel="noreferrer noopener">

@@ -1,5 +1,12 @@
-:global(body) {
+:global(body):has(.cursorActive) {
   cursor: none;
+}
+
+.cursorActive {
+  position: fixed;
+  inset: 0;
+  pointer-events: none;
+  z-index: 9998;
 }
 
 .ring {

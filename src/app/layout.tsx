@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter, Space_Grotesk, Barlow_Condensed, Bebas_Neue, Cormorant_Garamond } from "next/font/google";
 import "./globals.css";
-import CustomCursor from "@/components/CustomCursor";
 import NavBar from "@/components/NavBar";
 
 const inter = Inter({
@@ -52,7 +51,6 @@ export default function RootLayout({
   return (
     <html lang="en" className={`${inter.variable} ${spaceGrotesk.variable} ${barlowCondensed.variable} ${bebasNeue.variable} ${cormorantGaramond.variable}`}>
       <body>
-        <CustomCursor />
         <NavBar />
         {children}
       </body>

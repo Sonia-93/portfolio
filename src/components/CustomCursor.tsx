@@ -30,8 +30,11 @@ export default function CustomCursor() {
   }, []);
 
   return (
-    <div ref={ringRef} className={styles.ring}>
-      <div className={styles.dot} />
-    </div>
+    <>
+      <div className={styles.cursorActive} aria-hidden="true" />
+      <div ref={ringRef} className={styles.ring}>
+        <div className={styles.dot} />
+      </div>
+    </>
   );
 }

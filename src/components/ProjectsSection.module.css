@@ -108,38 +108,69 @@
   width: 100%;
 }
 
+/* ───────────────────────────────────────
+   Tablet Mockup Frame (screen.png)
+   ───────────────────────────────────────
+   Adjust these 4 % values if the screenshot
+   doesn't align perfectly inside the screen area: */
 .frame {
+  --screen-inset-top: 7.8%;
+  --screen-inset-bottom: 8.6%;
+  --screen-inset-left: 5.2%;
+  --screen-inset-right: 5.2%;
+
   position: relative;
   width: 100%;
-  aspect-ratio: 16 / 10;
-  border-radius: 16px;
+  aspect-ratio: 3 / 2;
+  border-radius: 0;
   overflow: hidden;
-  background: #050505;
-  padding: 10px;
-  box-shadow:
-    0 35px 70px -25px rgba(0, 0, 0, 0.9),
-    0 15px 35px -12px rgba(0, 0, 0, 0.7),
-    0 0 0 1px rgba(255, 255, 255, 0.05);
+  background: transparent;
+  padding: 0;
+  filter: drop-shadow(0 35px 70px rgba(0,0,0,0.85))
+          drop-shadow(0 15px 35px rgba(0,0,0,0.65));
   transition: transform 0.6s cubic-bezier(0.22, 1, 0.36, 1),
-    box-shadow 0.5s ease;
+    filter 0.5s ease;
+  border: none;
 }
 
 .row:hover .frame {
   transform: translateY(-6px) scale(1.01);
-  box-shadow:
-    0 50px 90px -30px rgba(255, 255, 255, 0.12),
-    0 25px 50px -15px rgba(0, 0, 0, 0.8),
-    0 0 0 1px rgba(255, 255, 255, 0.08);
+  filter: drop-shadow(0 50px 90px rgba(255, 255, 255, 0.1))
+          drop-shadow(0 25px 50px rgba(0, 0, 0, 0.9));
 }
 
-/* Image stage - REDUCED */
-.imageStage {
-  position: relative;
+/* ─── Tablet Frame PNG (screen.png) ─── z-index 3 = sits on TOP to create the bezel look */
+.tabletFrameImg {
+  position: absolute;
+  inset: 0;
   width: 100%;
   height: 100%;
+  z-index: 3;
+  pointer-events: none;
+  user-select: none;
+}
+
+/* ─── Image stage - sits INSIDE the tablet screen area ─── */
+.imageStage {
+  position: absolute;
+  top: var(--screen-inset-top);
+  bottom: var(--screen-inset-bottom);
+  left: var(--screen-inset-left);
+  right: var(--screen-inset-right);
   overflow: hidden;
-  background: #0a0a0a;
-  border-radius: 10px;
+  background: #050505;
+  z-index: 1;
+  border-radius: 6px;
+}
+
+/* Full-size (no tablet frame, used in modal) */
+.imageStageFull {
+  top: 0 !important;
+  left: 0 !important;
+  right: 0 !important;
+  bottom: 0 !important;
+  border-radius: 12px;
+  position: relative;
 }
 
 .projectImage {
@@ -147,8 +178,8 @@
   inset: 0;
   width: 100%;
   height: 100%;
-  object-fit: contain;
-  object-position: center center;
+  object-fit: cover;
+  object-position: top center;
   transition: opacity 0.9s ease-in-out, transform 7s ease-out;
 }
 
@@ -459,80 +490,80 @@
 .backdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.82);
-  backdrop-filter: blur(8px);
+  background: #000;
   z-index: 60;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  padding: clamp(16px, 4vw, 40px);
+  overflow-y: auto;
+  display: block;
 }
 
 .modal {
   width: 100%;
-  max-width: 900px;
-  max-height: 88vh;
-  overflow: auto;
-  border: 1px solid rgba(255, 255, 255, 0.13);
-  border-radius: 18px;
-  background:
-    linear-gradient(180deg, rgba(255, 255, 255, 0.018), rgba(255, 255, 255, 0)),
-    #0a0a0a;
-  padding: clamp(22px, 3.5vw, 36px);
-  box-shadow:
-    0 30px 80px -20px rgba(255, 255, 255, 0.1),
-    0 0 60px -10px rgba(255, 255, 255, 0.05);
-  position: relative;
+  min-height: 100vh;
+  max-width: 860px;
+  margin: 0 auto;
+  padding: clamp(40px, 6vw, 80px) clamp(24px, 5vw, 60px);
+  color: #fff;
 }
 
-.closeBtn {
-  position: absolute;
-  top: 16px;
-  right: 16px;
-  width: 32px;
-  height: 32px;
+.backBtn {
   display: inline-flex;
   align-items: center;
-  justify-content: center;
-  border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.16);
-  background: rgba(255, 255, 255, 0.045);
-  color: #ffffff;
-  cursor: pointer;
-  transition: border-color 0.25s ease, background 0.25s ease, box-shadow 0.25s ease;
-}
-
-.closeBtn:hover {
-  border-color: rgba(255, 255, 255, 0.5);
-  background: rgba(255, 255, 255, 0.09);
-  box-shadow: 0 0 14px -4px rgba(255, 255, 255, 0.5);
-}
-
-.modalSubtitle {
-  font-family: var(--font-condensed), 'Barlow Condensed', sans-serif;
-  font-size: 12px;
-  letter-spacing: 0.28em;
-  text-transform: uppercase;
+  gap: 8px;
+  font-size: 13px;
+  font-weight: 500;
+  letter-spacing: 0.04em;
   color: rgba(255, 255, 255, 0.55);
-  margin-bottom: 8px;
-  margin-left: 0;
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-bottom: 48px;
+  transition: color 0.2s ease;
+  padding: 0;
+}
+
+.backBtn:hover {
+  color: #ffffff;
+}
+
+.backArrow {
+  font-size: 16px;
+}
+
+.modalHeader {
+  margin-bottom: 24px;
+}
+
+.modalCategory {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.4);
+  margin-bottom: 12px;
 }
 
 .modalTitle {
-  font-family: var(--font-heading), 'Space Grotesk', sans-serif;
-  font-size: clamp(22px, 3.5vw, 30px);
-  font-weight: 600;
+  font-size: clamp(32px, 5vw, 56px);
+  font-weight: 700;
   color: #ffffff;
-  margin: 0 0 4px;
-  margin-left: 0;
+  line-height: 1.1;
+  margin: 0 0 12px;
+  letter-spacing: -0.02em;
+}
+
+.modalSubheading {
+  font-size: 16px;
+  color: rgba(255, 255, 255, 0.55);
+  line-height: 1.5;
+  margin: 0;
 }
 
 .modalTags {
   display: flex;
   flex-wrap: wrap;
-  gap: 7px;
-  margin-bottom: 22px;
-  margin-left: 0;
+  gap: 8px;
+  margin-bottom: 36px;
 }
 
 /* Modal gallery */
@@ -540,10 +571,10 @@
   position: relative;
   width: 100%;
   aspect-ratio: 16 / 9;
-  border-radius: 14px;
+  border-radius: 12px;
   overflow: hidden;
   background: #0a0a0a;
-  margin: 0 0 26px;
+  margin: 0 0 40px;
   border: 1px solid rgba(255, 255, 255, 0.08);
 }
 
@@ -556,12 +587,17 @@
   transform: scale(1.02);
 }
 
+.modalWriteup {
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  padding-top: 32px;
+  margin-bottom: 36px;
+}
+
 .modalParagraph {
-  font-family: var(--font-sans), 'Inter', sans-serif;
-  font-size: 14px;
-  line-height: 1.72;
-  color: rgba(255, 255, 255, 0.7);
-  margin: 0 0 13px;
+  font-size: 15px;
+  line-height: 1.8;
+  color: rgba(255, 255, 255, 0.65);
+  margin: 0 0 16px;
 }
 
 .modalParagraph strong {
@@ -571,10 +607,9 @@
 
 .modalLinks {
   display: flex;
-  gap: 11px;
+  gap: 12px;
   flex-wrap: wrap;
-  margin-top: 20px;
-  margin-left: 0;
+  padding-top: 8px;
 }
 
 /* ── View all projects CTA ── */
