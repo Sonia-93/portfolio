@@ -3,6 +3,7 @@
 import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
 import { useState } from "react";
+import { Github, ExternalLink } from "lucide-react";
 import styles from "./projects.module.css";
 
 import scree from "@/app/scree.png";
@@ -15,6 +16,8 @@ import code from "@/app/code.png";
 import codeFront from "@/app/codeFront.png";
 import rcaFront from "@/app/rcaFront.png";
 import rcaRight from "@/app/rcaRight.png";
+import gwizaFront from "@/app/gwizaFront.png";
+import gwizaRight from "@/app/gwizaRight.png";
 
 type Project = {
   id: string;
@@ -25,6 +28,8 @@ type Project = {
   defaultImage?: StaticImageData;
   hoverImage?: StaticImageData;
   writeup: string[];
+  githubUrl?: string;
+  liveUrl?: string;
 };
 
 const projects: Project[] = [
@@ -47,7 +52,7 @@ const projects: Project[] = [
     category: "Operations Platform",
     title: "StaffNet",
     subtitle: "RCA Staff Operations Portal",
-    tags: ["Next.js", "TypeScript", "PostgreSQL", "Prisma"],
+    tags: ["Express", "PostgreSQL", "OpenAI", "React"],
     defaultImage: staffnetFront,
     hoverImage: staffnet,
     writeup: [
@@ -75,7 +80,7 @@ const projects: Project[] = [
     category: "Education Technology",
     title: "CodeBridge",
     subtitle: "Coding Education Community",
-    tags: ["Next.js", "Node.js", "PostgreSQL", "Learning Platform"],
+    tags: ["TYPO3", "PHP", "MySQL", "JavaScript"],
     defaultImage: codeFront,
     hoverImage: code,
     writeup: [
@@ -90,6 +95,10 @@ const projects: Project[] = [
     title: "Gwiza AI",
     subtitle: "AI-Powered Recruitment Platform",
     tags: ["Next.js", "Node.js", "Express", "MongoDB", "REST API", "TypeScript"],
+    defaultImage: gwizaFront,
+    hoverImage: gwizaRight,
+    githubUrl: "#",
+    liveUrl: "#",
     writeup: [
       "Gwiza AI takes the guesswork out of hiring by automatically ranking applicants and surfacing the top 10–20 candidates.",
       "Each candidate comes with a detailed breakdown of their strengths, weaknesses, and the reasoning behind their ranking.",

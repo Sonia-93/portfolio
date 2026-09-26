@@ -62,7 +62,7 @@ const PROJECTS: Project[] = [
     category: "Operations Platform",
     title: "StaffNet",
     subtitle: "RCA Staff Operations Portal",
-    tags: ["Next.js", "TypeScript", "PostgreSQL", "Prisma", "Role Dashboards"],
+    tags: ["Express", "PostgreSQL", "OpenAI", "React"],
     short:
       "A digital operations system designed for RCA staff to ditch the paperwork. Manages student tickets, borrowed phones, and student funds all in one place — streamlining daily administrative tasks with a clean, intuitive interface that saves time and reduces errors.",
     photos: [
@@ -104,7 +104,7 @@ const PROJECTS: Project[] = [
     category: "Education Technology",
     title: "CodeBridge",
     subtitle: "Coding Education Community",
-    tags: ["Next.js", "TypeScript", "Node.js", "PostgreSQL", "Learning Platform"],
+    tags: ["TYPO3", "PHP", "MySQL", "JavaScript"],
     short:
       "A community-driven coding education platform that bridges the gap between beginners and mentors — featuring interactive tutorials, peer code reviews, project-based tracks, and live study rooms.",
     photos: [
