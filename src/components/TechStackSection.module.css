@@ -90,4 +90,10 @@
   color: rgba(255, 255, 255, 0.45);
   white-space: nowrap;
   letter-spacing: 0.02em;
+  transition: color 0.2s ease;
+}
+
+.item:hover .name {
+  color: #ffffff;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
 }
