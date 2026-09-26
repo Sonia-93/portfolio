@@ -3,7 +3,7 @@
 import Link from "next/link";
 import Image, { StaticImageData } from "next/image";
 import { useState } from "react";
-import { Github, ExternalLink } from "lucide-react";
+import { GitBranch, ExternalLink } from "lucide-react";
 import styles from "./projects.module.css";
 
 import scree from "@/app/scree.png";
@@ -172,7 +172,7 @@ function ProjectCard({ project, onSelect }: { project: Project; onSelect: (p: Pr
           <div className={styles.cardLinks} onClick={(e) => e.stopPropagation()}>
             {project.githubUrl && (
               <a href={project.githubUrl} target="_blank" rel="noreferrer" className={styles.iconLink} aria-label="GitHub">
-                <Github size={15} />
+                <GitBranch size={15} />
               </a>
             )}
             {project.liveUrl && (
@@ -233,7 +233,7 @@ function ProjectDetail({ project, onBack }: { project: Project; onBack: () => vo
         <div className={styles.detailLinks}>
           {project.githubUrl && (
             <a href={project.githubUrl} target="_blank" rel="noreferrer" className={styles.detailBtn}>
-              <Github size={15} /> Source Code
+              <GitBranch size={15} /> Source Code
             </a>
           )}
           {project.liveUrl && (
