@@ -31,7 +31,7 @@
   margin-bottom: 60px;
   padding: 0 clamp(20px, 5vw, 60px);
   max-width: 1400px;
-  margin-left: auto;
+  margin-left: 500px;
   margin-right: auto;
   text-shadow:
     0 0 18px rgba(255, 255, 255, 0.25),
