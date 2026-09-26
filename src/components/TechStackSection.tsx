@@ -28,6 +28,7 @@ export default function TechStackSection() {
   return (
     <section className={styles.section} id="skills">
       <div className={styles.label}>Technologies I work with</div>
+      <div className={styles.bigTitle}>Technical Arsenal</div>
       <div className={styles.track}>
         <div className={styles.marquee}>
           {doubled.map((tech, i) => (
