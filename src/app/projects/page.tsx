@@ -228,6 +228,21 @@ function ProjectDetail({ project, onBack }: { project: Project; onBack: () => vo
           <p key={i} className={styles.detailParagraph}>{p}</p>
         ))}
       </div>
+
+      {(project.githubUrl || project.liveUrl) && (
+        <div className={styles.detailLinks}>
+          {project.githubUrl && (
+            <a href={project.githubUrl} target="_blank" rel="noreferrer" className={styles.detailBtn}>
+              <Github size={15} /> Source Code
+            </a>
+          )}
+          {project.liveUrl && (
+            <a href={project.liveUrl} target="_blank" rel="noreferrer" className={`${styles.detailBtn} ${styles.detailBtnPrimary}`}>
+              <ExternalLink size={15} /> Live Demo
+            </a>
+          )}
+        </div>
+      )}
     </div>
   );
 }
