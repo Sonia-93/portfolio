@@ -167,7 +167,21 @@ function ProjectCard({ project, onSelect }: { project: Project; onSelect: (p: Pr
             <span key={t} className={styles.tag}>{t}</span>
           ))}
         </div>
-        <span className={styles.viewStory}>View Story →</span>
+        <div className={styles.cardFooter}>
+          <span className={styles.viewStory}>View Story →</span>
+          <div className={styles.cardLinks} onClick={(e) => e.stopPropagation()}>
+            {project.githubUrl && (
+              <a href={project.githubUrl} target="_blank" rel="noreferrer" className={styles.iconLink} aria-label="GitHub">
+                <Github size={15} />
+              </a>
+            )}
+            {project.liveUrl && (
+              <a href={project.liveUrl} target="_blank" rel="noreferrer" className={styles.iconLink} aria-label="Live Demo">
+                <ExternalLink size={15} />
+              </a>
+            )}
+          </div>
+        </div>
       </div>
     </div>
   );
@@ -228,7 +242,7 @@ export default function ProjectsPage() {
       ) : (
         <>
           <div className={styles.header}>
-            <Link href="/" className={styles.backLink}>← Back to Home</Link>
+            <Link href="/#projects" className={styles.backLink}>← Back to Projects</Link>
             <h1 className={styles.title}>Projects Archive</h1>
             <p className={styles.desc}>
               A collection of projects built across backend systems, AI, and product development.
