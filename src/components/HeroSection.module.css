@@ -265,7 +265,7 @@
 .headlineText {
   display: block;
   font-size: clamp(52px, 8vw, 100px);
-  font-weight: 300;
+  font-weight: 500;
   letter-spacing: -0.005em;
   text-transform: none;
   color: #ffffff;
@@ -282,7 +282,7 @@
 .headlineTextWhite {
   display: block;
   font-size: clamp(52px, 8vw, 100px);
-  font-weight: 400;
+  font-weight: 600;
   letter-spacing: -0.002em;
   text-transform: none;
   color: #ffffff;
