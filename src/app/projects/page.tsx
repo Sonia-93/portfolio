@@ -18,6 +18,8 @@ import rcaFront from "@/app/rcaFront.png";
 import rcaRight from "@/app/rcaRight.png";
 import gwizaFront from "@/app/gwizaFront.png";
 import gwizaRight from "@/app/gwizaRight.png";
+import herFront from "@/app/herFront.png";
+import herRight from "@/app/herRight.png";
 
 type Project = {
   id: string;
@@ -125,6 +127,8 @@ const projects: Project[] = [
     title: "HerIngress",
     subtitle: "AI-Powered Platform for Women Empowerment",
     tags: ["React", "AI", "Real-time Chat", "Node.js", "MongoDB"],
+    defaultImage: herFront,
+    hoverImage: herRight,
     writeup: [
       "HerIngress is an AI-powered platform built to empower women across every field.",
       "It features inspiring role model stories, field-specific opportunities, and real-time group chats where girls collaborate and invite mentors.",
