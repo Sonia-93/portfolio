@@ -44,7 +44,7 @@ const MILESTONES = [
     bigNumber: "03",
     title: "Internship · Velora",
     description:
-      "Completed an internship at Velora where I worked alongside a group of backend developers — building production APIs, databases, and services together on real engineering projects.",
+      "Currently doing an internship at Velora, working alongside a group of backend developers — building production APIs, databases, and services together on real engineering projects.",
   },
 ];
 
