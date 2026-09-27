@@ -10,24 +10,28 @@ const testimonials = [
     name: "Alex M.",
     role: "CTO, TechStartup",
     initials: "AM",
+    photo: "",
   },
   {
     quote: "Working with Sonia was a pleasure. She built our entire API layer from scratch — well-documented, fast, and exactly what we needed.",
     name: "Jordan K.",
     role: "Product Manager, Velora",
     initials: "JK",
+    photo: "",
   },
   {
     quote: "Sonia has a rare combination of technical depth and communication skills. She understood our requirements immediately and delivered ahead of schedule.",
     name: "Sarah L.",
     role: "Lead Developer, CodeBridge",
     initials: "SL",
+    photo: "",
   },
   {
     quote: "The database architecture Sonia designed for us handles thousands of concurrent users without breaking a sweat. Impressive work.",
     name: "Daniel R.",
     role: "Founder, WasteNet",
     initials: "DR",
+    photo: "",
   },
 ];
 
@@ -93,7 +97,14 @@ export default function TestimonialsSection() {
             <span className={styles.quoteIcon}>"</span>
             <p className={styles.quote}>{testimonials[active].quote}</p>
             <div className={styles.author}>
-              <div className={styles.avatar}>{testimonials[active].initials}</div>
+              <div className={styles.avatar}>
+                {testimonials[active].photo ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={testimonials[active].photo} alt={testimonials[active].name} className={styles.avatarImg} />
+                ) : (
+                  <span>{testimonials[active].initials}</span>
+                )}
+              </div>
               <div>
                 <p className={styles.name}>{testimonials[active].name}</p>
                 <p className={styles.role}>{testimonials[active].role}</p>
