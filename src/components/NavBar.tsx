@@ -8,10 +8,10 @@ import styles from "./NavBar.module.css";
 
 const links = [
   { icon: Home, href: "/", label: "Home", section: "home" },
-  { icon: User, href: "/about", label: "About", section: "about" },
+  { icon: User, href: "/#about", label: "About", section: "about" },
+  { icon: Code2, href: "/#skills", label: "Skills", section: "skills" },
   { icon: FolderOpen, href: "/projects", label: "Projects", section: "projects" },
-  { icon: Code2, href: "/skills", label: "Skills", section: "skills" },
-  { icon: Mail, href: "/contact", label: "Contact", section: "contact" },
+  { icon: Mail, href: "/#contact", label: "Contact", section: "contact" },
 ];
 
 export default function NavBar() {

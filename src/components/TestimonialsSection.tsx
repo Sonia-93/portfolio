@@ -94,10 +94,6 @@ export default function TestimonialsSection() {
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             className={styles.card}
           >
-            {/* Corner brackets */}
-            <span className={`${styles.corner} ${styles.cornerTL}`} />
-            <span className={`${styles.corner} ${styles.cornerBR}`} />
-
             {/* Top row: photo + name/role + github */}
             <div className={styles.cardTop}>
               <div className={styles.photoWrap}>
