@@ -16,7 +16,6 @@ import {
   Rocket,
   ChevronLeft,
   ChevronRight,
-  Server,
 } from "lucide-react";
 import styles from "./BackendProcessSection.module.css";
 
@@ -226,14 +225,6 @@ export default function BackendProcessSection() {
         </motion.div>
 
         <div className={styles.titleRow}>
-          <motion.div
-            className={styles.titleIconWrap}
-            initial={{ opacity: 0, scale: 0.6, rotate: -10 }}
-            animate={sectionInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
-            transition={{ duration: 0.8, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
-          >
-            <Server className={styles.titleIcon} strokeWidth={1.6} />
-          </motion.div>
           <h2 className={styles.sectionTitle}>
             {titleText || sectionInView ? (
               <>
