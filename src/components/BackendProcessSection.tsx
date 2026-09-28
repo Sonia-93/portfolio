@@ -288,7 +288,6 @@ export default function BackendProcessSection() {
           {STEPS.map((s, i) => {
             const Icon = s.icon;
             const isActive = i === activeIdx;
-            const isCompleted = i < activeIdx;
             return (
               <motion.div
                 key={s.id}
@@ -311,24 +310,9 @@ export default function BackendProcessSection() {
                 <div
                   className={`${styles.stepCircle} ${
                     isActive ? styles.stepCircleActive : ""
-                  } ${isCompleted ? styles.stepCircleCompleted : ""}`}
+                  }`}
                 >
-                  {isCompleted ? (
-                    <svg
-                      width="18"
-                      height="18"
-                      viewBox="0 0 24 24"
-                      fill="none"
-                      stroke="currentColor"
-                      strokeWidth="3"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      <polyline points="20 6 9 17 4 12" />
-                    </svg>
-                  ) : (
-                    <Icon className={styles.stepIcon} strokeWidth={2} />
-                  )}
+                  <Icon className={styles.stepIcon} strokeWidth={2} />
                 </div>
 
                 <div className={styles.stepText}>
