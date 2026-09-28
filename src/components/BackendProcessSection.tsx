@@ -16,6 +16,7 @@ import {
   Rocket,
   ChevronLeft,
   ChevronRight,
+  Server,
 } from "lucide-react";
 import styles from "./BackendProcessSection.module.css";
 
@@ -36,8 +37,6 @@ type Step = {
   subtitle: string;
   description: string;
   points: string[];
-  filename: string;
-  codeLines: { text: string; cls?: string }[];
 };
 
 const STEPS: Step[] = [
@@ -46,32 +45,13 @@ const STEPS: Step[] = [
     num: "01",
     icon: ClipboardList,
     title: "Requirements & Discovery",
-    subtitle: "Map business goals to tech specs",
+    subtitle: "Map goals to specs",
     description:
-      "Before writing a single line of code I sit down with stakeholders and map out exactly what the system needs to do — users, roles, core flows, expected traffic, and non-negotiable constraints. The goal here is to make impossible decisions early, not late.",
+      "Map users, roles, core flows, traffic estimates, and constraints with stakeholders.",
     points: [
-      "<strong>Stakeholder interviews</strong> — identify core users, roles, and high-priority workflows",
-      "<strong>Traffic &amp; scale estimates</strong> — rough QPS, concurrent users, data growth per month",
-      "<strong>Acceptance criteria</strong> — every feature written as testable, measurable requirements",
-      "<strong>Constraints &amp; trade-offs</strong> — realtime vs consistency, budget, timeline, compliance",
-    ],
-    filename: "requirements.md",
-    codeLines: [
-      { text: "# Backend Spec — User Service", cls: "codeComment" },
-      { text: "" },
-      { text: "## Actors & Roles", cls: "codeComment" },
-      { text: "ROLES = [", cls: "codeKeyword" },
-      { text: '  "GUEST"     # browse public data', cls: "codeString" },
-      { text: '  "USER"      # own profile, orders', cls: "codeString" },
-      { text: '  "ADMIN"     # full CRUD, reports', cls: "codeString" },
-      { text: "]" },
-      { text: "" },
-      { text: "## Non-Functional Requirements", cls: "codeComment" },
-      { text: "NFR = {" },
-      { text: "  latency_p95: 300,    # ms", cls: "codeNum" },
-      { text: "  availability: 99.9,  # %", cls: "codeNum" },
-      { text: "  rps_target: 500", cls: "codeNum" },
-      { text: "}" },
+      "<strong>Stakeholder interviews</strong> — users, roles, workflows",
+      "<strong>Traffic estimates</strong> — QPS, concurrency, growth",
+      "<strong>Acceptance criteria</strong> — testable requirements",
     ],
   },
   {
@@ -79,28 +59,13 @@ const STEPS: Step[] = [
     num: "02",
     icon: Network,
     title: "System Architecture",
-    subtitle: "Pick the right shape for the job",
+    subtitle: "Blueprint the topology",
     description:
-      "Now I translate the requirements into a blueprint. Monolith vs microservices, where state lives, which services talk to which, and how the system fails gracefully. Diagrams and quick prototypes come before production code.",
+      "Modular monolith first, services later. Define how components communicate and fail.",
     points: [
-      "<strong>Architecture style</strong> — modular monolith first; split services only when boundaries are obvious",
-      "<strong>Communication</strong> — sync (HTTP/gRPC) vs async queues (Redis/RabbitMQ) for background work",
-      "<strong>Service boundaries</strong> — single-responsibility modules with explicit public APIs",
-      "<strong>Fault-tolerance</strong> — retries, circuit breakers, idempotency keys baked in from day one",
-    ],
-    filename: "architecture.ts",
-    codeLines: [
-      { text: "// High-level system topology", cls: "codeComment" },
-      { text: "" },
-      { text: "const system = {", cls: "codeKeyword" },
-      { text: "  gateway:   'Nginx / Cloudflare',", cls: "codeString" },
-      { text: "  apiLayer:  'NestJS (HTTP + WebSockets)',", cls: "codeString" },
-      { text: "  workers:   'BullMQ queues for email + ML jobs',", cls: "codeString" },
-      { text: "  cache:     'Redis 7 (sessions + hot reads)',", cls: "codeString" },
-      { text: "  db:        'PostgreSQL 16 (primary + replica)',", cls: "codeString" },
-      { text: "  storage:   'S3-compatible object store',", cls: "codeString" },
-      { text: "  observability: 'Prometheus + Grafana + Sentry',", cls: "codeString" },
-      { text: "};", cls: "codePunct" },
+      "<strong>Architecture style</strong> — modular monolith → services",
+      "<strong>Communication</strong> — HTTP/gRPC + async queues",
+      "<strong>Fault-tolerance</strong> — retries, circuit breakers",
     ],
   },
   {
@@ -108,33 +73,13 @@ const STEPS: Step[] = [
     num: "03",
     icon: Database,
     title: "Database Design",
-    subtitle: "Schema shapes the entire app",
+    subtitle: "Schema shapes everything",
     description:
-      "A clean schema saves months of pain later. I start with the ER diagram, normalize tables to 3NF, then strategically denormalize for reads. Indexes, constraints, and migration strategy are locked in before the first INSERT.",
+      "Clean ERD, 3NF normalization, proper indexes, reversible migrations.",
     points: [
-      "<strong>Schema design</strong> — entities, relationships, enums, and correct nullability",
-      "<strong>Indexes &amp; query plan</strong> — EXPLAIN every query the app will issue at scale",
-      "<strong>Migrations</strong> — versioned, reversible, zero-downtime when possible",
-      "<strong>Seed &amp; fixtures</strong> — realistic test data so dev envs behave like production",
-    ],
-    filename: "schema.prisma",
-    codeLines: [
-      { text: "model User {", cls: "codeKeyword" },
-      { text: "  id        String   @id @default(cuid())", cls: "codeVar" },
-      { text: "  email     String   @unique", cls: "codeVar" },
-      { text: "  role      Role     @default(USER)", cls: "codeVar" },
-      { text: "  createdAt DateTime @default(now())", cls: "codeVar" },
-      { text: "  orders    Order[]", cls: "codeType" },
-      { text: "" },
-      { text: "  @@index([email, role])", cls: "codeFn" },
-      { text: "}", cls: "codePunct" },
-      { text: "" },
-      { text: "model Order {", cls: "codeKeyword" },
-      { text: "  id     String @id @default(cuid())", cls: "codeVar" },
-      { text: "  userId String", cls: "codeVar" },
-      { text: "  user   User   @relation(fields: [userId])", cls: "codeType" },
-      { text: "  status Status @default(PENDING)", cls: "codeVar" },
-      { text: "}", cls: "codePunct" },
+      "<strong>Schema</strong> — entities, relations, nullability",
+      "<strong>Indexes</strong> — EXPLAIN every hot query",
+      "<strong>Migrations</strong> — versioned, reversible",
     ],
   },
   {
@@ -142,36 +87,13 @@ const STEPS: Step[] = [
     num: "04",
     icon: Layers,
     title: "API & Business Logic",
-    subtitle: "Controllers → services → repositories",
+    subtitle: "Controller → Service → Repo",
     description:
-      "I keep business logic isolated from transport layers so HTTP, gRPC, and a CLI can all drive the same code. Strict layering means tests are fast and replacing a framework doesn't require rewriting the app.",
+      "Business logic in services, isolated from transport so HTTP/CLI/gRPC share code.",
     points: [
-      "<strong>Layered architecture</strong> — routes/controller → service → repository, no cross-leaks",
-      "<strong>Contract-first</strong> — OpenAPI or tRPC schema written before handlers",
-      "<strong>Validation</strong> — DTOs with class-validator / zod at every trust boundary",
-      "<strong>Error taxonomy</strong> — typed domain errors map cleanly to HTTP 4xx / 5xx",
-    ],
-    filename: "user.service.ts",
-    codeLines: [
-      { text: "@Injectable()", cls: "codeFn" },
-      { text: "export class UserService {", cls: "codeKeyword" },
-      { text: "  constructor(", cls: "codePunct" },
-      { text: "    private readonly users: UserRepository,", cls: "codeType" },
-      { text: "    private readonly hash: HashService,", cls: "codeType" },
-      { text: "    private readonly events: EventBus,", cls: "codeType" },
-      { text: "  ) {}", cls: "codePunct" },
-      { text: "" },
-      { text: "  async register(dto: RegisterDto) {", cls: "codeFn" },
-      { text: "    const exists = await this.users.findByEmail(dto.email);", cls: "codeVar" },
-      { text: "    if (exists) throw new UserAlreadyExistsError();", cls: "codeKeyword" },
-      { text: "    const user = await this.users.create({", cls: "codeVar" },
-      { text: "      ...dto,", cls: "codeVar" },
-      { text: "      passwordHash: await this.hash.make(dto.password),", cls: "codeVar" },
-      { text: "    });", cls: "codePunct" },
-      { text: "    await this.events.publish(new UserCreated(user.id));", cls: "codeFn" },
-      { text: "    return user;", cls: "codeKeyword" },
-      { text: "  }", cls: "codePunct" },
-      { text: "}", cls: "codePunct" },
+      "<strong>Layering</strong> — routes → services → repos",
+      "<strong>Validation</strong> — zod / class-validator",
+      "<strong>Typed errors</strong> — domain → HTTP codes",
     ],
   },
   {
@@ -179,30 +101,13 @@ const STEPS: Step[] = [
     num: "05",
     icon: ShieldCheck,
     title: "Auth & Security",
-    subtitle: "Defense in depth, every request",
+    subtitle: "Defense in depth",
     description:
-      "Security is not a final pass — it's baked into each layer. Signed short-lived access tokens, refresh tokens in httpOnly cookies, RBAC at both route and service levels, plus the OWASP Top 10 run through on every endpoint.",
+      "Short-lived tokens, RBAC at both layers, OWASP Top 10 on every endpoint.",
     points: [
-      "<strong>Authentication</strong> — JWT + refresh rotation or httpOnly sessions, rate-limited login",
-      "<strong>Authorization</strong> — role &amp; attribute checks both in routes AND inside services",
-      "<strong>Input hygiene</strong> — parameterized queries, CSP, CORS, CSRF tokens for forms",
-      "<strong>Secrets</strong> — env-managed via Vault/.env, never committed, rotated on incidents",
-    ],
-    filename: "auth.guard.ts",
-    codeLines: [
-      { text: "@Injectable()", cls: "codeFn" },
-      { text: "export class JwtGuard implements CanActivate {", cls: "codeKeyword" },
-      { text: "  canActivate(ctx: ExecutionContext) {", cls: "codeFn" },
-      { text: "    const req = ctx.switchToHttp().getRequest();", cls: "codeVar" },
-      { text: "    const token = this.extractBearer(req);", cls: "codeVar" },
-      { text: "    const payload = this.jwt.verify(token, {", cls: "codeVar" },
-      { text: "      algorithms: ['ES256'],", cls: "codeString" },
-      { text: "      issuer: 'api.myapp',", cls: "codeString" },
-      { text: "    });", cls: "codePunct" },
-      { text: "    req.user = payload.sub;", cls: "codeVar" },
-      { text: "    return true;", cls: "codeKeyword" },
-      { text: "  }", cls: "codePunct" },
-      { text: "}", cls: "codePunct" },
+      "<strong>Authentication</strong> — JWT + refresh rotation",
+      "<strong>Authorization</strong> — role + attribute checks",
+      "<strong>Input hygiene</strong> — parameterized queries, CSP",
     ],
   },
   {
@@ -210,33 +115,13 @@ const STEPS: Step[] = [
     num: "06",
     icon: TestTube2,
     title: "Testing & Optimization",
-    subtitle: "Verify, measure, then speed up",
+    subtitle: "Verify, measure, speed up",
     description:
-      "I write tests where they pay for themselves: unit tests for pure logic, integration tests for service boundaries, and a small set of smoke tests that run in CI. After correctness comes profiling — slow queries, cold paths, and memory leaks get hunted down with real data.",
+      "Tests where they pay, CI gates on PRs, then profiling for queries and cold paths.",
     points: [
-      "<strong>Testing pyramid</strong> — 70% unit, 25% integration, 5% e2e; flaky tests are deleted or fixed",
-      "<strong>CI pipelines</strong> — lint → typecheck → test → build, on every PR before merge",
-      "<strong>Performance</strong> — DB query logs, flamegraphs, cache hit ratios, k6 load tests",
-      "<strong>Observability</strong> — structured logs, metrics dashboards, APM tracing per request",
-    ],
-    filename: "user.service.spec.ts",
-    codeLines: [
-      { text: "describe('UserService.register', () => {", cls: "codeFn" },
-      { text: "  it('creates a user and emits event', async () => {", cls: "codeFn" },
-      { text: "    const { users, hash, events, service } = setup();", cls: "codeVar" },
-      { text: "    users.findByEmail.resolves(null);", cls: "codeVar" },
-      { text: "    hash.make.resolves('$2a$10$...salted');", cls: "codeString" },
-      { text: "" },
-      { text: "    const user = await service.register({", cls: "codeVar" },
-      { text: "      email: 'a@x.com', password: 'secret123',", cls: "codeString" },
-      { text: "    });", cls: "codePunct" },
-      { text: "" },
-      { text: "    expect(users.create).toHaveBeenCalled();", cls: "codeFn" },
-      { text: "    expect(events.publish).toHaveBeenCalledWith(", cls: "codeFn" },
-      { text: "      expect.any(UserCreated),", cls: "codeType" },
-      { text: "    );", cls: "codePunct" },
-      { text: "  });", cls: "codePunct" },
-      { text: "});", cls: "codePunct" },
+      "<strong>Pyramid</strong> — unit 70% · integration 25% · e2e 5%",
+      "<strong>CI gates</strong> — lint → typecheck → test → build",
+      "<strong>Observability</strong> — logs, metrics, traces",
     ],
   },
   {
@@ -246,28 +131,11 @@ const STEPS: Step[] = [
     title: "Deploy & Operate",
     subtitle: "Containers, pipelines, rollbacks",
     description:
-      "Every service ships inside a container with a Dockerfile and docker-compose for local parity. CI builds the image, pushes the registry, and rolls out to staging first. Production deployments are gradual, with automatic rollback on health-check failure.",
+      "Multi-stage containers, infra-as-code, staging-first gradual rolls with auto-rollback.",
     points: [
-      "<strong>Containerize</strong> — multi-stage Dockerfiles, distroless/Alpine, non-root user",
-      { text: "<strong>Infra as code</strong> — Terraform/Pulumi, reproducible environments", cls: "" } as any,
-      "<strong>Zero-downtime deploys</strong> — rolling updates, health probes, automated rollback",
-      "<strong>Runbooks &amp; alerts</strong> — on-call paging with dashboards and known-incident playbooks",
-    ],
-    filename: "Dockerfile",
-    codeLines: [
-      { text: "# syntax=docker/dockerfile:1.7", cls: "codeComment" },
-      { text: "FROM node:20-alpine AS build", cls: "codeKeyword" },
-      { text: "WORKDIR /app", cls: "codeVar" },
-      { text: "COPY package*.json ./", cls: "codeKeyword" },
-      { text: "RUN npm ci --only=production=false", cls: "codeFn" },
-      { text: "COPY . .", cls: "codeKeyword" },
-      { text: "RUN npm run build", cls: "codeFn" },
-      { text: "" },
-      { text: "FROM node:20-alpine AS runtime", cls: "codeKeyword" },
-      { text: "USER node", cls: "codeKeyword" },
-      { text: "COPY --from=build --chown=node /app/dist ./dist", cls: "codeKeyword" },
-      { text: "EXPOSE 3000", cls: "codeKeyword" },
-      { text: 'CMD ["node", "dist/main.js"]', cls: "codeString" },
+      "<strong>Containerize</strong> — multi-stage Docker, non-root",
+      "<strong>Infra as code</strong> — Terraform/Pulumi",
+      "<strong>Zero-downtime</strong> — rolling + health probes",
     ],
   },
 ];
@@ -357,32 +225,41 @@ export default function BackendProcessSection() {
           My Playbook
         </motion.div>
 
-        <h2 className={styles.sectionTitle}>
-          {titleText || sectionInView ? (
-            <>
-              {titleText}
-              {!titleDone && sectionInView && (
-                <span
-                  style={{
-                    display: "inline-block",
-                    width: 4,
-                    height: "0.9em",
-                    background: "#ffffff",
-                    marginLeft: 8,
-                    verticalAlign: "baseline",
-                    boxShadow: "0 0 10px rgba(255,255,255,0.9)",
-                    borderRadius: 2,
-                    animation: "blinkCursorBP 0.75s ease-in-out infinite",
-                  }}
-                />
-              )}
-            </>
-          ) : null}
-        </h2>
+        <div className={styles.titleRow}>
+          <motion.div
+            className={styles.titleIconWrap}
+            initial={{ opacity: 0, scale: 0.6, rotate: -10 }}
+            animate={sectionInView ? { opacity: 1, scale: 1, rotate: 0 } : {}}
+            transition={{ duration: 0.8, delay: 0.05, ease: [0.22, 1, 0.36, 1] }}
+          >
+            <Server className={styles.titleIcon} strokeWidth={1.6} />
+          </motion.div>
+          <h2 className={styles.sectionTitle}>
+            {titleText || sectionInView ? (
+              <>
+                {titleText}
+                {!titleDone && sectionInView && (
+                  <span
+                    style={{
+                      display: "inline-block",
+                      width: 4,
+                      height: "0.9em",
+                      background: "#ffffff",
+                      marginLeft: 8,
+                      verticalAlign: "baseline",
+                      boxShadow: "0 0 10px rgba(255,255,255,0.9)",
+                      borderRadius: 2,
+                      animation: "blinkCursorBP 0.75s ease-in-out infinite",
+                    }}
+                  />
+                )}
+              </>
+            ) : null}
+          </h2>
+        </div>
       </div>
 
       <div className={styles.layout}>
-        {/* ─── STEPS COLUMN ─── */}
         <div ref={stepsWrapRef} className={styles.stepsWrap}>
           <svg className={styles.stepsSvg} preserveAspectRatio="none">
             <line
@@ -469,7 +346,6 @@ export default function BackendProcessSection() {
           })}
         </div>
 
-        {/* ─── DETAIL PANEL ─── */}
         <div className={styles.detailWrap}>
           <AnimatePresence mode="wait">
             <motion.div
@@ -516,34 +392,6 @@ export default function BackendProcessSection() {
                       />
                     </motion.div>
                   ))}
-                </div>
-
-                <div className={styles.codeBlock}>
-                  <div className={styles.codeHeader}>
-                    <div className={styles.codeDots}>
-                      <span className={styles.codeDot} />
-                      <span className={styles.codeDot} />
-                      <span className={styles.codeDot} />
-                    </div>
-                    <div className={styles.codeFile}>{activeStep.filename}</div>
-                    <div style={{ width: 36 }} />
-                  </div>
-                  <div className={styles.codeBody}>
-                    {activeStep.codeLines.map((ln, i) => (
-                      <motion.span
-                        key={i}
-                        className={`${styles.codeLine} ${ln.cls ? styles[ln.cls] : ""}`}
-                        initial={{ opacity: 0, x: -6 }}
-                        animate={{ opacity: 1, x: 0 }}
-                        transition={{
-                          duration: 0.35,
-                          delay: 0.25 + i * 0.03,
-                        }}
-                      >
-                        {ln.text || "\u00A0"}
-                      </motion.span>
-                    ))}
-                  </div>
                 </div>
               </div>
 
