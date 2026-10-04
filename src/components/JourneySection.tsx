@@ -114,20 +114,19 @@ export default function JourneySection() {
 
   const labelShown = sectionInView;
 
-  // ── Step 2: AFTER title finishes typing → start car 0 → 1 (10s) ──
+  // ── Step 2: Start car as soon as section is in view (alongside typing) ──
   const journeyProgress = useMotionValue(0);
 
   useEffect(() => {
-    if (!titleDone) return;
-    // ALWAYS restart from 0 every time typing finishes → no "jump to midpoint!
+    if (!sectionInView) return;
     journeyProgress.jump(0);
     const controls = animate(journeyProgress, 1, {
-      duration: 10,
+      duration: 5,
       ease: "easeInOut",
       delay: 0.25,
     });
     return controls.stop;
-  }, [titleDone, journeyProgress]);
+  }, [sectionInView, journeyProgress]);
 
   const journeyPct = useTransform(journeyProgress, (v) => `${v * 100}%`);
 

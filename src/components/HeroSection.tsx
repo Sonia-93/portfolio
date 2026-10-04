@@ -190,8 +190,8 @@ function OrbitalRings() {
 
 export default function HeroSection() {
   const { date, time, mounted } = useLiveDateTime();
-  const { displayed: text1, done: done1 } = useTypingEffect("Hi there", 700, 70, 55, true);
-  const { displayed: text2, done: done2 } = useTypingEffect("I am Sonia", 300, 70, 55, done1);
+  const { displayed: text1, done: done1 } = useTypingEffect("Hi there", 200, 40, 20, true);
+  const { displayed: text2, done: done2 } = useTypingEffect("I am Sonia", 100, 40, 20, done1);
 
   const typingFullyDone = done1 && done2;
 

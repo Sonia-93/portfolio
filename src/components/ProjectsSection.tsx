@@ -297,7 +297,7 @@ function ProjectRow({
         initial={{ opacity: 0, x: flipped ? 80 : -80, scale: 0.92 }}
         animate={reveal ? { opacity: 1, x: 0, scale: 1 } : {}}
         transition={{
-          duration: 0.95,
+          duration: 0.5,
           delay: 0.02,
           ease: [0.22, 1, 0.36, 1],
         }}
@@ -323,8 +323,8 @@ function ProjectRow({
         initial={{ opacity: 0, x: flipped ? -80 : 80, scale: 0.92 }}
         animate={reveal ? { opacity: 1, x: 0, scale: 1 } : {}}
         transition={{
-          duration: 1.0,
-          delay: 0.28,
+          duration: 0.5,
+          delay: 0.12,
           ease: [0.22, 1, 0.36, 1],
         }}
       >
@@ -344,7 +344,7 @@ function ProjectRow({
           className={styles.category}
           initial={{ opacity: 0, y: 10 }}
           animate={contentInnerReveal ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.6, delay: 0.55 }}
+          transition={{ duration: 0.4, delay: 0.2 }}
         >
           {project.category}
         </motion.span>
@@ -353,7 +353,7 @@ function ProjectRow({
           className={styles.projectTitle}
           initial={{ opacity: 0, y: 12 }}
           animate={contentInnerReveal ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.7, delay: 0.62 }}
+          transition={{ duration: 0.4, delay: 0.26 }}
         >
           {project.title}
         </motion.h3>
@@ -362,7 +362,7 @@ function ProjectRow({
           className={styles.projectSubtitle}
           initial={{ opacity: 0, y: 10 }}
           animate={contentInnerReveal ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.65, delay: 0.68 }}
+          transition={{ duration: 0.4, delay: 0.32 }}
         >
           {project.subtitle}
         </motion.div>
@@ -371,7 +371,7 @@ function ProjectRow({
           className={styles.description}
           initial={{ opacity: 0, y: 16 }}
           animate={contentInnerReveal ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.8, delay: 0.74 }}
+          transition={{ duration: 0.5, delay: 0.38 }}
         >
           {project.short}
         </motion.p>
@@ -383,7 +383,7 @@ function ProjectRow({
               className={styles.tag}
               initial={{ opacity: 0, y: 6 }}
               animate={contentInnerReveal ? { opacity: 1, y: 0 } : {}}
-              transition={{ delay: 0.84 + i * 0.045, duration: 0.5 }}
+              transition={{ delay: 0.44 + i * 0.03, duration: 0.35 }}
             >
               {t}
             </motion.span>
