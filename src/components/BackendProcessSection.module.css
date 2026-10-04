@@ -4,8 +4,9 @@
 }
 
 .header {
-  max-width: 1100px;
+  max-width: 600px;
   margin: 0 auto 60px;
+  text-align: center;
 }
 
 .label {
@@ -31,258 +32,61 @@
     0 0 40px rgba(255, 255, 255, 0.1);
 }
 
-.layout {
-  max-width: 1100px;
+.list {
+  max-width: 480px;
   margin: 0 auto;
-  display: grid;
-  grid-template-columns: 260px 1fr;
-  gap: 32px;
-  align-items: start;
-}
-
-/* ── Step list ── */
-.stepList {
   display: flex;
   flex-direction: column;
-  gap: 4px;
-}
-
-.stepBtn {
   position: relative;
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  background: transparent;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  text-align: left;
-  transition: background 0.2s ease;
-  overflow: hidden;
 }
 
-.stepBtn:hover {
-  background: rgba(255, 255, 255, 0.04);
-}
-
-.stepBtnActive {
-  background: rgba(255, 255, 255, 0.06);
-}
-
-.stepNum {
-  font-size: 11px;
-  font-weight: 600;
-  color: rgba(255, 255, 255, 0.3);
-  letter-spacing: 0.1em;
-  min-width: 24px;
-  flex-shrink: 0;
-}
-
-.stepBtnActive .stepNum {
-  color: rgba(255, 255, 255, 0.7);
-}
-
-.stepBtnTitle {
-  font-size: 13px;
-  font-weight: 500;
-  color: rgba(255, 255, 255, 0.45);
-  line-height: 1.3;
-}
-
-.stepBtnActive .stepBtnTitle {
-  color: #ffffff;
-  text-shadow: 0 0 12px rgba(255, 255, 255, 0.5);
-}
-
-.activeLine {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
-  width: 2px;
-  background: #ffffff;
-  box-shadow: 0 0 8px rgba(255, 255, 255, 0.8);
-  border-radius: 0 2px 2px 0;
-}
-
-/* ── Card ── */
-.card {
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
-  border-radius: 16px;
-  padding: clamp(24px, 3vw, 40px);
-}
-
-.cardHeader {
+.item {
   display: flex;
   align-items: flex-start;
   gap: 16px;
-  margin-bottom: 20px;
+  position: relative;
+  padding-bottom: 32px;
 }
 
 .iconWrap {
-  width: 48px;
-  height: 48px;
-  border-radius: 10px;
-  border: 1px solid rgba(255, 255, 255, 0.12);
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  border: 1px solid rgba(255, 255, 255, 0.15);
   background: rgba(255, 255, 255, 0.05);
   display: flex;
   align-items: center;
   justify-content: center;
   color: rgba(255, 255, 255, 0.7);
   flex-shrink: 0;
+  position: relative;
+  z-index: 1;
 }
 
-.stepLabel {
-  font-size: 11px;
-  letter-spacing: 0.16em;
-  text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.35);
-  margin: 0 0 6px;
+.connector {
+  position: absolute;
+  left: 21px;
+  top: 44px;
+  bottom: 0;
+  width: 1px;
+  background: linear-gradient(to bottom, rgba(255,255,255,0.2), transparent);
 }
 
-.cardTitle {
-  font-size: clamp(18px, 2.5vw, 24px);
-  font-weight: 700;
-  color: #ffffff;
-  margin: 0;
-  text-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+.itemText {
+  padding-top: 8px;
 }
 
-.cardDesc {
-  font-size: 14px;
-  line-height: 1.7;
-  color: rgba(255, 255, 255, 0.55);
-  margin: 0 0 24px;
-}
-
-/* ── Points ── */
-.points {
-  display: flex;
-  flex-direction: column;
-  gap: 10px;
-  margin-bottom: 32px;
-}
-
-.point {
-  display: flex;
-  align-items: center;
-  gap: 12px;
-  padding: 12px 16px;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.07);
-  border-radius: 8px;
-  font-size: 13.5px;
-  color: rgba(255, 255, 255, 0.65);
-  line-height: 1.5;
-}
-
-.point strong {
-  color: #ffffff;
+.itemTitle {
+  font-size: 15px;
   font-weight: 600;
+  color: #ffffff;
+  margin: 0 0 4px;
+  text-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
 }
 
-.dot {
-  display: inline-block;
-  width: 6px;
-  height: 6px;
-  border-radius: 50%;
-  background: #ffffff;
-  flex-shrink: 0;
-  box-shadow: 0 0 6px rgba(255, 255, 255, 0.8);
-}
-
-/* ── Footer ── */
-.cardFooter {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  padding-top: 20px;
-  border-top: 1px solid rgba(255, 255, 255, 0.06);
-}
-
-.footerCount {
+.itemSubtitle {
   font-size: 12px;
-  color: rgba(255, 255, 255, 0.3);
-  letter-spacing: 0.08em;
-}
-
-.footerBtns {
-  display: flex;
-  gap: 10px;
-}
-
-.navBtn {
-  padding: 8px 18px;
-  font-size: 13px;
-  font-weight: 500;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.5);
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  border-radius: 8px;
-  cursor: pointer;
-  transition: all 0.2s ease;
-}
-
-.navBtn:hover:not(:disabled) {
-  color: #fff;
-  border-color: rgba(255, 255, 255, 0.4);
-}
-
-.navBtn:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
-
-.navBtnPrimary {
-  padding: 8px 22px;
-  font-size: 13px;
-  font-weight: 600;
-  background: #ffffff;
-  color: #000;
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-  transition: all 0.2s ease;
-}
-
-.navBtnPrimary:hover:not(:disabled) {
-  box-shadow: 0 0 32px rgba(255, 255, 255, 0.5);
-  transform: scale(1.02);
-}
-
-.navBtnPrimary:disabled {
-  opacity: 0.3;
-  cursor: not-allowed;
-}
-
-@media (max-width: 700px) {
-  .layout {
-    grid-template-columns: 1fr;
-  }
-
-  .stepList {
-    flex-direction: row;
-    overflow-x: auto;
-    gap: 4px;
-    padding-bottom: 8px;
-  }
-
-  .stepBtn {
-    flex-direction: column;
-    align-items: center;
-    min-width: 80px;
-    padding: 10px;
-  }
-
-  .activeLine {
-    left: 0;
-    right: 0;
-    top: auto;
-    bottom: 0;
-    width: auto;
-    height: 2px;
-  }
+  color: rgba(255, 255, 255, 0.4);
+  margin: 0;
+  letter-spacing: 0.02em;
 }
