@@ -5,6 +5,7 @@ import JourneySection from "@/components/JourneySection";
 import TechStackSection from "@/components/TechStackSection";
 import ProjectsSection from "@/components/ProjectsSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
+import ContactSection from "@/components/ContactSection";
 import CustomCursor from "@/components/CustomCursor";
 
 export default function Home() {
@@ -18,6 +19,7 @@ export default function Home() {
       <TechStackSection />
       <ProjectsSection />
       <TestimonialsSection />
+      <ContactSection />
     </main>
   );
 }
