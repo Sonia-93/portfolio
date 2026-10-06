@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef, useState, useEffect } from "react";
-import { motion, useInView } from "framer-motion";
+import { useRef } from "react";
+import { motion, useScroll, useTransform } from "framer-motion";
 import {
   ClipboardList, Network, Database, Layers,
   ShieldCheck, TestTube2, Rocket,
@@ -25,97 +25,83 @@ const STEPS = [
     points: ["Containerize — multi-stage Docker, non-root", "Infra as code — Terraform/Pulumi", "Zero-downtime — rolling + health probes"] },
 ];
 
-function StepRow({ step, index }: { step: typeof STEPS[0]; index: number }) {
-  const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: false, margin: "0px 0px -35% 0px" });
+function StackCard({ step, index, total, scrollYProgress }: {
+  step: typeof STEPS[0];
+  index: number;
+  total: number;
+  scrollYProgress: any;
+}) {
   const Icon = step.icon;
+  const start = index / total;
+  const end = (index + 1) / total;
+
+  const y = useTransform(scrollYProgress, [start, end], ["0%", "-8%"]);
+  const scale = useTransform(scrollYProgress, [start, end], [1, 0.95]);
+  const opacity = useTransform(scrollYProgress, [start, Math.min(end + 0.05, 1)], [1, index === total - 1 ? 1 : 0.6]);
 
   return (
-    <div
-      ref={ref}
-      className={`${styles.stepRow} ${inView ? styles.stepRowActive : ""}`}
+    <motion.div
+      className={styles.card}
+      style={{
+        y,
+        scale,
+        opacity,
+        zIndex: index + 1,
+        top: `${index * 12}px`,
+      }}
     >
-      {/* Big number */}
-      <motion.span
-        className={styles.bigNum}
-        animate={inView
-          ? { opacity: 1, textShadow: "0 0 30px rgba(255,255,255,0.9), 0 0 60px rgba(255,255,255,0.4)" }
-          : { opacity: 0.08, textShadow: "none" }
-        }
-        transition={{ duration: 0.4 }}
-      >
-        {step.num}
-      </motion.span>
-
-      {/* Content */}
-      <motion.div
-        className={styles.stepContent}
-        initial={{ opacity: 0, y: 20 }}
-        animate={inView ? { opacity: 1, y: 0 } : { opacity: 0.3, y: 0 }}
-        transition={{ duration: 0.4, delay: 0.1 }}
-      >
-        <div className={styles.stepHead}>
-          <div className={`${styles.iconWrap} ${inView ? styles.iconActive : ""}`}>
+      <div className={styles.cardHead}>
+        <span className={styles.bigNum}>{step.num}</span>
+        <div className={styles.cardMeta}>
+          <div className={styles.iconWrap}>
             <Icon size={18} strokeWidth={1.6} />
           </div>
           <div>
-            <h3 className={styles.stepTitle}>{step.title}</h3>
-            <p className={styles.stepSub}>{step.subtitle}</p>
+            <h3 className={styles.cardTitle}>{step.title}</h3>
+            <p className={styles.cardSub}>{step.subtitle}</p>
           </div>
         </div>
-
-        <motion.div
-          className={styles.pointsList}
-          animate={inView ? { opacity: 1, height: "auto" } : { opacity: 0, height: 0 }}
-          transition={{ duration: 0.35, delay: 0.15 }}
-        >
-          {step.points.map((pt, i) => (
-            <motion.p
-              key={i}
-              className={styles.point}
-              initial={{ opacity: 0, x: 10 }}
-              animate={inView ? { opacity: 1, x: 0 } : {}}
-              transition={{ delay: 0.2 + i * 0.06, duration: 0.3 }}
-            >
-              <span className={styles.dot} />
-              {pt}
-            </motion.p>
-          ))}
-        </motion.div>
-      </motion.div>
-    </div>
+      </div>
+      <div className={styles.points}>
+        {step.points.map((pt, i) => (
+          <p key={i} className={styles.point}>
+            <span className={styles.dot} />{pt}
+          </p>
+        ))}
+      </div>
+    </motion.div>
   );
 }
 
 export default function BackendProcessSection() {
-  const headerRef = useRef<HTMLDivElement>(null);
-  const headerInView = useInView(headerRef, { once: true, margin: "0px 0px -10% 0px" });
+  const containerRef = useRef<HTMLDivElement>(null);
+  const { scrollYProgress } = useScroll({
+    target: containerRef,
+    offset: ["start start", "end end"],
+  });
 
   return (
     <section className={styles.section}>
-      <div className={styles.header} ref={headerRef}>
-        <motion.span
-          className={styles.label}
-          initial={{ opacity: 0, y: 10 }}
-          animate={headerInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.4 }}
-        >
-          My Playbook
-        </motion.span>
-        <motion.h2
-          className={styles.title}
-          initial={{ opacity: 0, y: 16 }}
-          animate={headerInView ? { opacity: 1, y: 0 } : {}}
-          transition={{ duration: 0.45, delay: 0.1 }}
-        >
-          How I Build Backend Systems
-        </motion.h2>
+      <div className={styles.header}>
+        <span className={styles.label}>My Playbook</span>
+        <h2 className={styles.title}>How I Build Backend Systems</h2>
       </div>
 
-      <div className={styles.steps}>
-        {STEPS.map((s, i) => (
-          <StepRow key={i} step={s} index={i} />
-        ))}
+      {/* Sticky scroll container — height controls how long user scrolls */}
+      <div ref={containerRef} className={styles.scrollContainer}>
+        <div className={styles.stickyWrap}>
+          <div className={styles.stack}>
+            {STEPS.map((s, i) => (
+              <StackCard
+                key={i}
+                step={s}
+                index={i}
+                total={STEPS.length}
+                scrollYProgress={scrollYProgress}
+              />
+            ))}
+          </div>
+        </div>
       </div>
     </section>
   );
