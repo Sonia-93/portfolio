@@ -1,4 +1,5 @@
 import HeroSection from "@/components/HeroSection";
+import IntersectionSection from "@/components/IntersectionSection";
 import AboutSection from "@/components/AboutSection";
 import JourneySection from "@/components/JourneySection";
 import TechStackSection from "@/components/TechStackSection";
@@ -12,6 +13,7 @@ export default function Home() {
     <main>
       <CustomCursor />
       <HeroSection />
+      <IntersectionSection />
       <AboutSection />
       <JourneySection />
       <TechStackSection />

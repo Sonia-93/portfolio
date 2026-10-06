@@ -8,7 +8,7 @@ import {
   useMotionValue,
   animate,
 } from "framer-motion";
-import { Car } from "lucide-react";
+import { Code2 } from "lucide-react";
 import styles from "./JourneySection.module.css";
 
 // ── Road path: viewBox 1200 × 420 EXACTLY matches CSS aspect-ratio, no letterboxing!
@@ -250,7 +250,7 @@ export default function JourneySection() {
             offsetRotate: "auto",
           }}
         >
-          <Car size={24} strokeWidth={1.6} />
+          <Code2 size={24} strokeWidth={1.6} />
         </motion.div>
 
         {MILESTONES.map((m, i) => (
