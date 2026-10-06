@@ -16,6 +16,18 @@
   padding: 12px 8px;
 }
 
+@media (max-width: 640px) {
+  .nav {
+    right: auto;
+    top: auto;
+    bottom: 24px;
+    left: 50%;
+    transform: translateX(-50%);
+    flex-direction: row;
+    padding: 8px 12px;
+  }
+}
+
 .link {
   display: flex;
   align-items: center;
@@ -49,6 +61,16 @@
   padding: 4px 10px;
   border-radius: 4px;
   pointer-events: none;
+}
+
+@media (max-width: 640px) {
+  .link:hover::after {
+    right: auto;
+    top: auto;
+    bottom: calc(100% + 8px);
+    left: 50%;
+    transform: translateX(-50%);
+  }
 }
 
 .active {
