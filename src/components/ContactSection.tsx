@@ -2,6 +2,7 @@
 
 import { useState } from "react";
 import { motion } from "framer-motion";
+import { Mail, GitBranch, Link } from "lucide-react";
 import styles from "./ContactSection.module.css";
 
 export default function ContactSection() {
@@ -59,15 +60,15 @@ export default function ContactSection() {
             transition={{ duration: 0.4, delay: 0.24 }}
           >
             <a href="mailto:sonia@example.com" className={styles.contactLink}>
-              <span className={styles.linkIcon}>✉</span>
+              <span className={styles.linkIcon}><Mail size={14} /></span>
               sonia@example.com
             </a>
             <a href="https://github.com" target="_blank" rel="noreferrer" className={styles.contactLink}>
-              <span className={styles.linkIcon}>⌥</span>
+              <span className={styles.linkIcon}><GitBranch size={14} /></span>
               github.com/sonia
             </a>
             <a href="https://linkedin.com" target="_blank" rel="noreferrer" className={styles.contactLink}>
-              <span className={styles.linkIcon}>in</span>
+              <span className={styles.linkIcon}><Link size={14} /></span>
               linkedin.com/in/sonia
             </a>
           </motion.div>
