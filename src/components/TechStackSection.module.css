@@ -17,16 +17,16 @@
 
 .bigTitle {
   text-align: center;
-  font-family: var(--font-bebas), 'Barlow Condensed', sans-serif;
-  font-size: 45px;
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  font-family: var(--title-font);
+  font-size: var(--title-size);
+  font-weight: var(--title-weight);
+  letter-spacing: var(--title-tracking);
   text-transform: uppercase;
   color: #ffffff;
-  line-height: 1.05;
+  line-height: var(--title-line-height);
   margin-bottom: 60px;
   text-shadow:
-    0 0 18px rgba(255, 255, 255, 0.G25),
+    0 0 18px rgba(255, 255, 255, 0.25),
     0 0 40px rgba(255, 255, 255, 0.1);
 }
 

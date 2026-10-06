@@ -25,14 +25,15 @@
 }
 
 .title {
-  font-family: var(--font-bebas), 'Barlow Condensed', sans-serif;
-  font-size: clamp(48px, 7vw, 80px);
-  font-weight: 700;
-  letter-spacing: 0.02em;
+  font-family: var(--title-font);
+  font-size: var(--title-size);
+  font-weight: var(--title-weight);
+  letter-spacing: var(--title-tracking);
   text-transform: uppercase;
+  line-height: var(--title-line-height);
   color: #fff;
-  line-height: 1;
   margin: 0 0 24px;
+  white-space: nowrap;
   text-shadow:
     0 0 18px rgba(255, 255, 255, 0.25),
     0 0 40px rgba(255, 255, 255, 0.1);
