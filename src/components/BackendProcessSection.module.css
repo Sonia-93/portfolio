@@ -1,11 +1,11 @@
 .section {
   background: #000;
-  padding: clamp(80px, 10vw, 140px) clamp(20px, 5vw, 80px);
+  padding: clamp(80px, 10vw, 140px) clamp(20px, 5vw, 80px) 0;
 }
 
 .header {
   max-width: 1100px;
-  margin: 0 auto 60px;
+  margin: 0 auto 52px;
 }
 
 .label {
@@ -26,22 +26,20 @@
   text-transform: uppercase;
   color: #fff;
   margin: 0;
-  text-shadow:
-    0 0 18px rgba(255, 255, 255, 0.25),
-    0 0 40px rgba(255, 255, 255, 0.1);
+  text-shadow: 0 0 18px rgba(255,255,255,0.25), 0 0 40px rgba(255,255,255,0.1);
 }
 
-/* Scroll container — tall enough to scroll through all 7 cards */
+/* Tall scroll area — 7 steps × 100vh each */
 .scrollContainer {
-  height: 350vh;
-  max-width: 1100px;
-  margin: 0 auto;
+  height: 600vh;
   position: relative;
 }
 
-.stickyWrap {
+/* Card stays sticky in viewport while user scrolls */
+.sticky {
   position: sticky;
-  top: 80px;
+  top: 0;
+  height: 100vh;
   display: flex;
   align-items: center;
   justify-content: center;
@@ -51,34 +49,32 @@
   position: relative;
   width: 100%;
   max-width: 680px;
-  height: 280px;
+  height: 260px;
 }
 
 /* ── Card ── */
 .card {
-  position: absolute;
-  width: 100%;
-  background: rgba(15, 15, 15, 0.95);
+  background: rgba(12, 12, 12, 0.96);
   border: 1px solid rgba(255, 255, 255, 0.1);
   border-radius: 16px;
   padding: 28px 32px;
-  backdrop-filter: blur(12px);
+  box-shadow: 0 24px 64px rgba(0, 0, 0, 0.7);
   will-change: transform, opacity;
-  box-shadow: 0 20px 60px rgba(0, 0, 0, 0.6);
+  overflow: hidden;
 }
 
 .cardHead {
   display: flex;
   align-items: center;
-  gap: 20px;
-  margin-bottom: 20px;
+  gap: 18px;
+  margin-bottom: 18px;
 }
 
 .bigNum {
   font-family: var(--font-bebas), 'Barlow Condensed', sans-serif;
-  font-size: 52px;
+  font-size: 48px;
   font-weight: 700;
-  color: rgba(255, 255, 255, 0.12);
+  color: rgba(255, 255, 255, 0.1);
   line-height: 1;
   flex-shrink: 0;
   letter-spacing: -0.02em;
@@ -94,25 +90,25 @@
   width: 36px;
   height: 36px;
   border-radius: 50%;
-  border: 1px solid rgba(255, 255, 255, 0.15);
-  background: rgba(255, 255, 255, 0.06);
+  border: 1px solid rgba(255,255,255,0.15);
+  background: rgba(255,255,255,0.05);
   display: flex;
   align-items: center;
   justify-content: center;
-  color: rgba(255, 255, 255, 0.6);
+  color: rgba(255,255,255,0.6);
   flex-shrink: 0;
 }
 
 .cardTitle {
-  font-size: 17px;
+  font-size: 18px;
   font-weight: 700;
-  color: #ffffff;
+  color: #fff;
   margin: 0 0 2px;
 }
 
 .cardSub {
   font-size: 11px;
-  color: rgba(255, 255, 255, 0.4);
+  color: rgba(255,255,255,0.4);
   margin: 0;
   letter-spacing: 0.02em;
 }
@@ -128,7 +124,7 @@
   align-items: center;
   gap: 10px;
   font-size: 13px;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(255,255,255,0.55);
   margin: 0;
 }
 
@@ -137,6 +133,6 @@
   width: 4px;
   height: 4px;
   border-radius: 50%;
-  background: rgba(255, 255, 255, 0.35);
+  background: rgba(255,255,255,0.3);
   flex-shrink: 0;
 }

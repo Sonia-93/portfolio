@@ -25,29 +25,35 @@ const STEPS = [
     points: ["Containerize — multi-stage Docker, non-root", "Infra as code — Terraform/Pulumi", "Zero-downtime — rolling + health probes"] },
 ];
 
-function StackCard({ step, index, total, scrollYProgress }: {
+function Card({ step, index, total, containerProgress }: {
   step: typeof STEPS[0];
   index: number;
   total: number;
-  scrollYProgress: any;
+  containerProgress: any;
 }) {
   const Icon = step.icon;
-  const start = index / total;
-  const end = (index + 1) / total;
 
-  const y = useTransform(scrollYProgress, [start, end], ["0%", "-8%"]);
-  const scale = useTransform(scrollYProgress, [start, end], [1, 0.95]);
-  const opacity = useTransform(scrollYProgress, [start, Math.min(end + 0.05, 1)], [1, index === total - 1 ? 1 : 0.6]);
+  // Each card occupies 1/total of the scroll range
+  const segStart = index / total;
+  const segEnd = (index + 1) / total;
+
+  // Card slides up into view
+  const y = useTransform(containerProgress, [segStart - 1/total, segStart], ["100%", "0%"]);
+  // Previous cards scale down and fade slightly when next one comes
+  const scale = useTransform(containerProgress, [segStart, segEnd], [1, index < total - 1 ? 0.94 : 1]);
+  const opacity = useTransform(containerProgress, [segStart, segEnd], [1, index < total - 1 ? 0.7 : 1]);
 
   return (
     <motion.div
       className={styles.card}
       style={{
-        y,
+        y: index === 0 ? "0%" : y,
         scale,
         opacity,
         zIndex: index + 1,
-        top: `${index * 12}px`,
+        position: "absolute",
+        top: `${index * 8}px`,
+        width: "100%",
       }}
     >
       <div className={styles.cardHead}>
@@ -64,9 +70,7 @@ function StackCard({ step, index, total, scrollYProgress }: {
       </div>
       <div className={styles.points}>
         {step.points.map((pt, i) => (
-          <p key={i} className={styles.point}>
-            <span className={styles.dot} />{pt}
-          </p>
+          <p key={i} className={styles.point}><span className={styles.dot} />{pt}</p>
         ))}
       </div>
     </motion.div>
@@ -87,17 +91,17 @@ export default function BackendProcessSection() {
         <h2 className={styles.title}>How I Build Backend Systems</h2>
       </div>
 
-      {/* Sticky scroll container — height controls how long user scrolls */}
+      {/* Tall container to give scroll room */}
       <div ref={containerRef} className={styles.scrollContainer}>
-        <div className={styles.stickyWrap}>
+        <div className={styles.sticky}>
           <div className={styles.stack}>
             {STEPS.map((s, i) => (
-              <StackCard
+              <Card
                 key={i}
                 step={s}
                 index={i}
                 total={STEPS.length}
-                scrollYProgress={scrollYProgress}
+                containerProgress={scrollYProgress}
               />
             ))}
           </div>
