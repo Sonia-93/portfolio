@@ -7,10 +7,10 @@ import styles from "./TestimonialsSection.module.css";
 const testimonials = [
   {
     quote: "Sonia delivered clean, scalable backend architecture that exceeded our expectations. Her attention to detail and problem-solving skills are outstanding.",
-    name: "Alex M.",
-    role: "CTO, TechStartup",
-    initials: "AM",
-    photo: "",
+    name: "Irasubiza Saly Nelson",
+    role: "CEO, Velora",
+    initials: "IS",
+    photo: "/saly.png",
   },
   {
     quote: "Working with Sonia was a pleasure. She built our entire API layer from scratch — well-documented, fast, and exactly what we needed.",
