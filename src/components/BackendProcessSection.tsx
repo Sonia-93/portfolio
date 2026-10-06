@@ -1,7 +1,7 @@
 "use client";
 
-import { useRef } from "react";
-import { motion, useScroll, useTransform, useInView } from "framer-motion";
+import { useRef, useState, useEffect } from "react";
+import { motion, useInView } from "framer-motion";
 import {
   ClipboardList, Network, Database, Layers,
   ShieldCheck, TestTube2, Rocket,
@@ -9,70 +9,90 @@ import {
 import styles from "./BackendProcessSection.module.css";
 
 const STEPS = [
-  { icon: ClipboardList, title: "Requirements & Discovery", subtitle: "Map goals to specs" },
-  { icon: Network,       title: "System Architecture",      subtitle: "Blueprint the topology" },
-  { icon: Database,      title: "Database Design",           subtitle: "Schema shapes everything" },
-  { icon: Layers,        title: "API & Business Logic",      subtitle: "Controller → Service → Repo" },
-  { icon: ShieldCheck,   title: "Auth & Security",           subtitle: "Defense in depth" },
-  { icon: TestTube2,     title: "Testing & Optimization",    subtitle: "Verify, measure, speed up" },
-  { icon: Rocket,        title: "Deploy & Operate",          subtitle: "Containers, pipelines, rollbacks" },
+  { num: "01", icon: ClipboardList, title: "Requirements & Discovery", subtitle: "Map goals to specs",
+    points: ["Stakeholder interviews — users, roles, workflows", "Traffic estimates — QPS, concurrency, growth", "Acceptance criteria — testable requirements"] },
+  { num: "02", icon: Network, title: "System Architecture", subtitle: "Blueprint the topology",
+    points: ["Architecture style — modular monolith → services", "Communication — HTTP/gRPC + async queues", "Fault-tolerance — retries, circuit breakers"] },
+  { num: "03", icon: Database, title: "Database Design", subtitle: "Schema shapes everything",
+    points: ["Schema — entities, relations, nullability", "Indexes — EXPLAIN every hot query", "Migrations — versioned, reversible"] },
+  { num: "04", icon: Layers, title: "API & Business Logic", subtitle: "Controller → Service → Repo",
+    points: ["Layering — routes → services → repos", "Validation — zod / class-validator", "Typed errors — domain → HTTP codes"] },
+  { num: "05", icon: ShieldCheck, title: "Auth & Security", subtitle: "Defense in depth",
+    points: ["Authentication — JWT + refresh rotation", "Authorization — role + attribute checks", "Input hygiene — parameterized queries, CSP"] },
+  { num: "06", icon: TestTube2, title: "Testing & Optimization", subtitle: "Verify, measure, speed up",
+    points: ["Pyramid — unit 70% · integration 25% · e2e 5%", "CI gates — lint → typecheck → test → build", "Observability — logs, metrics, traces"] },
+  { num: "07", icon: Rocket, title: "Deploy & Operate", subtitle: "Containers, pipelines, rollbacks",
+    points: ["Containerize — multi-stage Docker, non-root", "Infra as code — Terraform/Pulumi", "Zero-downtime — rolling + health probes"] },
 ];
 
-function Step({ step, index, total }: { step: typeof STEPS[0]; index: number; total: number }) {
+function StepRow({ step, index }: { step: typeof STEPS[0]; index: number }) {
   const ref = useRef<HTMLDivElement>(null);
-  const inView = useInView(ref, { once: true, margin: "0px 0px -20% 0px" });
+  const inView = useInView(ref, { once: false, margin: "0px 0px -35% 0px" });
   const Icon = step.icon;
-  const isLast = index === total - 1;
 
   return (
-    <div ref={ref} className={styles.step}>
-      {/* Connector line */}
-      {!isLast && (
+    <div
+      ref={ref}
+      className={`${styles.stepRow} ${inView ? styles.stepRowActive : ""}`}
+    >
+      {/* Big number */}
+      <motion.span
+        className={styles.bigNum}
+        animate={inView
+          ? { opacity: 1, textShadow: "0 0 30px rgba(255,255,255,0.9), 0 0 60px rgba(255,255,255,0.4)" }
+          : { opacity: 0.08, textShadow: "none" }
+        }
+        transition={{ duration: 0.4 }}
+      >
+        {step.num}
+      </motion.span>
+
+      {/* Content */}
+      <motion.div
+        className={styles.stepContent}
+        initial={{ opacity: 0, y: 20 }}
+        animate={inView ? { opacity: 1, y: 0 } : { opacity: 0.3, y: 0 }}
+        transition={{ duration: 0.4, delay: 0.1 }}
+      >
+        <div className={styles.stepHead}>
+          <div className={`${styles.iconWrap} ${inView ? styles.iconActive : ""}`}>
+            <Icon size={18} strokeWidth={1.6} />
+          </div>
+          <div>
+            <h3 className={styles.stepTitle}>{step.title}</h3>
+            <p className={styles.stepSub}>{step.subtitle}</p>
+          </div>
+        </div>
+
         <motion.div
-          className={styles.line}
-          initial={{ scaleY: 0 }}
-          animate={inView ? { scaleY: 1 } : {}}
-          transition={{ duration: 0.6, delay: 0.3, ease: "easeOut" }}
-        />
-      )}
-
-      {/* Icon circle */}
-      <motion.div
-        className={styles.iconCircle}
-        initial={{ scale: 0.5, opacity: 0 }}
-        animate={inView ? { scale: 1, opacity: 1 } : {}}
-        transition={{ duration: 0.4, ease: [0.22, 1, 0.36, 1] }}
-        style={inView ? {
-          background: "#ffffff",
-          borderColor: "#ffffff",
-          boxShadow: "0 0 20px rgba(255,255,255,0.9), 0 0 50px rgba(255,255,255,0.4)",
-          color: "#000",
-        } : undefined}
-      >
-        <Icon size={20} strokeWidth={1.8} />
-      </motion.div>
-
-      {/* Text */}
-      <motion.div
-        className={styles.stepText}
-        initial={{ opacity: 0, x: 20 }}
-        animate={inView ? { opacity: 1, x: 0 } : {}}
-        transition={{ duration: 0.4, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-      >
-        <p className={styles.stepTitle}>{step.title}</p>
-        <p className={styles.stepSubtitle}>{step.subtitle}</p>
+          className={styles.pointsList}
+          animate={inView ? { opacity: 1, height: "auto" } : { opacity: 0, height: 0 }}
+          transition={{ duration: 0.35, delay: 0.15 }}
+        >
+          {step.points.map((pt, i) => (
+            <motion.p
+              key={i}
+              className={styles.point}
+              initial={{ opacity: 0, x: 10 }}
+              animate={inView ? { opacity: 1, x: 0 } : {}}
+              transition={{ delay: 0.2 + i * 0.06, duration: 0.3 }}
+            >
+              <span className={styles.dot} />
+              {pt}
+            </motion.p>
+          ))}
+        </motion.div>
       </motion.div>
     </div>
   );
 }
 
 export default function BackendProcessSection() {
-  const sectionRef = useRef<HTMLElement>(null);
   const headerRef = useRef<HTMLDivElement>(null);
   const headerInView = useInView(headerRef, { once: true, margin: "0px 0px -10% 0px" });
 
   return (
-    <section className={styles.section} ref={sectionRef}>
+    <section className={styles.section}>
       <div className={styles.header} ref={headerRef}>
         <motion.span
           className={styles.label}
@@ -92,9 +112,9 @@ export default function BackendProcessSection() {
         </motion.h2>
       </div>
 
-      <div className={styles.list}>
+      <div className={styles.steps}>
         {STEPS.map((s, i) => (
-          <Step key={i} step={s} index={i} total={STEPS.length} />
+          <StepRow key={i} step={s} index={i} />
         ))}
       </div>
     </section>
