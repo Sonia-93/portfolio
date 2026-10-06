@@ -38,6 +38,7 @@ const testimonials = [
 export default function TestimonialsSection() {
   const [active, setActive] = useState(0);
   const [direction, setDirection] = useState(1);
+  const [paused, setPaused] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
   const go = (next: number, dir: number) => {
@@ -46,6 +47,7 @@ export default function TestimonialsSection() {
   };
 
   const startAuto = () => {
+    if (intervalRef.current) clearInterval(intervalRef.current);
     intervalRef.current = setInterval(() => {
       setDirection(1);
       setActive((i) => (i + 1) % testimonials.length);
@@ -53,18 +55,20 @@ export default function TestimonialsSection() {
   };
 
   useEffect(() => {
-    startAuto();
+    if (paused) {
+      if (intervalRef.current) clearInterval(intervalRef.current);
+    } else {
+      startAuto();
+    }
     return () => { if (intervalRef.current) clearInterval(intervalRef.current); };
-  }, []);
+  }, [paused]);
 
   const prev = () => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
     go((active - 1 + testimonials.length) % testimonials.length, -1);
     startAuto();
   };
 
   const next = () => {
-    if (intervalRef.current) clearInterval(intervalRef.current);
     go((active + 1) % testimonials.length, 1);
     startAuto();
   };
@@ -93,13 +97,20 @@ export default function TestimonialsSection() {
             exit="exit"
             transition={{ duration: 0.45, ease: [0.22, 1, 0.36, 1] }}
             className={styles.card}
+            onMouseEnter={() => setPaused(true)}
+            onMouseLeave={() => setPaused(false)}
           >
             {/* Top row: photo + name/role + github */}
             <div className={styles.cardTop}>
               <div className={styles.photoWrap}>
                 {testimonials[active].photo ? (
                   // eslint-disable-next-line @next/next/no-img-element
-                  <img src={testimonials[active].photo} alt={testimonials[active].name} className={styles.photo} />
+                  <img
+                    src={testimonials[active].photo}
+                    alt={testimonials[active].name}
+                    className={styles.photo}
+                    style={{ filter: paused ? "none" : "grayscale(100%)", transition: "filter 0.3s ease" }}
+                  />
                 ) : (
                   <div className={styles.photoPlaceholder}>{testimonials[active].initials}</div>
                 )}
