@@ -40,7 +40,7 @@ export default function ContactSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.45, delay: 0.08 }}
           >
-            Let&apos;s Work<br />Together
+            Let&apos;s Work Together
           </motion.h2>
           <motion.p
             className={styles.desc}
@@ -59,25 +59,25 @@ export default function ContactSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: 0.24 }}
           >
-            <a href="mailto:utujesandrine456@gmail.com" className={styles.contactCard}>
+            <a href="mailto:shimirwasonia5@gmail.com" className={styles.contactCard}>
               <span className={styles.cardIcon}><Mail size={18} /></span>
               <span className={styles.cardInfo}>
                 <span className={styles.cardLabel}>Email</span>
-                <span className={styles.cardValue}>utujesandrine456@gmail.com</span>
+                <span className={styles.cardValue}>shimirwasonia5@gmail.com</span>
               </span>
             </a>
-            <a href="tel:+250785805869" className={styles.contactCard}>
+            <a href="tel:+250792283148" className={styles.contactCard}>
               <span className={styles.cardIcon}><GitBranch size={18} /></span>
               <span className={styles.cardInfo}>
                 <span className={styles.cardLabel}>Phone</span>
-                <span className={styles.cardValue}>+250 785 805 869</span>
+                <span className={styles.cardValue}>+250 792 283 148</span>
               </span>
             </a>
             <div className={styles.contactCard}>
               <span className={styles.cardIcon}><Link size={18} /></span>
               <span className={styles.cardInfo}>
                 <span className={styles.cardLabel}>Location</span>
-                <span className={styles.cardValue}>Kigali, Rwanda</span>
+                <span className={styles.cardValue}>Muhanga, Rwanda</span>
               </span>
             </div>
           </motion.div>
