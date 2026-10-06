@@ -59,18 +59,27 @@ export default function ContactSection() {
             viewport={{ once: true }}
             transition={{ duration: 0.4, delay: 0.24 }}
           >
-            <a href="mailto:sonia@example.com" className={styles.contactLink}>
-              <span className={styles.linkIcon}><Mail size={14} /></span>
-              sonia@example.com
+            <a href="mailto:utujesandrine456@gmail.com" className={styles.contactCard}>
+              <span className={styles.cardIcon}><Mail size={18} /></span>
+              <span className={styles.cardInfo}>
+                <span className={styles.cardLabel}>Email</span>
+                <span className={styles.cardValue}>utujesandrine456@gmail.com</span>
+              </span>
             </a>
-            <a href="https://github.com" target="_blank" rel="noreferrer" className={styles.contactLink}>
-              <span className={styles.linkIcon}><GitBranch size={14} /></span>
-              github.com/sonia
+            <a href="tel:+250785805869" className={styles.contactCard}>
+              <span className={styles.cardIcon}><GitBranch size={18} /></span>
+              <span className={styles.cardInfo}>
+                <span className={styles.cardLabel}>Phone</span>
+                <span className={styles.cardValue}>+250 785 805 869</span>
+              </span>
             </a>
-            <a href="https://linkedin.com" target="_blank" rel="noreferrer" className={styles.contactLink}>
-              <span className={styles.linkIcon}><Link size={14} /></span>
-              linkedin.com/in/sonia
-            </a>
+            <div className={styles.contactCard}>
+              <span className={styles.cardIcon}><Link size={18} /></span>
+              <span className={styles.cardInfo}>
+                <span className={styles.cardLabel}>Location</span>
+                <span className={styles.cardValue}>Kigali, Rwanda</span>
+              </span>
+            </div>
           </motion.div>
         </div>
 
