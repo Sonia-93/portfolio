@@ -26,11 +26,11 @@
 
 .title {
   font-family: var(--title-font);
-  font-size: 50px;
+  font-size: 36px;
   font-weight: var(--title-weight);
   letter-spacing: var(--title-tracking);
   text-transform: uppercase;
-  line-height: var(--title-line-height);
+  line-height: 1;
   color: #fff;
   margin: 0 0 24px;
   white-space: nowrap;
