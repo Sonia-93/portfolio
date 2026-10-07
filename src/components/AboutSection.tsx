@@ -3,7 +3,7 @@
 import { useEffect, useRef, useState } from "react";
 import { motion, useInView } from "framer-motion";
 import Image from "next/image";
-import { Instagram, GitBranch, Twitter } from "lucide-react";
+import { Camera, Share2, GitBranch } from "lucide-react";
 import soniaImage from "@/app/sonia.png";
 import styles from "./AboutSection.module.css";
 
@@ -128,10 +128,10 @@ export default function AboutSection() {
             {/* Social icons */}
             <div className={styles.socials}>
               <a href="https://instagram.com" target="_blank" rel="noreferrer" className={styles.socialLink} aria-label="Instagram">
-                <Instagram size={18} strokeWidth={1.6} />
+                <Camera size={18} strokeWidth={1.6} />
               </a>
               <a href="https://x.com" target="_blank" rel="noreferrer" className={styles.socialLink} aria-label="X / Twitter">
-                <Twitter size={18} strokeWidth={1.6} />
+                <Share2 size={18} strokeWidth={1.6} />
               </a>
               <a href="https://github.com" target="_blank" rel="noreferrer" className={styles.socialLink} aria-label="GitHub">
                 <GitBranch size={18} strokeWidth={1.6} />
