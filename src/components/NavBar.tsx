@@ -7,12 +7,12 @@ import { Home, User, Code2, FolderOpen, Mail, MessageSquare } from "lucide-react
 import styles from "./NavBar.module.css";
 
 const links = [
-  { icon: Home,          href: "/",          label: "Home",         section: "home" },
-  { icon: User,          href: "/#about",    label: "About",        section: "about" },
-  { icon: Code2,         href: "/#skills",   label: "Skills",       section: "skills" },
-  { icon: FolderOpen,    href: "/projects",  label: "Projects",     section: "projects" },
-  { icon: MessageSquare, href: "/#contact",  label: "Testimonials", section: "testimonials" },
-  { icon: Mail,          href: "/#contact",  label: "Contact",      section: "contact" },
+  { icon: Home,          href: "/",           label: "Home",         section: "home" },
+  { icon: User,          href: "/#about",     label: "About",        section: "about" },
+  { icon: Code2,         href: "/#skills",    label: "Skills",       section: "skills" },
+  { icon: FolderOpen,    href: "/projects",   label: "Projects",     section: "projects" },
+  { icon: MessageSquare, href: "/#testimonials", label: "Testimonials", section: "testimonials" },
+  { icon: Mail,          href: "/#contact",   label: "Contact",      section: "contact" },
 ];
 
 export default function NavBar() {
