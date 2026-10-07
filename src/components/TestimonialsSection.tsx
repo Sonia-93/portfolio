@@ -80,7 +80,7 @@ export default function TestimonialsSection() {
   };
 
   return (
-    <section className={styles.section}>
+    <section className={styles.section} id="testimonials">
       <div className={styles.labelWrap}>
         <span className={styles.label}>What people say</span>
         <h2 className={styles.title}>Client Testimonials</h2>

@@ -26,7 +26,7 @@ export default function NavBar() {
       return;
     }
 
-    const SECTION_IDS = ["home", "about", "journey", "projects", "skills", "contact"];
+    const SECTION_IDS = ["home", "about", "journey", "skills", "projects", "testimonials", "contact"];
 
     const onScroll = () => {
       const scrollY = window.scrollY;
@@ -39,7 +39,7 @@ export default function NavBar() {
         if (!el) continue;
         const top = el.offsetTop;
         if (midpoint >= top) {
-          if (id === "journey") current = "about"; // journey sits within about portion of nav for now
+          if (id === "journey") current = "about";
           else current = id;
         }
       }
