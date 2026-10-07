@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, User, Code2, FolderOpen, Mail, MessageSquare } from "lucide-react";
+import { Home, User, Code2, FolderOpen, Mail, Star } from "lucide-react";
 import styles from "./NavBar.module.css";
 
 const links = [
