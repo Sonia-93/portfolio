@@ -40,6 +40,13 @@ const testimonials = [
     initials: "HM",
     photo: "/hope.jpg",
   },
+  {
+    quote: "Umurerwa Aubierge's vision for UmucoCore demanded a reliable, scalable system — Sonia delivered exactly that with clean architecture and zero downtime.",
+    name: "Umurerwa Aubierge",
+    role: "UmucoCore",
+    initials: "UA",
+    photo: "/aubi.jpg",
+  },
 ];
 
 export default function TestimonialsSection() {
