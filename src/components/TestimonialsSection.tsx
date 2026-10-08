@@ -43,7 +43,7 @@ const testimonials = [
   {
     quote: "Umurerwa Aubierge's vision for UmucoCore demanded a reliable, scalable system — Sonia delivered exactly that with clean architecture and zero downtime.",
     name: "Umurerwa Aubierge",
-    role: "UmucoCore",
+    role: "Founder, UmucoCore",
     initials: "UA",
     photo: "/aubi.jpg",
   },
