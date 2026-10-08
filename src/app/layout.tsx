@@ -41,6 +41,9 @@ export const metadata: Metadata = {
   title: "Sonia — Backend Developer",
   description:
     "Sonia is a Backend Developer based in Kigali, Rwanda. Building robust and scalable server-side solutions.",
+  icons: {
+    icon: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({
