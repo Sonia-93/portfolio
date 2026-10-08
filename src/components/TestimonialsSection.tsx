@@ -34,6 +34,9 @@ export default function TestimonialsSection() {
   const [paused, setPaused] = useState(false);
   const intervalRef = useRef<NodeJS.Timeout | null>(null);
 
+  // Guard against out-of-bounds active index
+  const safeActive = Math.min(active, testimonials.length - 1);
+
   const go = (next: number, dir: number) => {
     setDirection(dir);
     setActive(next);
@@ -82,7 +85,7 @@ export default function TestimonialsSection() {
       <div className={styles.carousel}>
         <AnimatePresence mode="wait" custom={direction}>
           <motion.div
-            key={active}
+            key={safeActive}
             custom={direction}
             variants={variants}
             initial="enter"
@@ -96,21 +99,21 @@ export default function TestimonialsSection() {
             {/* Top row: photo + name/role + github */}
             <div className={styles.cardTop}>
               <div className={styles.photoWrap}>
-                {testimonials[active].photo ? (
+                {testimonials[safeActive].photo ? (
                   // eslint-disable-next-line @next/next/no-img-element
                   <img
-                    src={testimonials[active].photo}
-                    alt={testimonials[active].name}
+                    src={testimonials[safeActive].photo}
+                    alt={testimonials[safeActive].name}
                     className={styles.photo}
                     style={{ filter: paused ? "none" : "grayscale(100%)", transition: "filter 0.3s ease" }}
                   />
                 ) : (
-                  <div className={styles.photoPlaceholder}>{testimonials[active].initials}</div>
+                  <div className={styles.photoPlaceholder}>{testimonials[safeActive].initials}</div>
                 )}
               </div>
               <div className={styles.authorInfo}>
-                <p className={styles.name}>{testimonials[active].name}</p>
-                <p className={styles.role}>{testimonials[active].role}</p>
+                <p className={styles.name}>{testimonials[safeActive].name}</p>
+                <p className={styles.role}>{testimonials[safeActive].role}</p>
               </div>
               <div className={styles.githubIcon}>
                 <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor">
@@ -120,7 +123,7 @@ export default function TestimonialsSection() {
             </div>
 
             {/* Quote */}
-            <p className={styles.quote}>"{testimonials[active].quote}"</p>
+            <p className={styles.quote}>"{testimonials[safeActive].quote}"</p>
           </motion.div>
         </AnimatePresence>
 
