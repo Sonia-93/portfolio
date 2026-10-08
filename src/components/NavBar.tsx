@@ -11,7 +11,7 @@ const links = [
   { icon: User,          href: "/#about",     label: "About",        section: "about" },
   { icon: Code2,         href: "/#skills",    label: "Skills",       section: "skills" },
   { icon: FolderOpen,    href: "/projects",   label: "Projects",     section: "projects" },
-  { icon: MessageSquare, href: "/#testimonials", label: "Testimonials", section: "testimonials" },
+  { icon: Star,       href: "/#testimonials", label: "Testimonials", section: "testimonials" },
   { icon: Mail,          href: "/#contact",   label: "Contact",      section: "contact" },
 ];
 
@@ -31,7 +31,7 @@ export default function NavBar() {
     const onScroll = () => {
       const scrollY = window.scrollY;
       const vh = window.innerHeight;
-      const midpoint = scrollY + vh * 0.45;
+      const midpoint = scrollY + vh * 0.6;
 
       let current = "home";
       for (const id of SECTION_IDS) {

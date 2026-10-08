@@ -33,6 +33,13 @@ const testimonials = [
     initials: "DR",
     photo: "",
   },
+  {
+    quote: "Sonia brought UmucoCore to life with a solid backend that handles our media-heavy archive beautifully. Her commitment to quality is unmatched.",
+    name: "Hope Mutimutuje",
+    role: "Co-Founder, UmucoCore",
+    initials: "HM",
+    photo: "/hope.jpg",
+  },
 ];
 
 export default function TestimonialsSection() {
