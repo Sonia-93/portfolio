@@ -13,27 +13,6 @@ const testimonials = [
     photo: "/saly.png",
   },
   {
-    quote: "Working with Sonia was a pleasure. She built our entire API layer from scratch — well-documented, fast, and exactly what we needed.",
-    name: "Jordan K.",
-    role: "Product Manager, Velora",
-    initials: "JK",
-    photo: "",
-  },
-  {
-    quote: "Sonia has a rare combination of technical depth and communication skills. She understood our requirements immediately and delivered ahead of schedule.",
-    name: "Sarah L.",
-    role: "Lead Developer, CodeBridge",
-    initials: "SL",
-    photo: "",
-  },
-  {
-    quote: "The database architecture Sonia designed for us handles thousands of concurrent users without breaking a sweat. Impressive work.",
-    name: "Daniel R.",
-    role: "Founder, WasteNet",
-    initials: "DR",
-    photo: "",
-  },
-  {
     quote: "Sonia brought UmucoCore to life with a solid backend that handles our media-heavy archive beautifully. Her commitment to quality is unmatched.",
     name: "Hope Mutimutuje",
     role: "Co-Founder, UmucoCore",
@@ -41,7 +20,7 @@ const testimonials = [
     photo: "/hope.jpg",
   },
   {
-    quote: "Umurerwa Aubierge's vision for UmucoCore demanded a reliable, scalable system — Sonia delivered exactly that with clean architecture and zero downtime.",
+    quote: "A reliable, scalable system with clean architecture and zero downtime — exactly what we needed for UmucoCore.",
     name: "Umurerwa Aubierge",
     role: "Founder, UmucoCore",
     initials: "UA",
