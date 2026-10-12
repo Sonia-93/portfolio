@@ -6,7 +6,7 @@ import { ExternalLink, Code2, X, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import styles from "./ProjectsSection.module.css";
 
-import wastrica2 from "@/app/wastrica2.png";
+import wastenet2 from "@/app/wastenet2.png";
 import staffnet from "@/app/staffnet.png";
 import staffnetFront from "@/app/staffnetFront.png";
 import umuco from "@/app/umuco.png";
@@ -16,7 +16,7 @@ import codeFront from "@/app/codeFront.png";
 import screen1 from "@/app/screen1.png";
 import screen2 from "@/app/screen2.png";
 import scree from "@/app/scree.png";
-import wastricaFront from "@/app/wastricaFront.png";
+import wastenetFront from "@/app/wastenetFront.png";
 
 type Project = {
   id: string;
@@ -47,7 +47,7 @@ const PROJECTS: Project[] = [
     photos: [
       { src: "", alt: "Wastrica — smart bin classification dashboard", staticImport: scree },
     ],
-    hoverPhoto: wastricaFront,
+    hoverPhoto: wastenetFront,
     writeup: [
       "Wastrica combines on-device AI with a cloud backend to turn ordinary bins into smart, connected units.",
       "Each smart bin runs a lightweight image classifier that identifies waste as it's dropped in — sorted into plastic, paper, biodegradable, non-biodegradable, metals, and other common categories.",

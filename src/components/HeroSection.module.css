@@ -397,6 +397,8 @@
 
 .btnPrimary {
   padding: 14px 36px;
+  min-width: 160px;
+  text-align: center;
   background: #ffffff;
   color: #000000;
   font-size: 13px;
@@ -422,25 +424,28 @@
 }
 
 .btnOutline {
-  padding: 12px 28px;
+  padding: 14px 36px;
+  min-width: 160px;
+  text-align: center;
   background: transparent;
   color: #ffffff;
   font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.08em;
+  font-weight: 600;
+  letter-spacing: 0.15em;
   text-transform: uppercase;
   border: 1px solid rgba(255, 255, 255, 0.6);
   border-radius: 999px;
-  transition: all 0.2s ease;
+  transition: all 0.3s ease;
   text-shadow:
     0 0 20px rgba(255, 255, 255, 0.9),
     0 0 40px rgba(255, 255, 255, 0.5);
-  box-shadow: 0 0 12px rgba(255, 255, 255, 0.1);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.2);
 }
 
 .btnOutline:hover {
   border-color: rgba(255, 255, 255, 0.95);
-  box-shadow: 0 0 24px rgba(255, 255, 255, 0.25);
+  box-shadow: 0 0 24px rgba(255, 255, 255, 0.4);
+  transform: scale(1.02);
 }
 
 /* ── Typing Cursor ── */
