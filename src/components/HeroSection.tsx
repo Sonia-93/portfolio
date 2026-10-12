@@ -238,6 +238,7 @@ export default function HeroSection() {
         >
           Backend Developer
         </motion.p>
+        //Hello a pull request ready
         <motion.div
           className={styles.buttons}
           initial={{ opacity: 0, y: 40 }}
