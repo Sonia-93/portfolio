@@ -244,10 +244,12 @@ export default function HeroSection() {
           animate={typingFullyDone ? { opacity: 1, y: 0 } : {}}
           transition={{ duration: 0.85, delay: 0.45, ease: "easeOut" }}
         >
-          <a href="mailto:sonia@example.com" className={styles.btnPrimary}>
+          <a href="/#contact" className={styles.btnPrimary}>
             Get In Touch
           </a>
-          <a href="/cv.pdf" download className={styles.btnOutline}>
+          <a href="/cv.pdf" target="_blank" className={styles.btnOutline}>
+            View CV
+          </a>
             Download CV
           </a>
         </motion.div>

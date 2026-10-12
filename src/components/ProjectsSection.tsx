@@ -6,7 +6,7 @@ import { ExternalLink, Code2, X, ArrowRight } from "lucide-react";
 import Image from "next/image";
 import styles from "./ProjectsSection.module.css";
 
-import wastenet2 from "@/app/wastenet2.png";
+import wastrica2 from "@/app/wastrica2.png";
 import staffnet from "@/app/staffnet.png";
 import staffnetFront from "@/app/staffnetFront.png";
 import umuco from "@/app/umuco.png";
@@ -16,7 +16,7 @@ import codeFront from "@/app/codeFront.png";
 import screen1 from "@/app/screen1.png";
 import screen2 from "@/app/screen2.png";
 import scree from "@/app/scree.png";
-import wastenetFront from "@/app/wastenetFront.png";
+import wastricaFront from "@/app/wastricaFront.png";
 
 type Project = {
   id: string;
@@ -33,23 +33,23 @@ type Project = {
   liveUrl?: string;
 };
 
-/* ── 4 featured projects: WasteNet, StaffNet, UmucoCore, CodeBridge ── */
+/* ── 4 featured projects: Wastrica, StaffNet, UmucoCore, CodeBridge ── */
 const PROJECTS: Project[] = [
   {
-    id: "wastenet",
+    id: "wastrica",
     index: "01",
     category: "Artificial Intelligence",
-    title: "WasteNet",
+    title: "Wastrica",
     subtitle: "Smart Waste Classification System",
     tags: ["Next.js", "TypeScript", "Python", "AI Classification", "PostgreSQL", "Real-time Dashboard"],
     short:
       "An AI-powered waste management system that classifies waste into plastic, paper, biodegradable, non-biodegradable, metals, and more using smart bins. A real-time dashboard tracks waste levels, collection status, and environmental impact across locations.",
     photos: [
-      { src: "", alt: "WasteNet — smart bin classification dashboard", staticImport: scree },
+      { src: "", alt: "Wastrica — smart bin classification dashboard", staticImport: scree },
     ],
-    hoverPhoto: wastenetFront,
+    hoverPhoto: wastricaFront,
     writeup: [
-      "WasteNet combines on-device AI with a cloud backend to turn ordinary bins into smart, connected units.",
+      "Wastrica combines on-device AI with a cloud backend to turn ordinary bins into smart, connected units.",
       "Each smart bin runs a lightweight image classifier that identifies waste as it's dropped in — sorted into plastic, paper, biodegradable, non-biodegradable, metals, and other common categories.",
       "The real-time dashboard aggregates fill levels, collection status, and environmental-impact metrics across every location, giving municipalities and operations teams a single pane to plan routes, prioritize pickups, and measure sustainability progress week-over-week.",
     ],
@@ -306,8 +306,8 @@ function ProjectRow({
           <PhotoStage
             photos={project.photos}
             paused={true}
-            frame={project.id === "wastenet" ? scree : index % 2 === 0 ? screen1 : screen2}
-            showTabletFrame={project.id !== "wastenet" && project.id !== "staffnet" && project.id !== "umucocore" && project.id !== "codebridge"}
+            frame={project.id === "wastrica" ? scree : index % 2 === 0 ? screen1 : screen2}
+            showTabletFrame={project.id !== "wastrica" && project.id !== "staffnet" && project.id !== "umucocore" && project.id !== "codebridge"}
             hoverPhoto={project.hoverPhoto}
           />
         </div>
