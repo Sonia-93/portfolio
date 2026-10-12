@@ -96,7 +96,7 @@ const PROJECTS: Project[] = [
       "Built with role-based contribution workflows, elders and cultural custodians can submit content directly while moderators ensure quality and authenticity.",
     ],
     githubUrl: "#",
-    liveUrl: "#",
+    liveUrl: "https://umucocore.rw",
   },
   {
     id: "codebridge",
@@ -398,8 +398,9 @@ function ProjectRow({
             <motion.a
               className={styles.btn}
               href={project.githubUrl}
-              target="_blank"
+              target={project.githubUrl === "#" ? "_self" : "_blank"}
               rel="noreferrer noopener"
+              onClick={(e) => { if (project.githubUrl === "#") e.preventDefault(); }}
               initial={{ opacity: 0, y: 6 }}
               animate={contentInnerReveal ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 1.05, duration: 0.5 }}
@@ -410,12 +411,13 @@ function ProjectRow({
           {project.liveUrl && (
             <motion.a
               href={project.liveUrl}
-              target="_blank"
+              target={project.liveUrl === "#" ? "_self" : "_blank"}
               rel="noreferrer noopener"
               className={`${styles.btn} ${styles.btnPrimary}`}
               initial={{ opacity: 0, y: 6 }}
               animate={contentInnerReveal ? { opacity: 1, y: 0 } : {}}
               transition={{ delay: 1.12, duration: 0.5 }}
+              onClick={(e) => { if (project.liveUrl === "#") e.preventDefault(); }}
             >
               Live Demo <ExternalLink size={15} />
             </motion.a>
