@@ -248,9 +248,7 @@ export default function HeroSection() {
             Get In Touch
           </a>
           <a href="/cv.pdf" target="_blank" className={styles.btnOutline}>
-            View CV
-          </a>
-            Download CV
+            View My CV
           </a>
         </motion.div>
       </div>

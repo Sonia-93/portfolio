@@ -36,15 +36,15 @@ type Project = {
 
 const projects: Project[] = [
   {
-    id: "wastenet",
+    id: "wastrica",
     category: "Artificial Intelligence",
-    title: "WasteNet",
+    title: "Wastrica",
     subtitle: "Smart Waste Classification System",
     tags: ["Next.js", "Python", "AI Classification", "PostgreSQL"],
     defaultImage: wastenetFront,
     hoverImage: scree,
     writeup: [
-      "WasteNet combines on-device AI with a cloud backend to turn ordinary bins into smart, connected units.",
+      "Wastrica combines on-device AI with a cloud backend to turn ordinary bins into smart, connected units.",
       "Each smart bin runs a lightweight image classifier that identifies waste as it's dropped in — sorted into plastic, paper, biodegradable, non-biodegradable, metals, and other common categories.",
       "The real-time dashboard aggregates fill levels, collection status, and environmental-impact metrics across every location.",
     ],
