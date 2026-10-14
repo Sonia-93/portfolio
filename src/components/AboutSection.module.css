@@ -27,17 +27,28 @@
 /* "ABOUT ME" — NOW MATCHES "I BUILD SYSTEMS" exactly (same variables) */
 .aboutTitle {
   font-family: var(--title-font);
-  font-size: var(--title-size);
+  font-size: 50px;
   font-weight: var(--title-weight);
   letter-spacing: var(--title-tracking);
   text-transform: uppercase;
-  line-height: var(--title-line-height, 1);
+  line-height: 1;
   color: #ffffff;
   margin: 0 0 36px 0;
   text-shadow:
     0 0 18px rgba(255, 255, 255, 0.35),
     0 0 40px rgba(255, 255, 255, 0.15);
-    font-size: 50px;
+     font-family: var(--title-font);
+  font-size: 50px;
+  font-weight: var(--title-weight, 700);
+  letter-spacing: var(--title-tracking, 0.02em);
+  text-transform: uppercase;
+  line-height: 1.05;
+  color: #ffffff;
+  margin: 0;
+  text-shadow:
+    0 0 18px rgba(255, 255, 255, 0.25),
+    0 0 40px rgba(255, 255, 255, 0.1);
+    
 }
 
 /* Full name — large, crisp white */

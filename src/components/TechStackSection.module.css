@@ -98,3 +98,20 @@
   color: #ffffff;
   text-shadow: 0 0 12px rgba(255, 255, 255, 0.8);
 }
+
+.cursor {
+  display: inline-block;
+  width: 4px;
+  height: 0.85em;
+  background: #ffffff;
+  margin-left: 6px;
+  vertical-align: baseline;
+  border-radius: 2px;
+  animation: blink 0.75s ease-in-out infinite;
+  box-shadow: 0 0 10px rgba(255,255,255,0.9);
+}
+
+@keyframes blink {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0; }
+}

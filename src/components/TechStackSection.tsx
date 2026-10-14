@@ -1,5 +1,8 @@
 "use client";
 
+import { useEffect, useState } from "react";
+import { useInView } from "framer-motion";
+import { useRef } from "react";
 import styles from "./TechStackSection.module.css";
 
 const techs = [
@@ -27,14 +30,42 @@ const techs = [
   { name: "Networking", icon: "https://cdn.jsdelivr.net/gh/devicons/devicon/icons/ssh/ssh-original.svg" },
 ];
 
-// Duplicate for seamless infinite scroll
 const doubled = [...techs, ...techs];
 
+function useTypingEffect(text: string, trigger: boolean, speed = 55) {
+  const [displayed, setDisplayed] = useState("");
+  const [done, setDone] = useState(false);
+
+  useEffect(() => {
+    if (!trigger) { setDisplayed(""); setDone(false); return; }
+    let i = 0;
+    let id: NodeJS.Timeout;
+    const type = () => {
+      if (i <= text.length) {
+        setDisplayed(text.slice(0, i));
+        i++;
+        id = setTimeout(type, speed + Math.random() * 40);
+      } else setDone(true);
+    };
+    type();
+    return () => clearTimeout(id);
+  }, [trigger, text, speed]);
+
+  return { displayed, done };
+}
+
 export default function TechStackSection() {
+  const ref = useRef(null);
+  const inView = useInView(ref, { once: true, margin: "0px 0px -10% 0px" });
+  const { displayed, done } = useTypingEffect("Technical Arsenal", inView, 60);
+
   return (
-    <section className={styles.section} id="skills">
+    <section className={styles.section} id="skills" ref={ref}>
       <div className={styles.label}>Technologies I work with</div>
-      <div className={styles.bigTitle}>Technical Arsenal</div>
+      <div className={styles.bigTitle}>
+        {displayed}
+        {!done && inView && <span className={styles.cursor} />}
+      </div>
       <div className={styles.track}>
         <div className={styles.marquee}>
           {doubled.map((tech, i) => (
