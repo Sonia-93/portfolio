@@ -19,7 +19,7 @@
   mask-image: linear-gradient(90deg, #000, transparent 85%);
 }
 
-.inner { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; }
+.inner { position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; }
 .heading { max-width: 760px; margin-bottom: clamp(38px, 5vw, 64px); }
 .eyebrow { display: block; color: rgba(255,255,255,.52); font-size: 10px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; margin-bottom: 18px; }
 .title {
@@ -39,15 +39,15 @@
 .credentialRow { border-top: 1px solid rgba(255,255,255,.14); transition: border-color .25s ease; }
 .credentialRow:last-child { border-bottom: 1px solid rgba(255,255,255,.14); }
 .credentialRow:hover, .credentialRowExpanded { border-color: rgba(255,255,255,.42); }
-.rowTop { display: grid; grid-template-columns: 38px 46px minmax(0, 1fr) 42px; gap: 18px; align-items: center; min-height: 132px; padding: 22px 8px 22px 0; }
-.number { align-self: start; padding-top: 8px; color: rgba(255,255,255,.3); font-family: var(--font-heading); font-size: 10px; letter-spacing: .12em; }
-.icon { display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; border: 1px solid rgba(255,255,255,.16); border-radius: 50%; color: rgba(255,255,255,.76); transition: color .25s ease, background .25s ease, border-color .25s ease; }
+.rowTop { display: flex; width: 100%; gap: 18px; align-items: center; min-height: 132px; padding: 22px 8px 22px 0; }
+.number { align-self: flex-start; flex: 0 0 38px; padding-top: 8px; color: rgba(255,255,255,.3); font-family: var(--font-heading); font-size: 10px; letter-spacing: .12em; }
+.icon { display: flex; flex: 0 0 42px; align-items: center; justify-content: center; width: 42px; height: 42px; border: 1px solid rgba(255,255,255,.16); border-radius: 50%; color: rgba(255,255,255,.76); transition: color .25s ease, background .25s ease, border-color .25s ease; }
 .credentialRow:hover .icon, .credentialRowExpanded .icon { color: #080808; background: #fff; border-color: #fff; }
-.credentialText { min-width: 0; }
+.credentialText { flex: 1; min-width: 0; }
 .credentialType { display: block; margin-bottom: 6px; color: rgba(255,255,255,.42); font-size: 9px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; }
 .credentialText h3 { margin: 0 0 5px; color: rgba(255,255,255,.91); font-size: 16px; font-weight: 600; line-height: 1.35; }
 .credentialText p { margin: 0; color: rgba(255,255,255,.45); font-size: 11px; line-height: 1.55; }
-.expandButton { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid rgba(255,255,255,.15); background: transparent; color: rgba(255,255,255,.58); cursor: pointer; transition: color .2s ease, background .2s ease, border-color .2s ease, transform .2s ease; }
+.expandButton { display: grid; flex: 0 0 40px; place-items: center; width: 40px; height: 40px; margin-left: auto; border: 1px solid rgba(255,255,255,.15); border-radius: 0; background: transparent; color: rgba(255,255,255,.58); cursor: pointer; transition: color .2s ease, background .2s ease, border-color .2s ease, transform .2s ease; }
 .expandButton:hover, .expandButton:focus-visible { color: #000; background: #fff; border-color: #fff; }
 .credentialRowExpanded .expandButton { color: #000; background: #fff; border-color: #fff; transform: rotate(45deg); }
 .credentialDetails { display: grid; grid-template-columns: minmax(220px, .72fr) minmax(0, 1.28fr); gap: clamp(24px, 5vw, 64px); align-items: center; overflow: hidden; padding: 0 0 28px 102px; }
@@ -72,11 +72,12 @@
 
 @media (max-width: 520px) {
   .title { font-size: 38px; }
-  .rowTop { grid-template-columns: 25px 36px minmax(0, 1fr) 38px; gap: 11px; min-height: 118px; padding: 18px 0; }
-  .icon { width: 36px; height: 36px; }
+  .rowTop { gap: 11px; min-height: 118px; padding: 18px 0; }
+  .number { flex-basis: 25px; }
+  .icon { flex-basis: 36px; width: 36px; height: 36px; }
   .credentialText h3 { font-size: 14px; }
   .credentialText p { font-size: 10px; }
-  .expandButton { width: 36px; height: 36px; }
+  .expandButton { flex-basis: 36px; width: 36px; height: 36px; }
   .credentialDetails { gap: 18px; padding-bottom: 22px; }
 }
 
