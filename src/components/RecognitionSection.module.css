@@ -3,7 +3,7 @@
   overflow: hidden;
   padding: clamp(88px, 11vw, 152px) clamp(24px, 6vw, 100px);
   background:
-    radial-gradient(ellipse at 88% 48%, rgba(255, 255, 255, 0.055), transparent 34%),
+    radial-gradient(ellipse at 85% 52%, rgba(255, 255, 255, 0.045), transparent 38%),
     #050505;
   border-top: 1px solid rgba(255, 255, 255, 0.07);
 }
@@ -13,7 +13,7 @@
   position: absolute;
   inset: 0;
   pointer-events: none;
-  opacity: 0.18;
+  opacity: 0.16;
   background-image: linear-gradient(rgba(255,255,255,.025) 1px, transparent 1px), linear-gradient(90deg, rgba(255,255,255,.025) 1px, transparent 1px);
   background-size: 64px 64px;
   mask-image: linear-gradient(90deg, #000, transparent 85%);
@@ -21,101 +21,65 @@
 
 .inner { position: relative; z-index: 1; max-width: 1200px; margin: 0 auto; }
 .heading { max-width: 760px; margin-bottom: clamp(38px, 5vw, 64px); }
-.eyebrow { display: flex; align-items: center; gap: 12px; color: rgba(255,255,255,.52); font-size: 10px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; margin-bottom: 18px; }
+.eyebrow { display: block; color: rgba(255,255,255,.52); font-size: 10px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; margin-bottom: 18px; }
 .title {
-  color: #ffffff;
+  color: #fff;
   font-family: var(--title-font);
   font-size: 50px;
   font-weight: var(--title-weight, 700);
-  letter-spacing: var(--title-tracking, 0.02em);
+  letter-spacing: var(--title-tracking, .02em);
   line-height: 1.05;
   text-transform: uppercase;
   margin: 0;
   text-shadow: 0 0 18px rgba(255,255,255,.25), 0 0 40px rgba(255,255,255,.1);
 }
-.title span { color: #ffffff; }
-.intro { color: rgba(255,255,255,.48); font-size: 14px; line-height: 1.8; max-width: 450px; margin-top: 22px; }
-.contentGrid { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(30px, 5vw, 64px); align-items: stretch; }
-.achievementList { display: flex; flex-direction: column; }
-.achievement { display: grid; grid-template-columns: 34px 42px minmax(0, 1fr) 18px; gap: 17px; align-items: start; padding: 27px 8px 27px 0; border-top: 1px solid rgba(255,255,255,.12); transition: border-color .25s ease, transform .25s ease; }
-.achievement:last-child { border-bottom: 1px solid rgba(255,255,255,.12); }
-.achievement:hover { border-color: rgba(255,255,255,.42); transform: translateX(5px); }
-.number { padding-top: 5px; color: rgba(255,255,255,.28); font-family: var(--font-heading); font-size: 10px; letter-spacing: .12em; }
-.icon { display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; border: 1px solid rgba(255,255,255,.14); border-radius: 50%; color: rgba(255,255,255,.74); transition: color .25s ease, background .25s ease, border-color .25s ease; }
-.achievement:hover .icon { color: #080808; background: #fff; border-color: #fff; }
-.metric { display: flex; align-items: baseline; gap: 9px; margin: -4px 0 5px; }
-.metric strong { color: #fff; font-family: var(--title-font); font-size: clamp(27px, 3vw, 36px); font-weight: 400; letter-spacing: -.025em; }
-.metric span { color: rgba(255,255,255,.42); font-size: 9px; letter-spacing: .16em; text-transform: uppercase; }
-.achievementBody h3 { margin: 0 0 7px; color: rgba(255,255,255,.86); font-size: 14px; font-weight: 600; }
-.achievementBody p { max-width: 400px; margin: 0; color: rgba(255,255,255,.43); font-size: 12px; line-height: 1.7; }
-.arrow { margin-top: 5px; color: rgba(255,255,255,.28); transition: color .2s ease, transform .2s ease; }
-.achievement:hover .arrow { color: #fff; transform: translate(2px, -2px); }
-.certificatePanel { position: relative; display: flex; flex-direction: column; gap: 18px; padding: 20px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.025); box-shadow: 0 28px 80px rgba(0,0,0,.38); }
-.credentialsHeading { display: flex; justify-content: space-between; align-items: end; gap: 14px; padding-bottom: 15px; border-bottom: 1px solid rgba(255,255,255,.11); }
-.credentialsEyebrow { color: rgba(255,255,255,.36); font-size: 9px; letter-spacing: .16em; text-transform: uppercase; }
-.credentialsHeading h3 { margin: 7px 0 0; color: #fff; font-family: var(--title-font); font-size: clamp(25px, 2.6vw, 34px); font-weight: 400; letter-spacing: var(--title-tracking); line-height: 1; text-transform: uppercase; }
-.credentialsHeading h3 span { color: rgba(255,255,255,.48); }
-.credentialCount { color: #fff; font-family: var(--title-font); font-size: 27px; line-height: 1; white-space: nowrap; }
-.credentialCount small { color: rgba(255,255,255,.38); font-family: var(--font-sans); font-size: 8px; letter-spacing: .12em; text-transform: uppercase; }
-.credentialGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-.credentialCard { min-width: 0; overflow: hidden; border: 1px solid rgba(255,255,255,.1); background: rgba(255,255,255,.025); transition: border-color .25s ease, transform .25s ease, background .25s ease; }
-.credentialCard:hover { border-color: rgba(255,255,255,.42); background: rgba(255,255,255,.05); transform: translateY(-3px); }
-.previewWrap { position: relative; display: block; overflow: hidden; aspect-ratio: 1.55; background: #f4f2ed; }
-.preview { display: block; width: 100%; height: 100%; object-fit: cover; object-position: center; transition: transform .45s cubic-bezier(.22,1,.36,1); }
-.credentialCard:hover .preview { transform: scale(1.045); }
-.openCredential { position: absolute; right: 9px; bottom: 9px; display: grid; place-items: center; width: 34px; height: 34px; color: #fff; background: rgba(0,0,0,.78); border: 1px solid rgba(255,255,255,.45); cursor: pointer; transition: background .2s ease, transform .2s ease; }
-.openCredential:hover, .openCredential:focus-visible { background: #000; transform: translateY(-2px); }
-.credentialCard:focus-visible { outline: 2px solid #fff; outline-offset: 3px; }
-.credentialInfo { display: flex; flex-direction: column; gap: 5px; padding: 12px 12px 14px; }
-.credentialType { color: rgba(255,255,255,.4); font-size: 8px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; }
-.credentialInfo strong { color: rgba(255,255,255,.9); font-size: 11px; font-weight: 600; line-height: 1.45; }
-.credentialIssuer { color: rgba(255,255,255,.42); font-size: 9px; line-height: 1.5; }
-.showAllButton { display: flex; align-items: center; justify-content: space-between; width: 100%; padding: 13px 14px; border: 1px solid rgba(255,255,255,.17); background: transparent; color: rgba(255,255,255,.83); font: inherit; font-size: 10px; font-weight: 600; letter-spacing: .1em; text-align: left; text-transform: uppercase; cursor: pointer; transition: border-color .2s ease, background .2s ease; }
-.showAllButton:hover { border-color: rgba(255,255,255,.48); background: rgba(255,255,255,.05); }
-.showAllButton span { display: flex; align-items: center; gap: 8px; font-size: 11px; font-weight: 500; }
-.viewerBackdrop { position: fixed; z-index: 300; inset: 0; display: grid; place-items: center; padding: 24px; background: rgba(0,0,0,.84); backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px); }
-.viewer { display: flex; flex-direction: column; width: min(100%, 1060px); max-height: min(92vh, 980px); padding: 20px; overflow: auto; border: 1px solid rgba(255,255,255,.18); background: #101010; box-shadow: 0 35px 120px rgba(0,0,0,.7); }
-.galleryViewer { display: flex; flex-direction: column; width: min(100%, 1120px); max-height: min(92vh, 980px); padding: 20px; overflow: auto; border: 1px solid rgba(255,255,255,.18); background: #101010; box-shadow: 0 35px 120px rgba(0,0,0,.7); }
-.allCredentialsGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
-.galleryCard { display: grid; grid-template-columns: minmax(100px, 34%) 1fr; grid-template-rows: auto auto 1fr; align-items: start; column-gap: 14px; padding: 10px; border: 1px solid rgba(255,255,255,.12); background: rgba(255,255,255,.025); color: rgba(255,255,255,.48); font: inherit; font-size: 10px; text-align: left; cursor: pointer; transition: border-color .2s ease, background .2s ease; }
-.galleryCard:hover { border-color: rgba(255,255,255,.48); background: rgba(255,255,255,.06); }
-.galleryCard img { grid-column: 1; grid-row: 1 / span 3; display: block; width: 100%; aspect-ratio: 1.4; object-fit: cover; background: #eee; }
-.galleryCard .credentialType { align-self: end; }
-.galleryCard strong { margin: 5px 0; color: #fff; font-size: 13px; line-height: 1.35; }
-.galleryCard > span:last-child { line-height: 1.5; }
-.viewerHeader { display: flex; justify-content: space-between; align-items: flex-start; gap: 20px; padding-bottom: 16px; }
-.viewerHeader h3 { margin: 7px 0 4px; color: #fff; font-family: var(--title-font); font-size: clamp(24px, 4vw, 36px); font-weight: 400; line-height: 1; text-transform: uppercase; }
-.viewerHeader p { margin: 0; color: rgba(255,255,255,.48); font-size: 11px; }
-.viewerClose { display: grid; place-items: center; width: 40px; height: 40px; flex-shrink: 0; border: 1px solid rgba(255,255,255,.18); background: transparent; color: #fff; cursor: pointer; }
-.viewerClose:hover { background: rgba(255,255,255,.1); }
-.fullPreviewWrap { display: grid; place-items: center; min-height: 180px; padding: 12px; overflow: auto; background: #252525; }
-.fullPreview { display: block; width: 100%; height: auto; max-height: min(66vh, 720px); object-fit: contain; }
-.viewerFooter { display: flex; justify-content: space-between; align-items: center; gap: 12px; padding-top: 16px; }
-.viewerNav, .openPdf { display: inline-flex; align-items: center; justify-content: center; gap: 8px; min-height: 40px; padding: 0 12px; border: 1px solid rgba(255,255,255,.18); background: transparent; color: rgba(255,255,255,.82); font: inherit; font-size: 10px; text-decoration: none; cursor: pointer; transition: border-color .2s ease, color .2s ease; }
-.viewerNav:hover, .openPdf:hover { border-color: rgba(255,255,255,.58); color: #fff; }
+.title span { color: #fff; }
+.intro { max-width: 560px; margin-top: 18px; color: rgba(255,255,255,.5); font-size: 14px; line-height: 1.8; }
+.certificateList { width: 100%; }
+.credentialRow { border-top: 1px solid rgba(255,255,255,.14); transition: border-color .25s ease; }
+.credentialRow:last-child { border-bottom: 1px solid rgba(255,255,255,.14); }
+.credentialRow:hover, .credentialRowExpanded { border-color: rgba(255,255,255,.42); }
+.rowTop { display: grid; grid-template-columns: 38px 46px minmax(0, 1fr) 42px; gap: 18px; align-items: center; min-height: 132px; padding: 22px 8px 22px 0; }
+.number { align-self: start; padding-top: 8px; color: rgba(255,255,255,.3); font-family: var(--font-heading); font-size: 10px; letter-spacing: .12em; }
+.icon { display: flex; align-items: center; justify-content: center; width: 42px; height: 42px; border: 1px solid rgba(255,255,255,.16); border-radius: 50%; color: rgba(255,255,255,.76); transition: color .25s ease, background .25s ease, border-color .25s ease; }
+.credentialRow:hover .icon, .credentialRowExpanded .icon { color: #080808; background: #fff; border-color: #fff; }
+.credentialText { min-width: 0; }
+.credentialType { display: block; margin-bottom: 6px; color: rgba(255,255,255,.42); font-size: 9px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; }
+.credentialText h3 { margin: 0 0 5px; color: rgba(255,255,255,.91); font-size: 16px; font-weight: 600; line-height: 1.35; }
+.credentialText p { margin: 0; color: rgba(255,255,255,.45); font-size: 11px; line-height: 1.55; }
+.expandButton { display: grid; place-items: center; width: 40px; height: 40px; border: 1px solid rgba(255,255,255,.15); background: transparent; color: rgba(255,255,255,.58); cursor: pointer; transition: color .2s ease, background .2s ease, border-color .2s ease, transform .2s ease; }
+.expandButton:hover, .expandButton:focus-visible { color: #000; background: #fff; border-color: #fff; }
+.credentialRowExpanded .expandButton { color: #000; background: #fff; border-color: #fff; transform: rotate(45deg); }
+.credentialDetails { display: grid; grid-template-columns: minmax(220px, .72fr) minmax(0, 1.28fr); gap: clamp(24px, 5vw, 64px); align-items: center; overflow: hidden; padding: 0 0 28px 102px; }
+.detailCopy { max-width: 340px; }
+.detailLabel { display: block; margin-bottom: 12px; color: rgba(255,255,255,.4); font-size: 9px; font-weight: 600; letter-spacing: .16em; text-transform: uppercase; }
+.detailCopy p { margin: 0 0 20px; color: rgba(255,255,255,.62); font-size: 13px; line-height: 1.8; }
+.pdfLink { display: inline-flex; align-items: center; gap: 8px; padding: 10px 13px; border: 1px solid rgba(255,255,255,.24); color: rgba(255,255,255,.86); font-size: 10px; font-weight: 600; letter-spacing: .06em; text-transform: uppercase; transition: border-color .2s ease, background .2s ease; }
+.pdfLink:hover { border-color: #fff; background: rgba(255,255,255,.08); }
+.previewLink { position: relative; display: block; overflow: hidden; border: 1px solid rgba(255,255,255,.17); background: #f4f2ed; }
+.preview { display: block; width: 100%; max-height: 520px; object-fit: contain; }
+.previewHint { position: absolute; right: 12px; bottom: 12px; display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: rgba(0,0,0,.82); color: #fff; font-size: 9px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; opacity: 0; transform: translateY(4px); transition: opacity .2s ease, transform .2s ease; }
+.previewLink:hover .previewHint, .previewLink:focus-visible .previewHint { opacity: 1; transform: translateY(0); }
+.showAllButton { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-top: 18px; padding: 14px 16px; border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.025); color: rgba(255,255,255,.86); font: inherit; font-size: 10px; font-weight: 600; letter-spacing: .11em; text-align: left; text-transform: uppercase; cursor: pointer; transition: border-color .2s ease, background .2s ease; }
+.showAllButton:hover { border-color: rgba(255,255,255,.5); background: rgba(255,255,255,.06); }
+.showAllButton span { color: rgba(255,255,255,.48); font-size: 10px; letter-spacing: .06em; }
 
-@media (max-width: 850px) {
-  .contentGrid { grid-template-columns: 1fr; }
-  .certificatePanel { max-width: 700px; width: 100%; margin: 12px auto 0; }
+@media (max-width: 760px) {
+  .credentialDetails { grid-template-columns: 1fr; padding-left: 0; }
+  .detailCopy { max-width: none; }
+  .preview { max-height: 460px; }
 }
 
 @media (max-width: 520px) {
   .title { font-size: 38px; }
-  .achievement { grid-template-columns: 25px 36px minmax(0, 1fr) 14px; gap: 11px; padding: 22px 0; }
+  .rowTop { grid-template-columns: 25px 36px minmax(0, 1fr) 38px; gap: 11px; min-height: 118px; padding: 18px 0; }
   .icon { width: 36px; height: 36px; }
-  .achievementBody p { font-size: 11px; }
-  .certificatePanel { padding: 12px; }
-  .credentialGrid { gap: 9px; }
-  .credentialInfo { padding: 10px 9px 12px; }
-  .credentialInfo strong { font-size: 10px; }
-  .viewerBackdrop { padding: 10px; }
-  .viewer { padding: 13px; }
-  .viewerFooter { flex-wrap: wrap; }
-  .openPdf { order: -1; width: 100%; }
-  .allCredentialsGrid { grid-template-columns: 1fr; }
-  .galleryViewer { padding: 13px; }
+  .credentialText h3 { font-size: 14px; }
+  .credentialText p { font-size: 10px; }
+  .expandButton { width: 36px; height: 36px; }
+  .credentialDetails { gap: 18px; padding-bottom: 22px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .achievement, .icon, .arrow, .credentialCard, .preview, .showAllButton, .openCredential, .viewerNav, .openPdf { transition: none; }
+  .credentialRow, .icon, .expandButton, .pdfLink, .previewHint, .showAllButton { transition: none; }
 }

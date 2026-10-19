@@ -1,8 +1,8 @@
 "use client";
 
+import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { useEffect, useState } from "react";
-import { ArrowLeft, ArrowRight, ArrowUpRight, Award, ExternalLink, Sparkles, UsersRound, X } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, Award, BookOpen, Lightbulb, Medal } from "lucide-react";
 import styles from "./RecognitionSection.module.css";
 
 const credentials = [
@@ -10,86 +10,44 @@ const credentials = [
     title: "2026 Season Semifinalist",
     issuer: "Technovation Rwanda · HerIngress",
     type: "Certificate of recognition",
+    description: "Recognized for developing HerIngress as a member of Team Dev Girls in the 2026 Technovation season.",
     file: "/certificates/technovation-2026-semifinalist.pdf",
     preview: "/certificates/previews/technovation.png",
+    icon: Medal,
   },
   {
     title: "Networking Basics",
     issuer: "Cisco Networking Academy",
     type: "Course completion",
+    description: "Completed the Networking Basics course through the Cisco Networking Academy program.",
     file: "/certificates/cisco-networking-basics.pdf",
     preview: "/certificates/previews/cisco.png",
+    icon: BookOpen,
   },
   {
     title: "AI Software Design & Development",
     issuer: "Nazli Tech School · Women in Tech Rwanda",
     type: "Course completion",
+    description: "Completed a course in AI Software Design and Development with Nazli Tech School and Women in Tech Rwanda.",
     file: "/certificates/ai-software-design-and-development.pdf",
     preview: "/certificates/previews/ai-software-design.png",
+    icon: Lightbulb,
   },
   {
     title: "Wavumbuzi Entrepreneurship Challenge",
     issuer: "6th Edition · 2026",
     type: "Certificate of appreciation",
+    description: "Recognized for active participation in the 6th edition of the Wavumbuzi Entrepreneurship Challenge.",
     file: "/certificates/wavumbuzi-certificate-of-appreciation.pdf",
     preview: "/certificates/previews/wavumbuzi.png",
-  },
-];
-
-const highlights = [
-  {
-    number: "01",
-    value: "04",
-    unit: "credentials",
-    title: "Learning across disciplines",
-    description: "Coursework and recognition spanning networking, AI software design, entrepreneurship, and innovation.",
     icon: Award,
-  },
-  {
-    number: "02",
-    value: "02",
-    unit: "recognitions",
-    title: "Taking on new challenges",
-    description: "Recognized as a Technovation Rwanda 2026 semifinalist and in the Wavumbuzi Entrepreneurship Challenge.",
-    icon: Sparkles,
-  },
-  {
-    number: "03",
-    value: "2026",
-    unit: "season",
-    title: "HerIngress · Team Dev Girls",
-    description: "Developed HerIngress as a member of Team Dev Girls for the Technovation Rwanda season.",
-    icon: UsersRound,
   },
 ];
 
 export default function RecognitionSection() {
-  const [galleryOpen, setGalleryOpen] = useState(false);
-  const [activeCredential, setActiveCredential] = useState<number | null>(null);
-  const shownCredentials = credentials;
-  const selectedCredential = activeCredential === null ? null : credentials[activeCredential];
-  const modalKey = activeCredential !== null ? activeCredential + 1 : galleryOpen ? 0 : null;
-
-  useEffect(() => {
-    if (modalKey === null) return;
-
-    const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "Escape") {
-        setActiveCredential(null);
-        setGalleryOpen(false);
-      }
-      if (modalKey > 0 && event.key === "ArrowRight") setActiveCredential((current) => current === null ? 0 : (current + 1) % credentials.length);
-      if (modalKey > 0 && event.key === "ArrowLeft") setActiveCredential((current) => current === null ? credentials.length - 1 : (current - 1 + credentials.length) % credentials.length);
-    };
-
-    const previousOverflow = document.body.style.overflow;
-    document.body.style.overflow = "hidden";
-    window.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.body.style.overflow = previousOverflow;
-      window.removeEventListener("keydown", onKeyDown);
-    };
-  }, [modalKey]);
+  const [showAll, setShowAll] = useState(false);
+  const [expanded, setExpanded] = useState<number | null>(null);
+  const visibleCredentials = showAll ? credentials : credentials.slice(0, 2);
 
   return (
     <section className={styles.section} id="recognition" aria-labelledby="recognition-title">
@@ -103,172 +61,77 @@ export default function RecognitionSection() {
         >
           <span className={styles.eyebrow}>Progress with purpose</span>
           <h2 id="recognition-title" className={styles.title}>Certificates <span>&amp; recognition</span></h2>
-          <p className={styles.intro}>A few markers of the work, learning, and momentum behind my journey as a developer.</p>
+          <p className={styles.intro}>A record of continued learning, creative problem-solving, and recognition. Select a certificate to view it.</p>
         </motion.div>
 
-        <div className={styles.contentGrid}>
-          <div className={styles.achievementList}>
-            {highlights.map(({ number, value, unit, title, description, icon: Icon }, index) => (
+        <div className={styles.certificateList}>
+          {visibleCredentials.map(({ title, issuer, type, description, file, preview, icon: Icon }, index) => {
+            const isExpanded = expanded === index;
+            return (
               <motion.article
-                key={number}
-                className={styles.achievement}
-                initial={{ opacity: 0, x: -22 }}
-                whileInView={{ opacity: 1, x: 0 }}
-                viewport={{ once: true, amount: 0.25 }}
-                transition={{ duration: 0.55, delay: index * 0.12, ease: [0.22, 1, 0.36, 1] }}
+                key={file}
+                className={`${styles.credentialRow} ${isExpanded ? styles.credentialRowExpanded : ""}`}
+                initial={{ opacity: 0, y: 18 }}
+                whileInView={{ opacity: 1, y: 0 }}
+                viewport={{ once: true, amount: 0.15 }}
+                transition={{ duration: 0.45, delay: index * 0.07 }}
               >
-                <span className={styles.number}>{number}</span>
-                <span className={styles.icon}><Icon size={18} strokeWidth={1.6} /></span>
-                <div className={styles.achievementBody}>
-                  <div className={styles.metric}><strong>{value}</strong><span>{unit}</span></div>
-                  <h3>{title}</h3>
-                  <p>{description}</p>
-                </div>
-                <ArrowUpRight className={styles.arrow} size={17} aria-hidden="true" />
-              </motion.article>
-            ))}
-          </div>
-
-          <motion.aside
-            className={styles.certificatePanel}
-            initial={{ opacity: 0, y: 28, rotate: 1.5 }}
-            whileInView={{ opacity: 1, y: 0, rotate: 0 }}
-            viewport={{ once: true, amount: 0.25 }}
-            transition={{ duration: 0.75, delay: 0.18, ease: [0.22, 1, 0.36, 1] }}
-            aria-labelledby="credentials-title"
-          >
-            <div className={styles.credentialsHeading}>
-              <div>
-                <span className={styles.credentialsEyebrow}>Learning · building · growing</span>
-                <h3 id="credentials-title">Certificates <span>&amp; recognition</span></h3>
-              </div>
-              <span className={styles.credentialCount}>04 <small>items</small></span>
-            </div>
-            <div className={styles.credentialGrid}>
-              {shownCredentials.map((credential, index) => (
-                <motion.article
-                  key={credential.file}
-                  className={styles.credentialCard}
-                  initial={{ opacity: 0, y: 16 }}
-                  whileInView={{ opacity: 1, y: 0 }}
-                  viewport={{ once: true, amount: 0.2 }}
-                  transition={{ duration: 0.45, delay: index * 0.09 }}
-                >
-                  <span className={styles.previewWrap}>
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={credential.preview} alt={`${credential.title} certificate preview`} className={styles.preview} />
-                    <button
-                      type="button"
-                      className={styles.openCredential}
-                      onClick={() => setActiveCredential(credentials.indexOf(credential))}
-                      aria-label={`View ${credential.title}`}
-                    >
-                      <ArrowUpRight size={17} />
-                    </button>
-                  </span>
-                  <span className={styles.credentialInfo}>
-                    <span className={styles.credentialType}>{credential.type}</span>
-                    <strong>{credential.title}</strong>
-                    <span className={styles.credentialIssuer}>{credential.issuer}</span>
-                  </span>
-                </motion.article>
-              ))}
-            </div>
-            <button className={styles.showAllButton} type="button" onClick={() => setGalleryOpen(true)}>
-              Show all certificates
-              <span>{credentials.length} <ArrowUpRight size={15} /></span>
-            </button>
-          </motion.aside>
-        </div>
-      </div>
-
-      <AnimatePresence>
-        {galleryOpen && (
-          <motion.div
-            className={styles.viewerBackdrop}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setGalleryOpen(false)}
-          >
-            <motion.div
-              className={styles.galleryViewer}
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="all-certificates-title"
-              initial={{ opacity: 0, y: 20, scale: 0.97 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 12, scale: 0.98 }}
-              transition={{ duration: 0.25 }}
-              onClick={(event) => event.stopPropagation()}
-            >
-              <div className={styles.viewerHeader}>
-                <div>
-                  <span className={styles.credentialType}>Learning · building · growing</span>
-                  <h3 id="all-certificates-title">All certificates &amp; recognition</h3>
-                  <p>Browse each credential and open its full preview.</p>
-                </div>
-                <button className={styles.viewerClose} type="button" onClick={() => setGalleryOpen(false)} aria-label="Close certificate gallery"><X size={20} /></button>
-              </div>
-              <div className={styles.allCredentialsGrid}>
-                {credentials.map((credential, index) => (
+                <div className={styles.rowTop}>
+                  <span className={styles.number}>{String(index + 1).padStart(2, "0")}</span>
+                  <span className={styles.icon}><Icon size={18} strokeWidth={1.6} /></span>
+                  <div className={styles.credentialText}>
+                    <span className={styles.credentialType}>{type}</span>
+                    <h3>{title}</h3>
+                    <p>{issuer}</p>
+                  </div>
                   <button
-                    key={credential.file}
-                    className={styles.galleryCard}
                     type="button"
-                    onClick={() => { setGalleryOpen(false); setActiveCredential(index); }}
+                    className={styles.expandButton}
+                    onClick={() => setExpanded(isExpanded ? null : index)}
+                    aria-expanded={isExpanded}
+                    aria-controls={`credential-preview-${index}`}
+                    aria-label={`${isExpanded ? "Hide" : "View"} ${title}`}
                   >
-                    {/* eslint-disable-next-line @next/next/no-img-element */}
-                    <img src={credential.preview} alt="" />
-                    <span className={styles.credentialType}>{credential.type}</span>
-                    <strong>{credential.title}</strong>
-                    <span>{credential.issuer}</span>
+                    {isExpanded ? <ArrowUpRight size={19} /> : <ArrowDownRight size={19} />}
                   </button>
-                ))}
-              </div>
-            </motion.div>
-          </motion.div>
-        )}
-        {selectedCredential && (
-          <motion.div
-            className={styles.viewerBackdrop}
-            initial={{ opacity: 0 }}
-            animate={{ opacity: 1 }}
-            exit={{ opacity: 0 }}
-            onClick={() => setActiveCredential(null)}
-          >
-            <motion.div
-              className={styles.viewer}
-              role="dialog"
-              aria-modal="true"
-              aria-labelledby="certificate-viewer-title"
-              initial={{ opacity: 0, y: 20, scale: 0.97 }}
-              animate={{ opacity: 1, y: 0, scale: 1 }}
-              exit={{ opacity: 0, y: 12, scale: 0.98 }}
-              transition={{ duration: 0.25 }}
-              onClick={(event) => event.stopPropagation()}
-            >
-              <div className={styles.viewerHeader}>
-                <div>
-                  <span className={styles.credentialType}>{selectedCredential.type}</span>
-                  <h3 id="certificate-viewer-title">{selectedCredential.title}</h3>
-                  <p>{selectedCredential.issuer}</p>
                 </div>
-                <button className={styles.viewerClose} type="button" onClick={() => setActiveCredential(null)} aria-label="Close certificate viewer"><X size={20} /></button>
-              </div>
-              <div className={styles.fullPreviewWrap}>
-                {/* eslint-disable-next-line @next/next/no-img-element */}
-                <img src={selectedCredential.preview} alt={`${selectedCredential.title} full certificate`} className={styles.fullPreview} />
-              </div>
-              <div className={styles.viewerFooter}>
-                <button type="button" className={styles.viewerNav} onClick={() => setActiveCredential((activeCredential! - 1 + credentials.length) % credentials.length)} aria-label="Previous certificate"><ArrowLeft size={17} /> Previous</button>
-                <a className={styles.openPdf} href={selectedCredential.file} target="_blank" rel="noreferrer">Open original PDF <ExternalLink size={15} /></a>
-                <button type="button" className={styles.viewerNav} onClick={() => setActiveCredential((activeCredential! + 1) % credentials.length)} aria-label="Next certificate">Next <ArrowRight size={17} /></button>
-              </div>
-            </motion.div>
-          </motion.div>
+
+                <AnimatePresence initial={false}>
+                  {isExpanded && (
+                    <motion.div
+                      id={`credential-preview-${index}`}
+                      className={styles.credentialDetails}
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
+                    >
+                      <div className={styles.detailCopy}>
+                        <span className={styles.detailLabel}>About this credential</span>
+                        <p>{description}</p>
+                        <a href={file} target="_blank" rel="noreferrer" className={styles.pdfLink}>
+                          Open original PDF <ArrowUpRight size={15} />
+                        </a>
+                      </div>
+                      <a href={file} target="_blank" rel="noreferrer" className={styles.previewLink} aria-label={`Open the full ${title} certificate PDF`}>
+                        {/* eslint-disable-next-line @next/next/no-img-element */}
+                        <img src={preview} alt={`${title} certificate`} className={styles.preview} />
+                        <span className={styles.previewHint}>Open full certificate <ArrowUpRight size={15} /></span>
+                      </a>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.article>
+            );
+          })}
+        </div>
+
+        {!showAll && credentials.length > visibleCredentials.length && (
+          <button className={styles.showAllButton} type="button" onClick={() => setShowAll(true)}>
+            Show all certificates <span>+{credentials.length - visibleCredentials.length}</span>
+          </button>
         )}
-      </AnimatePresence>
+      </div>
     </section>
   );
 }
