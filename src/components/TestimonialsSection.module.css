@@ -137,6 +137,13 @@
   justify-content: center;
   color: rgba(255, 255, 255, 0.5);
   flex-shrink: 0;
+  transition: color 0.2s ease, transform 0.2s ease, filter 0.2s ease;
+}
+
+.githubIcon:hover {
+  color: #ffffff;
+  transform: scale(1.12);
+  filter: drop-shadow(0 0 8px rgba(255, 255, 255, 0.65));
 }
 
 .quote {

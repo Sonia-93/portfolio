@@ -4,6 +4,7 @@ import AboutSection from "@/components/AboutSection";
 import JourneySection from "@/components/JourneySection";
 import TechStackSection from "@/components/TechStackSection";
 import ProjectsSection from "@/components/ProjectsSection";
+import RecognitionSection from "@/components/RecognitionSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import ContactSection from "@/components/ContactSection";
 import CustomCursor from "@/components/CustomCursor";
@@ -18,6 +19,7 @@ export default function Home() {
       <JourneySection />
       <TechStackSection />
       <ProjectsSection />
+      <RecognitionSection />
       <TestimonialsSection />
       <ContactSection />
     </main>

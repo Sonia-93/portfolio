@@ -3,7 +3,7 @@
 import { useEffect, useState } from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Home, User, Code2, FolderOpen, Mail, Star } from "lucide-react";
+import { Home, User, Code2, FolderOpen, Mail, Star, Award } from "lucide-react";
 import styles from "./NavBar.module.css";
 
 const links = [
@@ -11,6 +11,7 @@ const links = [
   { icon: User,          href: "/#about",     label: "About",        section: "about" },
   { icon: Code2,         href: "/#skills",    label: "Skills",       section: "skills" },
   { icon: FolderOpen,    href: "/projects",   label: "Projects",     section: "projects" },
+  { icon: Award,         href: "/#recognition", label: "Recognition", section: "recognition" },
   { icon: Star,       href: "/#testimonials", label: "Testimonials", section: "testimonials" },
   { icon: Mail,          href: "/#contact",   label: "Contact",      section: "contact" },
 ];
@@ -26,7 +27,7 @@ export default function NavBar() {
       return;
     }
 
-    const SECTION_IDS = ["home", "about", "journey", "skills", "projects", "testimonials", "contact"];
+    const SECTION_IDS = ["home", "about", "journey", "skills", "projects", "recognition", "testimonials", "contact"];
 
     const onScroll = () => {
       const scrollY = window.scrollY;

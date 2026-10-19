@@ -8,7 +8,7 @@ const testimonials = [
   {
     quote: "Sonia delivered clean, scalable backend architecture that exceeded our expectations. Her attention to detail and problem-solving skills are outstanding.",
     name: "Irasubiza Saly Nelson",
-    role: "CEO, Velora",
+    role: "Co-Founder, Velora",
     initials: "IS",
     photo: "/saly.png",
   },

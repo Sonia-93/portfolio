@@ -9,14 +9,26 @@ export default function ContactSection() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
   const [sent, setSent] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [error, setError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setLoading(true);
-    // Simulate send
-    await new Promise((r) => setTimeout(r, 1200));
-    setLoading(false);
-    setSent(true);
+    setError("");
+    try {
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(form),
+      });
+      const result = await response.json();
+      if (!response.ok) throw new Error(result.error || "Your message could not be sent. Please try again.");
+      setSent(true);
+    } catch (err) {
+      setError(err instanceof Error ? err.message : "Your message could not be sent. Please try again.");
+    } finally {
+      setLoading(false);
+    }
   };
 
   return (
@@ -101,15 +113,16 @@ export default function ContactSection() {
               <span className={styles.successIcon}>✓</span>
               <h3 className={styles.successTitle}>Message sent!</h3>
               <p className={styles.successDesc}>Thanks for reaching out. I&apos;ll get back to you soon.</p>
-              <button className={styles.resetBtn} onClick={() => { setSent(false); setForm({ name: "", email: "", message: "" }); }}>
+              <button className={styles.resetBtn} onClick={() => { setSent(false); setError(""); setForm({ name: "", email: "", message: "" }); }}>
                 Send another
               </button>
             </motion.div>
           ) : (
             <form className={styles.form} onSubmit={handleSubmit}>
               <div className={styles.field}>
-                <label className={styles.fieldLabel}>Name</label>
+                <label className={styles.fieldLabel} htmlFor="contact-name">Name</label>
                 <input
+                  id="contact-name"
                   className={styles.input}
                   type="text"
                   placeholder="Your name"
@@ -119,8 +132,9 @@ export default function ContactSection() {
                 />
               </div>
               <div className={styles.field}>
-                <label className={styles.fieldLabel}>Email</label>
+                <label className={styles.fieldLabel} htmlFor="contact-email">Email</label>
                 <input
+                  id="contact-email"
                   className={styles.input}
                   type="email"
                   placeholder="your@email.com"
@@ -130,8 +144,9 @@ export default function ContactSection() {
                 />
               </div>
               <div className={styles.field}>
-                <label className={styles.fieldLabel}>Message</label>
+                <label className={styles.fieldLabel} htmlFor="contact-message">Message</label>
                 <textarea
+                  id="contact-message"
                   className={`${styles.input} ${styles.textarea}`}
                   placeholder="Tell me about your project..."
                   value={form.message}
@@ -140,6 +155,7 @@ export default function ContactSection() {
                   rows={5}
                 />
               </div>
+              {error && <p className={styles.formError} role="alert">{error}</p>}
               <button className={styles.submitBtn} type="submit" disabled={loading}>
                 {loading ? (
                   <span className={styles.spinner} />
