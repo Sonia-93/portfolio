@@ -61,7 +61,6 @@ export default function RecognitionSection() {
         >
           <span className={styles.eyebrow}>Progress with purpose</span>
           <h2 id="recognition-title" className={styles.title}>Certificates <span>&amp; recognition</span></h2>
-          <p className={styles.intro}>A record of continued learning, creative problem-solving, and recognition. Select a certificate to view it.</p>
         </motion.div>
 
         <div className={styles.certificateList}>

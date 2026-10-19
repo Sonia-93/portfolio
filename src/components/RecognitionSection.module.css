@@ -20,7 +20,7 @@
 }
 
 .inner { position: relative; z-index: 1; max-width: 1180px; margin: 0 auto; }
-.heading { max-width: 760px; margin-bottom: clamp(38px, 5vw, 64px); }
+.heading { max-width: 900px; margin: 0 auto clamp(38px, 5vw, 64px); text-align: center; }
 .eyebrow { display: block; color: rgba(255,255,255,.52); font-size: 10px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; margin-bottom: 18px; }
 .title {
   color: #fff;
@@ -34,7 +34,6 @@
   text-shadow: 0 0 18px rgba(255,255,255,.25), 0 0 40px rgba(255,255,255,.1);
 }
 .title span { color: #fff; }
-.intro { max-width: 560px; margin-top: 18px; color: rgba(255,255,255,.5); font-size: 14px; line-height: 1.8; }
 .certificateList { width: 100%; }
 .credentialRow { border-top: 1px solid rgba(255,255,255,.14); transition: border-color .25s ease; }
 .credentialRow:last-child { border-bottom: 1px solid rgba(255,255,255,.14); }
