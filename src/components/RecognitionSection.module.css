@@ -19,7 +19,7 @@
   mask-image: linear-gradient(90deg, #000, transparent 85%);
 }
 
-.inner { position: relative; z-index: 1; max-width: 1400px; margin: 0 auto; }
+.inner { position: relative; z-index: 1; max-width: 1180px; margin: 0 auto; }
 .heading { max-width: 760px; margin-bottom: clamp(38px, 5vw, 64px); }
 .eyebrow { display: block; color: rgba(255,255,255,.52); font-size: 10px; font-weight: 600; letter-spacing: .2em; text-transform: uppercase; margin-bottom: 18px; }
 .title {
