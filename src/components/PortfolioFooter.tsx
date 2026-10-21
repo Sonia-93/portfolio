@@ -13,21 +13,14 @@ export default function PortfolioFooter() {
     <footer className={styles.footer}>
       <div className={styles.inner}>
         <div className={styles.topRow}>
-          <a className={styles.brand} href="#top" aria-label="Shimirwa Teta Sonia, back to top">
-            <span className={styles.monogram}>ST</span>
-            <span className={styles.brandText}>
-              <strong>Shimirwa Teta Sonia</strong>
-              <small>Backend developer · Cybersecurity enthusiast</small>
-            </span>
-          </a>
-          <p className={styles.note}>Building thoughtful software, one system at a time.</p>
+          <p className={styles.quote}>Until you win, your efforts go unnoticed. Get used to it.</p>
           <a className={styles.contactLink} href="mailto:shimirwasonia5@gmail.com">
             Start a conversation <span aria-hidden="true">↗</span>
           </a>
         </div>
 
         <div className={styles.bottomRow}>
-          <p className={styles.copyright}>© {new Date().getFullYear()} Shimirwa Teta Sonia</p>
+          <p className={styles.copyright}>© {new Date().getFullYear()} · All rights reserved.</p>
           <nav className={styles.navigation} aria-label="Footer navigation">
             {footerLinks.map((link) => (
               <a href={link.href} key={link.href}>{link.label}</a>

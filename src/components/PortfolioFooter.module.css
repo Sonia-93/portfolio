@@ -8,12 +8,7 @@
 .inner { max-width: 1180px; margin: 0 auto; }
 .topRow, .bottomRow { display: flex; align-items: center; justify-content: space-between; gap: 28px; }
 .topRow { padding-bottom: 32px; }
-.brand { display: inline-flex; align-items: center; gap: 13px; color: #fff; }
-.monogram { display: grid; width: 42px; height: 42px; place-items: center; border: 1px solid rgba(255,255,255,.35); color: #fff; font-family: var(--font-heading); font-size: 14px; letter-spacing: .04em; }
-.brandText { display: flex; flex-direction: column; gap: 4px; }
-.brandText strong { font-size: 12px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; }
-.brandText small { color: rgba(255,255,255,.42); font-size: 10px; letter-spacing: .03em; }
-.note { margin: 0; color: rgba(255,255,255,.43); font-size: 12px; }
+.quote { flex: 1; margin: 0; color: rgba(255,255,255,.62); font-family: var(--font-heading); font-size: clamp(8px, 1.8vw, 18px); font-weight: 500; letter-spacing: .025em; line-height: 1.2; white-space: nowrap; }
 .contactLink { display: inline-flex; align-items: center; gap: 14px; padding: 12px 15px; border: 1px solid rgba(255,255,255,.24); color: rgba(255,255,255,.88); font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; transition: color .2s ease, background .2s ease, border-color .2s ease; }
 .contactLink:hover, .contactLink:focus-visible { border-color: #fff; background: #fff; color: #000; }
 .bottomRow { min-height: 52px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.1); }
@@ -25,18 +20,17 @@
 .backToTop { display: grid; width: 30px; height: 30px; place-items: center; border: 1px solid rgba(255,255,255,.2); color: #fff !important; font-size: 16px !important; }
 
 @media (max-width: 900px) {
-  .topRow { flex-wrap: wrap; }
-  .note { order: 3; flex-basis: 100%; }
+  .topRow { flex-wrap: wrap; justify-content: center; gap: 20px; }
+  .quote { flex-basis: 100%; text-align: center; }
   .bottomRow { flex-wrap: wrap; }
   .navigation { order: 3; flex-basis: 100%; justify-content: center; padding-top: 14px; }
 }
 
 @media (max-width: 560px) {
   .footer { padding-top: 30px; }
-  .topRow { align-items: flex-start; gap: 20px; }
-  .brand { flex: 1 1 100%; }
-  .note { order: initial; flex-basis: auto; }
-  .contactLink { margin-left: auto; }
+  .topRow { align-items: center; gap: 18px; }
+  .quote { font-size: clamp(8px, 2.4vw, 13px); }
+  .contactLink { margin: 0 auto; }
   .bottomRow { justify-content: center; gap: 18px; }
   .copyright { flex-basis: 100%; text-align: center; }
   .navigation { order: initial; flex-basis: 100%; flex-wrap: wrap; }
