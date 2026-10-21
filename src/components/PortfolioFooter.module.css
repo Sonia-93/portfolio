@@ -56,10 +56,10 @@
   margin: 0;
   color: rgba(255, 255, 255, 0.28);
   font-family: var(--font-heading);
-  font-size: 14px;
-  letter-spacing: 0.14em;
+  font-size: 18px;
+  letter-spacing: 0.06em;
   text-align: center;
-  text-transform: uppercase;
+  white-space: nowrap;
 }
 
 .backToTop {
@@ -88,7 +88,7 @@
 
   .socials { gap: 14px; margin-bottom: 28px; }
   .socialLink { width: 42px; height: 42px; }
-  .copyright { font-size: 11px; letter-spacing: 0.1em; }
+  .copyright { font-size: 14px; letter-spacing: 0.04em; }
 }
 
 @media (prefers-reduced-motion: reduce) {

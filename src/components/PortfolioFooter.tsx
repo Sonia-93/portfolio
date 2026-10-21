@@ -21,7 +21,7 @@ export default function PortfolioFooter() {
             </svg>
           </a>
         </nav>
-        <p className={styles.copyright}>© 2026 Sonia · All Right Reserved.</p>
+        <p className={styles.copyright}>© 2026 Sonia. All Right Reserved.</p>
         <a href="#top" className={styles.backToTop} aria-label="Back to top">↑</a>
       </div>
     </footer>
