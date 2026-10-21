@@ -1,42 +1,97 @@
 .footer {
-  position: relative;
-  padding: 38px clamp(22px, 6vw, 96px) 24px;
-  border-top: 1px solid rgba(255, 255, 255, 0.13);
+  padding: clamp(56px, 7vw, 92px) 24px 30px;
+  border-top: 1px solid rgba(255, 255, 255, 0.1);
   background: #000;
 }
 
-.inner { max-width: 1180px; margin: 0 auto; }
-.topRow, .bottomRow { display: flex; align-items: center; justify-content: space-between; gap: 28px; }
-.topRow { padding-bottom: 32px; }
-.quote { flex: 1; margin: 0; color: rgba(255,255,255,.62); font-family: var(--font-heading); font-size: clamp(8px, 1.8vw, 18px); font-weight: 500; letter-spacing: .025em; line-height: 1.2; white-space: nowrap; }
-.contactLink { display: inline-flex; align-items: center; gap: 14px; padding: 12px 15px; border: 1px solid rgba(255,255,255,.24); color: rgba(255,255,255,.88); font-size: 10px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; transition: color .2s ease, background .2s ease, border-color .2s ease; }
-.contactLink:hover, .contactLink:focus-visible { border-color: #fff; background: #fff; color: #000; }
-.bottomRow { min-height: 52px; padding-top: 18px; border-top: 1px solid rgba(255,255,255,.1); }
-.copyright { margin: 0; color: rgba(255,255,255,.38); font-size: 10px; }
-.navigation, .socials { display: flex; align-items: center; gap: clamp(12px, 2vw, 24px); }
-.navigation a, .socials a { color: rgba(255,255,255,.5); font-size: 10px; transition: color .2s ease; }
-.navigation a:hover, .socials a:hover, .navigation a:focus-visible, .socials a:focus-visible { color: #fff; }
-.socials { gap: 16px; }
-.backToTop { display: grid; width: 30px; height: 30px; place-items: center; border: 1px solid rgba(255,255,255,.2); color: #fff !important; font-size: 16px !important; }
+.inner {
+  display: flex;
+  max-width: 1240px;
+  margin: 0 auto;
+  flex-direction: column;
+  align-items: center;
+}
 
-@media (max-width: 900px) {
-  .topRow { flex-wrap: wrap; justify-content: center; gap: 20px; }
-  .quote { flex-basis: 100%; text-align: center; }
-  .bottomRow { flex-wrap: wrap; }
-  .navigation { order: 3; flex-basis: 100%; justify-content: center; padding-top: 14px; }
+.quote {
+  max-width: 100%;
+  margin: 0 0 32px;
+  color: rgba(255, 255, 255, 0.28);
+  font-family: var(--title-font);
+  font-size: clamp(10px, 3.2vw, 46px);
+  font-weight: var(--title-weight, 700);
+  letter-spacing: 0.005em;
+  line-height: 1;
+  text-align: center;
+  text-transform: uppercase;
+  white-space: nowrap;
+}
+
+.socials {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 18px;
+  margin-bottom: 34px;
+}
+
+.socialLink {
+  display: grid;
+  width: 48px;
+  height: 48px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.42);
+  transition: color 0.2s ease, border-color 0.2s ease, background 0.2s ease;
+}
+
+.socialLink:hover,
+.socialLink:focus-visible {
+  border-color: rgba(255, 255, 255, 0.55);
+  background: rgba(255, 255, 255, 0.06);
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.copyright {
+  margin: 0;
+  color: rgba(255, 255, 255, 0.28);
+  font-family: var(--font-heading);
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.backToTop {
+  display: grid;
+  width: 30px;
+  height: 30px;
+  margin-top: 24px;
+  place-items: center;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  border-radius: 50%;
+  color: rgba(255, 255, 255, 0.42);
+  font-size: 16px;
+  transition: color 0.2s ease, border-color 0.2s ease;
+}
+
+.backToTop:hover,
+.backToTop:focus-visible {
+  border-color: rgba(255, 255, 255, 0.55);
+  color: #fff;
 }
 
 @media (max-width: 560px) {
-  .footer { padding-top: 30px; }
-  .topRow { align-items: center; gap: 18px; }
-  .quote { font-size: clamp(8px, 2.4vw, 13px); }
-  .contactLink { margin: 0 auto; }
-  .bottomRow { justify-content: center; gap: 18px; }
-  .copyright { flex-basis: 100%; text-align: center; }
-  .navigation { order: initial; flex-basis: 100%; flex-wrap: wrap; }
-  .socials { justify-content: center; width: 100%; }
+  .quote {
+    font-size: clamp(8px, 2.8vw, 16px);
+    letter-spacing: 0;
+  }
+
+  .socials { gap: 14px; margin-bottom: 28px; }
+  .socialLink { width: 42px; height: 42px; }
+  .copyright { font-size: 8px; letter-spacing: 0.13em; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .contactLink, .navigation a, .socials a { transition: none; }
+  .socialLink, .backToTop { transition: none; }
 }
