@@ -2,42 +2,42 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowDownRight, ArrowUpRight, Award, BookOpen, Lightbulb, Medal } from "lucide-react";
+import { ArrowDownRight, ArrowUpRight, Award, BookOpen, ShieldCheck } from "lucide-react";
 import styles from "./RecognitionSection.module.css";
 
 const credentials = [
   {
-    title: "2026 Season Semifinalist",
-    issuer: "Technovation Rwanda · HerIngress",
-    type: "Certificate of recognition",
-    description: "Recognized for developing HerIngress as a member of Team Dev Girls in the 2026 Technovation season.",
-    file: "/certificates/technovation-2026-semifinalist.pdf",
-    preview: "/certificates/previews/technovation.png",
-    icon: Medal,
-  },
-  {
-    title: "Networking Basics",
-    issuer: "Cisco Networking Academy",
-    type: "Course completion",
-    description: "Completed the Networking Basics course through the Cisco Networking Academy program.",
-    file: "/certificates/cisco-networking-basics.pdf",
-    preview: "/certificates/previews/cisco.png",
-    icon: BookOpen,
+    title: "Best Team — High School Women in Cyber",
+    issuer: "primeCTF-Africa 2026 · Upanzi DPI Network",
+    type: "Certificate of achievement",
+    description: "Ciphers Team earned Best Team on the Africa leaderboard in the High School Women in Cyber category, demonstrating cybersecurity knowledge and problem-solving.",
+    file: "/certificates/primectf-africa-2026.png",
+    preview: "/certificates/primectf-africa-2026.png",
+    icon: ShieldCheck,
   },
   {
     title: "AI Software Design & Development",
     issuer: "Nazli Tech School · Women in Tech Rwanda",
     type: "Course completion",
-    description: "Completed a course in AI Software Design and Development with Nazli Tech School and Women in Tech Rwanda.",
+    description: "Completed the AI Software Design & Development course, building practical skills in designing and developing AI-powered software.",
     file: "/certificates/ai-software-design-and-development.pdf",
     preview: "/certificates/previews/ai-software-design.png",
-    icon: Lightbulb,
+    icon: BookOpen,
+  },
+  {
+    title: "2026 Season Semifinalist",
+    issuer: "Technovation Rwanda · HerIngress",
+    type: "Certificate of recognition",
+    description: "Recognized as a semifinalist for outstanding work with Team Dev Girls, developing the HerIngress project in the 2026 Technovation season.",
+    file: "/certificates/technovation-2026-semifinalist.pdf",
+    preview: "/certificates/previews/technovation.png",
+    icon: Award,
   },
   {
     title: "Wavumbuzi Entrepreneurship Challenge",
     issuer: "6th Edition · 2026",
     type: "Certificate of appreciation",
-    description: "Recognized for active participation in the 6th edition of the Wavumbuzi Entrepreneurship Challenge.",
+    description: "Received a certificate of appreciation for participation in the 6th edition of the Wavumbuzi Entrepreneurship Challenge.",
     file: "/certificates/wavumbuzi-certificate-of-appreciation.pdf",
     preview: "/certificates/previews/wavumbuzi.png",
     icon: Award,
@@ -45,9 +45,8 @@ const credentials = [
 ];
 
 export default function RecognitionSection() {
-  const [showAll, setShowAll] = useState(false);
-  const [expanded, setExpanded] = useState<number | null>(null);
-  const visibleCredentials = showAll ? credentials : credentials.slice(0, 2);
+  const [expanded, setExpanded] = useState<number[]>([]);
+  const allExpanded = expanded.length === credentials.length;
 
   return (
     <section className={styles.section} id="recognition" aria-labelledby="recognition-title">
@@ -64,8 +63,8 @@ export default function RecognitionSection() {
         </motion.div>
 
         <div className={styles.certificateList}>
-          {visibleCredentials.map(({ title, issuer, type, description, file, preview, icon: Icon }, index) => {
-            const isExpanded = expanded === index;
+          {credentials.map(({ title, issuer, type, description, file, preview, icon: Icon }, index) => {
+            const isExpanded = expanded.includes(index);
             return (
               <motion.article
                 key={file}
@@ -82,11 +81,14 @@ export default function RecognitionSection() {
                     <span className={styles.credentialType}>{type}</span>
                     <h3>{title}</h3>
                     <p>{issuer}</p>
+                    <p className={styles.credentialDescription}>{description}</p>
                   </div>
                   <button
                     type="button"
                     className={styles.expandButton}
-                    onClick={() => setExpanded(isExpanded ? null : index)}
+                    onClick={() => setExpanded((current) => (
+                      isExpanded ? current.filter((item) => item !== index) : [...current, index]
+                    ))}
                     aria-expanded={isExpanded}
                     aria-controls={`credential-preview-${index}`}
                     aria-label={`${isExpanded ? "Hide" : "View"} ${title}`}
@@ -106,13 +108,12 @@ export default function RecognitionSection() {
                       transition={{ duration: 0.35, ease: [0.22, 1, 0.36, 1] }}
                     >
                       <div className={styles.detailCopy}>
-                        <span className={styles.detailLabel}>About this credential</span>
-                        <p>{description}</p>
+                        <span className={styles.detailLabel}>Certificate preview</span>
                         <a href={file} target="_blank" rel="noreferrer" className={styles.pdfLink}>
-                          Open original PDF <ArrowUpRight size={15} />
+                          Open original certificate <ArrowUpRight size={15} />
                         </a>
                       </div>
-                      <a href={file} target="_blank" rel="noreferrer" className={styles.previewLink} aria-label={`Open the full ${title} certificate PDF`}>
+                      <a href={file} target="_blank" rel="noreferrer" className={styles.previewLink} aria-label={`Open the full ${title} certificate`}>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
                         <img src={preview} alt={`${title} certificate`} className={styles.preview} />
                         <span className={styles.previewHint}>Open full certificate <ArrowUpRight size={15} /></span>
@@ -124,12 +125,15 @@ export default function RecognitionSection() {
             );
           })}
         </div>
-
-        {!showAll && credentials.length > visibleCredentials.length && (
-          <button className={styles.showAllButton} type="button" onClick={() => setShowAll(true)}>
-            Show all certificates <span>+{credentials.length - visibleCredentials.length}</span>
-          </button>
-        )}
+        <button
+          className={styles.viewAllButton}
+          type="button"
+          onClick={() => setExpanded(allExpanded ? [] : credentials.map((_, index) => index))}
+          aria-expanded={allExpanded}
+        >
+          {allExpanded ? "Close all previews" : "View all certificates"}
+          {allExpanded ? <ArrowUpRight size={15} /> : <ArrowDownRight size={15} />}
+        </button>
       </div>
     </section>
   );

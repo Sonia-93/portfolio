@@ -46,6 +46,7 @@
 .credentialType { display: block; margin-bottom: 6px; color: rgba(255,255,255,.42); font-size: 9px; font-weight: 600; letter-spacing: .15em; text-transform: uppercase; }
 .credentialText h3 { margin: 0 0 5px; color: rgba(255,255,255,.91); font-size: 16px; font-weight: 600; line-height: 1.35; }
 .credentialText p { margin: 0; color: rgba(255,255,255,.45); font-size: 11px; line-height: 1.55; }
+.credentialText .credentialDescription { max-width: 720px; margin-top: 7px; color: rgba(255,255,255,.58); font-size: 12px; line-height: 1.65; }
 .expandButton { display: grid; flex: 0 0 40px; place-items: center; width: 40px; height: 40px; margin-left: auto; border: 1px solid rgba(255,255,255,.15); border-radius: 0; background: transparent; color: rgba(255,255,255,.58); cursor: pointer; transition: color .2s ease, background .2s ease, border-color .2s ease, transform .2s ease; }
 .expandButton:hover, .expandButton:focus-visible { color: #000; background: #fff; border-color: #fff; }
 .credentialRowExpanded .expandButton { color: #000; background: #fff; border-color: #fff; transform: rotate(45deg); }
@@ -59,10 +60,8 @@
 .preview { display: block; width: 100%; max-height: 520px; object-fit: contain; }
 .previewHint { position: absolute; right: 12px; bottom: 12px; display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: rgba(0,0,0,.82); color: #fff; font-size: 9px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; opacity: 0; transform: translateY(4px); transition: opacity .2s ease, transform .2s ease; }
 .previewLink:hover .previewHint, .previewLink:focus-visible .previewHint { opacity: 1; transform: translateY(0); }
-.showAllButton { display: flex; align-items: center; justify-content: space-between; width: 100%; margin-top: 18px; padding: 14px 16px; border: 1px solid rgba(255,255,255,.18); background: rgba(255,255,255,.025); color: rgba(255,255,255,.86); font: inherit; font-size: 10px; font-weight: 600; letter-spacing: .11em; text-align: left; text-transform: uppercase; cursor: pointer; transition: border-color .2s ease, background .2s ease; }
-.showAllButton:hover { border-color: rgba(255,255,255,.5); background: rgba(255,255,255,.06); }
-.showAllButton span { color: rgba(255,255,255,.48); font-size: 10px; letter-spacing: .06em; }
-
+.viewAllButton { display: inline-flex; align-items: center; gap: 10px; margin: 24px auto 0; padding: 10px 0; border: 0; border-bottom: 1px solid rgba(255,255,255,.35); background: transparent; color: rgba(255,255,255,.78); font: inherit; font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; transition: color .2s ease, border-color .2s ease; }
+.viewAllButton:hover, .viewAllButton:focus-visible { color: #fff; border-color: #fff; }
 @media (max-width: 760px) {
   .credentialDetails { grid-template-columns: 1fr; padding-left: 0; }
   .detailCopy { max-width: none; }
@@ -76,10 +75,11 @@
   .icon { flex-basis: 36px; width: 36px; height: 36px; }
   .credentialText h3 { font-size: 14px; }
   .credentialText p { font-size: 10px; }
+  .credentialText .credentialDescription { font-size: 11px; }
   .expandButton { flex-basis: 36px; width: 36px; height: 36px; }
   .credentialDetails { gap: 18px; padding-bottom: 22px; }
 }
 
 @media (prefers-reduced-motion: reduce) {
-  .credentialRow, .icon, .expandButton, .pdfLink, .previewHint, .showAllButton { transition: none; }
+  .credentialRow, .icon, .expandButton, .pdfLink, .previewHint, .viewAllButton { transition: none; }
 }

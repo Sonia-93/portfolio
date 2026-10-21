@@ -34,11 +34,7 @@ function useTypingEffect(
   const [done, setDone] = useState(false);
 
   useEffect(() => {
-    if (!startTrigger) {
-      setDisplayed("");
-      setDone(false);
-      return;
-    }
+    if (!startTrigger) return;
 
     let index = 0;
     let timeoutId: NodeJS.Timeout;
@@ -208,7 +204,7 @@ export default function IntersectionSection() {
   const sectionRef = useRef<HTMLDivElement>(null);
   const headlineRef = useRef<HTMLDivElement>(null);
   const sectionInView = useInView(headlineRef, {
-    once: false,
+    once: true,
     margin: "0px 0px -30% 0px",
   });
 
@@ -241,13 +237,6 @@ export default function IntersectionSection() {
     });
     return controls.stop;
   }, [typingFullyDone, autoProgress]);
-
-  // Reset circles progress if user scrolls away & back
-  useEffect(() => {
-    if (!sectionInView) {
-      autoProgress.jump(0);
-    }
-  }, [sectionInView, autoProgress]);
 
   const lineScaleY = useTransform(autoProgress, [0, 0.95], [0, 1]);
 
