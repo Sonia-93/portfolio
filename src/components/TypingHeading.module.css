@@ -1,0 +1,18 @@
+.caret {
+  display: inline-block;
+  width: 0.075em;
+  height: 0.86em;
+  margin-left: 0.12em;
+  vertical-align: -0.04em;
+  background: #fff;
+  box-shadow: 0 0 10px rgba(255, 255, 255, 0.8);
+  animation: caretBlink 0.75s steps(2, start) infinite;
+}
+
+@keyframes caretBlink {
+  to { visibility: hidden; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .caret { animation: none; }
+}

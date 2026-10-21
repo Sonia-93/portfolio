@@ -2,6 +2,7 @@
 
 import { useEffect, useRef, useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import TypingHeading from "./TypingHeading";
 import styles from "./TestimonialsSection.module.css";
 
 const testimonials = [
@@ -79,7 +80,7 @@ export default function TestimonialsSection() {
     <section className={styles.section} id="testimonials">
       <div className={styles.labelWrap}>
         <span className={styles.label}>What people say</span>
-        <h2 className={styles.title}>Client Testimonials</h2>
+        <TypingHeading className={styles.title} text="Client Testimonials" />
       </div>
 
       <div className={styles.carousel}>

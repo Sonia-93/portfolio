@@ -7,21 +7,25 @@ import ProjectsSection from "@/components/ProjectsSection";
 import RecognitionSection from "@/components/RecognitionSection";
 import TestimonialsSection from "@/components/TestimonialsSection";
 import ContactSection from "@/components/ContactSection";
+import PortfolioFooter from "@/components/PortfolioFooter";
 import CustomCursor from "@/components/CustomCursor";
 
 export default function Home() {
   return (
-    <main>
-      <CustomCursor />
-      <HeroSection />
-      <IntersectionSection />
-      <AboutSection />
-      <JourneySection />
-      <TechStackSection />
-      <ProjectsSection />
-      <RecognitionSection />
-      <TestimonialsSection />
-      <ContactSection />
-    </main>
+    <>
+      <main id="top">
+        <CustomCursor />
+        <HeroSection />
+        <IntersectionSection />
+        <AboutSection />
+        <JourneySection />
+        <TechStackSection />
+        <ProjectsSection />
+        <RecognitionSection />
+        <TestimonialsSection />
+        <ContactSection />
+      </main>
+      <PortfolioFooter />
+    </>
   );
 }

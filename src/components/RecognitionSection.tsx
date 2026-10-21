@@ -1,8 +1,9 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { AnimatePresence, motion } from "framer-motion";
 import { ArrowDownRight, ArrowRight, ArrowUpRight, Award, BookOpen, ShieldCheck } from "lucide-react";
+import TypingHeading from "./TypingHeading";
 import styles from "./RecognitionSection.module.css";
 
 const credentials = [
@@ -45,33 +46,9 @@ const credentials = [
   },
 ];
 
-const titleVariants = {
-  hidden: {},
-  visible: (reduceMotion: boolean) => ({
-    transition: {
-      delayChildren: reduceMotion ? 0 : 0.2,
-      staggerChildren: reduceMotion ? 0 : 0.045,
-    },
-  }),
-};
-
-const characterVariants = {
-  hidden: { opacity: 0, y: 5 },
-  visible: { opacity: 1, y: 0, transition: { duration: 0.06 } },
-};
-
-function renderTitle(text: string) {
-  return Array.from(text).map((character, index) => (
-    <motion.span className={styles.titleCharacter} key={`${character}-${index}`} variants={characterVariants}>
-      {character === " " ? "\u00a0" : character}
-    </motion.span>
-  ));
-}
-
 export default function RecognitionSection() {
   const [expanded, setExpanded] = useState<number[]>([]);
   const allExpanded = expanded.length === credentials.length;
-  const reduceMotion = useReducedMotion() ?? false;
 
   return (
     <section className={styles.section} id="recognition" aria-labelledby="recognition-title">
@@ -84,19 +61,7 @@ export default function RecognitionSection() {
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
         >
           <span className={styles.eyebrow}>Progress with purpose</span>
-          <motion.h2
-            id="recognition-title"
-            className={styles.title}
-            aria-label="Certificates & recognition"
-            variants={titleVariants}
-            custom={reduceMotion}
-            initial={reduceMotion ? false : "hidden"}
-            whileInView="visible"
-            viewport={{ once: true, amount: 0.8 }}
-          >
-            <span aria-hidden="true">{renderTitle("CERTIFICATES")}</span>{" "}
-            <span aria-hidden="true">{renderTitle("& RECOGNITION")}</span>
-          </motion.h2>
+          <TypingHeading id="recognition-title" className={styles.title} text="Certificates & recognition" />
         </motion.div>
 
         <div className={styles.certificateList}>

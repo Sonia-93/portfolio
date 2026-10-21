@@ -3,6 +3,7 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, GitBranch, Link } from "lucide-react";
+import TypingHeading from "./TypingHeading";
 import styles from "./ContactSection.module.css";
 
 export default function ContactSection() {
@@ -45,15 +46,7 @@ export default function ContactSection() {
           >
             Get in touch
           </motion.span>
-          <motion.h2
-            className={styles.title}
-            initial={{ opacity: 0, y: 20 }}
-            whileInView={{ opacity: 1, y: 0 }}
-            viewport={{ once: true }}
-            transition={{ duration: 0.45, delay: 0.08 }}
-          >
-            Let&apos;s Work Together
-          </motion.h2>
+          <TypingHeading className={styles.title} text="Let’s Work Together" />
           <motion.p
             className={styles.desc}
             initial={{ opacity: 0, y: 16 }}

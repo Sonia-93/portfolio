@@ -25,7 +25,6 @@
   text-shadow: 0 0 18px rgba(255,255,255,.25), 0 0 40px rgba(255,255,255,.1);
 }
 .title span { color: #fff; }
-.titleCharacter { display: inline-block; }
 .certificateList { width: 100%; }
 .credentialRow { border-top: 1px solid rgba(255,255,255,.14); transition: border-color .25s ease; }
 .credentialRow:last-child { border-bottom: 1px solid rgba(255,255,255,.14); }
