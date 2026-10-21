@@ -1,8 +1,8 @@
 "use client";
 
 import { useState } from "react";
-import { AnimatePresence, motion } from "framer-motion";
-import { ArrowDownRight, ArrowUpRight, Award, BookOpen, ShieldCheck } from "lucide-react";
+import { AnimatePresence, motion, useReducedMotion } from "framer-motion";
+import { ArrowDownRight, ArrowRight, ArrowUpRight, Award, BookOpen, ShieldCheck } from "lucide-react";
 import styles from "./RecognitionSection.module.css";
 
 const credentials = [
@@ -18,15 +18,16 @@ const credentials = [
   {
     title: "AI Software Design & Development",
     issuer: "Nazli Tech School · Women in Tech Rwanda",
-    type: "Course completion",
+    type: "Course completion & certification",
     description: "Completed the AI Software Design & Development course, building practical skills in designing and developing AI-powered software.",
     file: "/certificates/ai-software-design-and-development.pdf",
     preview: "/certificates/previews/ai-software-design.png",
+    relatedFile: "/certificates/nazli-letter-good-standing.pdf",
     icon: BookOpen,
   },
   {
-    title: "2026 Season Semifinalist",
-    issuer: "Technovation Rwanda · HerIngress",
+    title: "Technovation 2026 Season Semifinalist",
+    issuer: "Technovation · HerIngress",
     type: "Certificate of recognition",
     description: "Recognized as a semifinalist for outstanding work with Team Dev Girls, developing the HerIngress project in the 2026 Technovation season.",
     file: "/certificates/technovation-2026-semifinalist.pdf",
@@ -44,9 +45,33 @@ const credentials = [
   },
 ];
 
+const titleVariants = {
+  hidden: {},
+  visible: (reduceMotion: boolean) => ({
+    transition: {
+      delayChildren: reduceMotion ? 0 : 0.2,
+      staggerChildren: reduceMotion ? 0 : 0.045,
+    },
+  }),
+};
+
+const characterVariants = {
+  hidden: { opacity: 0, y: 5 },
+  visible: { opacity: 1, y: 0, transition: { duration: 0.06 } },
+};
+
+function renderTitle(text: string) {
+  return Array.from(text).map((character, index) => (
+    <motion.span className={styles.titleCharacter} key={`${character}-${index}`} variants={characterVariants}>
+      {character === " " ? "\u00a0" : character}
+    </motion.span>
+  ));
+}
+
 export default function RecognitionSection() {
   const [expanded, setExpanded] = useState<number[]>([]);
   const allExpanded = expanded.length === credentials.length;
+  const reduceMotion = useReducedMotion() ?? false;
 
   return (
     <section className={styles.section} id="recognition" aria-labelledby="recognition-title">
@@ -59,11 +84,23 @@ export default function RecognitionSection() {
           transition={{ duration: 0.65, ease: [0.22, 1, 0.36, 1] }}
         >
           <span className={styles.eyebrow}>Progress with purpose</span>
-          <h2 id="recognition-title" className={styles.title}>Certificates <span>&amp; recognition</span></h2>
+          <motion.h2
+            id="recognition-title"
+            className={styles.title}
+            aria-label="Certificates & recognition"
+            variants={titleVariants}
+            custom={reduceMotion}
+            initial={reduceMotion ? false : "hidden"}
+            whileInView="visible"
+            viewport={{ once: true, amount: 0.8 }}
+          >
+            <span aria-hidden="true">{renderTitle("CERTIFICATES")}</span>{" "}
+            <span aria-hidden="true">{renderTitle("& RECOGNITION")}</span>
+          </motion.h2>
         </motion.div>
 
         <div className={styles.certificateList}>
-          {credentials.map(({ title, issuer, type, description, file, preview, icon: Icon }, index) => {
+          {credentials.map(({ title, issuer, type, description, file, preview, relatedFile, icon: Icon }, index) => {
             const isExpanded = expanded.includes(index);
             return (
               <motion.article
@@ -112,6 +149,11 @@ export default function RecognitionSection() {
                         <a href={file} target="_blank" rel="noreferrer" className={styles.pdfLink}>
                           Open original certificate <ArrowUpRight size={15} />
                         </a>
+                        {relatedFile && (
+                          <a href={relatedFile} target="_blank" rel="noreferrer" className={styles.relatedDocument}>
+                            View letter of good standing <ArrowRight size={16} />
+                          </a>
+                        )}
                       </div>
                       <a href={file} target="_blank" rel="noreferrer" className={styles.previewLink} aria-label={`Open the full ${title} certificate`}>
                         {/* eslint-disable-next-line @next/next/no-img-element */}
