@@ -17,13 +17,14 @@
   margin: 0 0 32px;
   color: rgba(255, 255, 255, 0.28);
   font-family: var(--title-font);
-  font-size: clamp(9px, 4.6vw, 86px);
+  font-size: clamp(9px, 5.6vw, 104px);
   font-weight: var(--title-weight, 700);
   letter-spacing: 0.005em;
   line-height: 1;
   text-align: center;
   text-transform: uppercase;
   white-space: nowrap;
+  transform: scaleX(0.82);
 }
 
 .socials {
@@ -85,6 +86,7 @@
   .quote {
     font-size: clamp(9px, 2.8vw, 16px);
     letter-spacing: 0;
+    transform: none;
   }
 
   .socials { gap: 14px; margin-bottom: 28px; }
