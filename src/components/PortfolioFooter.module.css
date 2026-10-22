@@ -6,7 +6,7 @@
 
 .inner {
   display: flex;
-  max-width: 1600px;
+  max-width: 1800px;
   margin: 0 auto;
   flex-direction: column;
   align-items: center;
@@ -17,7 +17,7 @@
   margin: 0 0 32px;
   color: rgba(255, 255, 255, 0.28);
   font-family: var(--title-font);
-  font-size: clamp(9px, 4vw, 76px);
+  font-size: clamp(9px, 4.6vw, 86px);
   font-weight: var(--title-weight, 700);
   letter-spacing: 0.005em;
   line-height: 1;
@@ -83,6 +83,7 @@
 
 @media (max-width: 560px) {
   .quote {
+    font-size: clamp(9px, 2.8vw, 16px);
     letter-spacing: 0;
   }
 
