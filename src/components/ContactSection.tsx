@@ -3,8 +3,13 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Mail, GitBranch, Link } from "lucide-react";
+import emailjs from "@emailjs/browser";
 import TypingHeading from "./TypingHeading";
 import styles from "./ContactSection.module.css";
+
+const EMAILJS_SERVICE_ID  = "service_1zugglh";
+const EMAILJS_TEMPLATE_ID = "template_0ai0vz9";
+const EMAILJS_PUBLIC_KEY  = "V2ZShcrM-UBcxJemF";
 
 export default function ContactSection() {
   const [form, setForm] = useState({ name: "", email: "", message: "" });
@@ -17,16 +22,19 @@ export default function ContactSection() {
     setLoading(true);
     setError("");
     try {
-      const response = await fetch("/api/contact", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(form),
-      });
-      const result = await response.json();
-      if (!response.ok) throw new Error(result.error || "Your message could not be sent. Please try again.");
+      await emailjs.send(
+        EMAILJS_SERVICE_ID,
+        EMAILJS_TEMPLATE_ID,
+        {
+          from_name: form.name,
+          from_email: form.email,
+          message: form.message,
+        },
+        EMAILJS_PUBLIC_KEY
+      );
       setSent(true);
     } catch (err) {
-      setError(err instanceof Error ? err.message : "Your message could not be sent. Please try again.");
+      setError("Failed to send message. Please try again.");
     } finally {
       setLoading(false);
     }
