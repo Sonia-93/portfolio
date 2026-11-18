@@ -60,9 +60,7 @@ const orderedCredentials = [...credentials].reverse();
 
 export default function RecognitionSection() {
   const [expanded, setExpanded] = useState<number[]>([]);
-  const [showAll, setShowAll] = useState(false);
-
-  const visible = showAll ? orderedCredentials : orderedCredentials.slice(0, VISIBLE_COUNT);
+  const visible = orderedCredentials.slice(0, VISIBLE_COUNT);
   const allExpanded = expanded.length === visible.length;
 
   return (
@@ -149,19 +147,6 @@ export default function RecognitionSection() {
         </div>
 
         <div className={styles.bottomActions}>
-          {orderedCredentials.length > VISIBLE_COUNT && (
-            <button
-              className={styles.viewAllButton}
-              type="button"
-              onClick={() => {
-                setShowAll((prev) => !prev);
-                setExpanded([]);
-              }}
-            >
-              {showAll ? "Show less" : `Show ${orderedCredentials.length - VISIBLE_COUNT} more certificate${orderedCredentials.length - VISIBLE_COUNT > 1 ? "s" : ""}`}
-              {showAll ? <ArrowUpRight size={15} /> : <ArrowDownRight size={15} />}
-            </button>
-          )}
           <button
             className={styles.viewAllButton}
             type="button"
@@ -171,6 +156,10 @@ export default function RecognitionSection() {
             {allExpanded ? "Close all previews" : "View all previews"}
             {allExpanded ? <ArrowUpRight size={15} /> : <ArrowDownRight size={15} />}
           </button>
+          <a href="/certificates" className={styles.viewAllButton}>
+            View all certificates
+            <ArrowRight size={15} />
+          </a>
         </div>
       </div>
     </section>
