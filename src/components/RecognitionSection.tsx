@@ -61,7 +61,6 @@ const orderedCredentials = [...credentials].reverse();
 export default function RecognitionSection() {
   const [expanded, setExpanded] = useState<number[]>([]);
   const visible = orderedCredentials.slice(0, VISIBLE_COUNT);
-  const allExpanded = expanded.length === visible.length;
 
   return (
     <section className={styles.section} id="recognition" aria-labelledby="recognition-title">
@@ -147,15 +146,6 @@ export default function RecognitionSection() {
         </div>
 
         <div className={styles.bottomActions}>
-          <button
-            className={styles.viewAllButton}
-            type="button"
-            onClick={() => setExpanded(allExpanded ? [] : visible.map((_, index) => index))}
-            aria-expanded={allExpanded}
-          >
-            {allExpanded ? "Close all previews" : "View all previews"}
-            {allExpanded ? <ArrowUpRight size={15} /> : <ArrowDownRight size={15} />}
-          </button>
           <a href="/certificates" className={styles.viewAllButton}>
             View all certificates
             <ArrowRight size={15} />
