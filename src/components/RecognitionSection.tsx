@@ -55,9 +55,15 @@ const credentials = [
   },
 ];
 
+const VISIBLE_COUNT = 4;
+const orderedCredentials = [...credentials].reverse();
+
 export default function RecognitionSection() {
   const [expanded, setExpanded] = useState<number[]>([]);
-  const allExpanded = expanded.length === credentials.length;
+  const [showAll, setShowAll] = useState(false);
+
+  const visible = showAll ? orderedCredentials : orderedCredentials.slice(0, VISIBLE_COUNT);
+  const allExpanded = expanded.length === visible.length;
 
   return (
     <section className={styles.section} id="recognition" aria-labelledby="recognition-title">
@@ -74,7 +80,7 @@ export default function RecognitionSection() {
         </motion.div>
 
         <div className={styles.certificateList}>
-          {credentials.map(({ title, issuer, type, description, file, preview, relatedFile, icon: Icon }, index) => {
+          {visible.map(({ title, issuer, type, description, file, preview, relatedFile, icon: Icon }, index) => {
             const isExpanded = expanded.includes(index);
             return (
               <motion.article
@@ -141,15 +147,31 @@ export default function RecognitionSection() {
             );
           })}
         </div>
-        <button
-          className={styles.viewAllButton}
-          type="button"
-          onClick={() => setExpanded(allExpanded ? [] : credentials.map((_, index) => index))}
-          aria-expanded={allExpanded}
-        >
-          {allExpanded ? "Close all previews" : "View all certificates"}
-          {allExpanded ? <ArrowUpRight size={15} /> : <ArrowDownRight size={15} />}
-        </button>
+
+        <div className={styles.bottomActions}>
+          {orderedCredentials.length > VISIBLE_COUNT && (
+            <button
+              className={styles.viewAllButton}
+              type="button"
+              onClick={() => {
+                setShowAll((prev) => !prev);
+                setExpanded([]);
+              }}
+            >
+              {showAll ? "Show less" : `Show ${orderedCredentials.length - VISIBLE_COUNT} more certificate${orderedCredentials.length - VISIBLE_COUNT > 1 ? "s" : ""}`}
+              {showAll ? <ArrowUpRight size={15} /> : <ArrowDownRight size={15} />}
+            </button>
+          )}
+          <button
+            className={styles.viewAllButton}
+            type="button"
+            onClick={() => setExpanded(allExpanded ? [] : visible.map((_, index) => index))}
+            aria-expanded={allExpanded}
+          >
+            {allExpanded ? "Close all previews" : "View all previews"}
+            {allExpanded ? <ArrowUpRight size={15} /> : <ArrowDownRight size={15} />}
+          </button>
+        </div>
       </div>
     </section>
   );

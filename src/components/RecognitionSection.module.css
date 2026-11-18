@@ -54,6 +54,7 @@
 .previewHint { position: absolute; right: 12px; bottom: 12px; display: flex; align-items: center; gap: 8px; padding: 10px 12px; background: rgba(0,0,0,.82); color: #fff; font-size: 9px; font-weight: 600; letter-spacing: .08em; text-transform: uppercase; opacity: 0; transform: translateY(4px); transition: opacity .2s ease, transform .2s ease; }
 .previewLink:hover .previewHint, .previewLink:focus-visible .previewHint { opacity: 1; transform: translateY(0); }
 .viewAllButton { display: inline-flex; align-items: center; gap: 10px; margin: 24px auto 0; padding: 10px 0; border: 0; border-bottom: 1px solid rgba(255,255,255,.35); background: transparent; color: rgba(255,255,255,.78); font: inherit; font-size: 10px; font-weight: 600; letter-spacing: .12em; text-transform: uppercase; cursor: pointer; transition: color .2s ease, border-color .2s ease; }
+.bottomActions { display: flex; align-items: center; justify-content: center; gap: 32px; flex-wrap: wrap; }
 .viewAllButton:hover, .viewAllButton:focus-visible { color: #fff; border-color: #fff; }
 @media (max-width: 760px) {
   .credentialDetails { grid-template-columns: 1fr; padding-left: 0; }
