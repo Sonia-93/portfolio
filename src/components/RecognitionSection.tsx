@@ -2,7 +2,7 @@
 
 import { useState } from "react";
 import { AnimatePresence, motion } from "framer-motion";
-import { ArrowDownRight, ArrowRight, ArrowUpRight, Award, BookOpen, ShieldCheck } from "lucide-react";
+import { ArrowDownRight, ArrowRight, ArrowUpRight, Award, BookOpen, Rocket, ShieldCheck } from "lucide-react";
 import TypingHeading from "./TypingHeading";
 import styles from "./RecognitionSection.module.css";
 
@@ -43,6 +43,15 @@ const credentials = [
     file: "/certificates/wavumbuzi-certificate-of-appreciation.pdf",
     preview: "/certificates/previews/wavumbuzi.png",
     icon: Award,
+  },
+  {
+    title: "NASA Space Apps Challenge 2026",
+    issuer: "NASA · Global Hackathon",
+    type: "Certificate of participation",
+    description: "Participated in the world's largest annual global hackathon, collaborating with a team to build solutions using open NASA data to address real-world challenges in space exploration and science.",
+    file: "/certificates/nasa-space-apps-challenge.pdf",
+    preview: "/certificates/previews/nasa.png",
+    icon: Rocket,
   },
 ];
 
